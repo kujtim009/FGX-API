@@ -3,6 +3,7 @@ import Aux from "../../../../../../hoc/_Aux";
 import NavCollapse from "./../NavCollapse";
 import NavItem from "./../NavItem";
 import LicenseType from "./../../Filters/LicenseType/LicenseType";
+import CostumEditBox from "./../../Filters/CostumEditBox/CostumEditBox";
 
 const navGroup = props => {
   let navItems = "";
@@ -21,6 +22,11 @@ const navGroup = props => {
         case "costum":
           return (
             <LicenseType layout={props.layout} key={item.id} item={item} />
+          );
+
+        case "costumEditBox":
+          return (
+            <CostumEditBox layout={props.layout} key={item.id} item={item} />
           );
         default:
           return false;

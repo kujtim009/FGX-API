@@ -40,54 +40,16 @@ export default {
     },
 
     {
-      id: "ui-element",
-      title: "UI ELEMENT",
+      id: "License",
+      title: "License",
       type: "group",
       icon: "icon-ui",
       children: [
         {
-          id: "basic",
-          title: "Component",
-          type: "collapse",
-          icon: "feather icon-box",
-          children: [
-            {
-              id: "button",
-              title: "Button",
-              type: "item",
-              url: "/basic/button"
-            },
-            {
-              id: "badges",
-              title: "Badges",
-              type: "item",
-              url: "/basic/badges"
-            },
-            {
-              id: "breadcrumb-pagination",
-              title: "Breadcrumb & Pagination",
-              type: "item",
-              url: "/basic/breadcrumb-paging"
-            },
-            {
-              id: "collapse",
-              title: "Collapse",
-              type: "item",
-              url: "/basic/collapse"
-            },
-            {
-              id: "tabs-pills",
-              title: "Tabs & Pills",
-              type: "item",
-              url: "/basic/tabs-pills"
-            },
-            {
-              id: "typography",
-              title: "Typography",
-              type: "item",
-              url: "/basic/typography"
-            }
-          ]
+          id: "LicenseNumber",
+          title: "License Number",
+          type: "costumEditBox",
+          url: "/basic/button"
         }
       ]
     },
