@@ -10,9 +10,14 @@ import NavBadge from "./../NavBadge";
 import NavItem from "../NavItem";
 import LoopNavCollapse from "./index";
 import LicenseType from "./../../Filters/LicenseType/LicenseType";
+import CostumEditBox from "./../../Filters/CostumEditBox/CostumEditBox";
+import CostumDropBox from "./../../Filters/CostumDropBox/CostumDropBox";
+import CostumComboBox from "./../../Filters/CostumComboBox/CostumComboBox";
+import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
 
 class NavCollapse extends Component {
   componentDidMount() {
+    console.log("NAV COLLAPSE: ", this.props);
     const currentIndex = document.location.pathname
       .toString()
       .split("/")
@@ -23,8 +28,9 @@ class NavCollapse extends Component {
   }
 
   render() {
+    console.log("NAV COLLAPSE: ", this.props);
     const { isOpen, isTrigger } = this.props;
-
+    // alert(this.props.is);
     let navItems = "";
     if (this.props.collapse.children) {
       const collapses = this.props.collapse.children;
@@ -38,9 +44,40 @@ class NavCollapse extends Component {
               <NavItem layout={this.props.layout} key={item.id} item={item} />
             );
           case "costum":
-            console.log("item: ", item);
             return (
               <LicenseType
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "costumEditBox":
+            return (
+              <CostumEditBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "costumDropBox":
+            return (
+              <CostumDropBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "costumComboBox":
+            return (
+              <CostumComboBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "costumSrchBtn":
+            return (
+              <CostumSrchBtn
                 layout={this.props.layout}
                 key={item.id}
                 item={item}
@@ -129,6 +166,7 @@ class NavCollapse extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log("MAP STATE TO PROPS: ", state);
   return {
     layout: state.layout,
     isOpen: state.isOpen,

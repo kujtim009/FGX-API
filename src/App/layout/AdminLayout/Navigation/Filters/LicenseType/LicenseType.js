@@ -25,12 +25,9 @@ export default class LicenseType extends Component {
   };
 
   componentDidUpdate() {
-    console.log("Component did updatee: ", this.state.licenseType);
+    // console.log("Component did updatee: ", this.state.licenseType);
   }
   onCheckboxCheckHandler(event) {
-    console.log(event);
-    console.log(event.target.id);
-    console.log(this.state.licenseType);
     const tempLicTypes = this.state.licenseType.map(item => {
       if (event.target.id === item.id) {
         return { title: item.title, id: item.id, Status: event.target.checked };

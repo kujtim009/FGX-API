@@ -43,6 +43,7 @@ class AdminLayout extends Component {
   }
 
   render() {
+    console.log("ADMIN LAYOUT", this.props);
     /* full screen exit call */
     document.addEventListener("fullscreenchange", this.fullScreenExitHandler);
     document.addEventListener(

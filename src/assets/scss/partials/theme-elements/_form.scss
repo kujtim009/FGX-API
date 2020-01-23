@@ -5,8 +5,8 @@
 .custom-select,
 .form-control {
     background: $theme-background;
-    padding: 10px 20px;
-    font-size: 14px;
+    // padding: 10px 20px;
+    font-size: 12px;
     height: auto;
 
     &.form-control-lg {
@@ -14,8 +14,18 @@
     }
 
     &.form-control-sm {
-        height: calc(1.8125rem + 2px);
-        font-size: .875rem;
+        // height: calc(1.8125rem + 2px);
+        // font-size: .875rem;
+        background-color: rgb(41, 65, 82);
+        color: rgb(206, 206, 206);
+        font-size: .835rem;
+    }
+
+    &.form-control-xs {
+        // height: 10px;
+        background-color: rgb(41, 65, 82);
+        color: rgb(206, 206, 206);
+        font-size: .735rem;
     }
 
     &.form-control-range {
@@ -23,7 +33,8 @@
     }
 
     &:focus {
-        background: $theme-background;
+        // background: $theme-background;
+        // background-color: red($color: #000000);
     }
 
     &::-moz-placeholder {
@@ -39,6 +50,7 @@
         color: #aaaeb3;
     }
 }
+
 /* input group start */
 
 .input-group {
@@ -48,6 +60,7 @@
         padding-left: 15px;
         padding-right: 15px;
         background: transparent;
+
         i {
             font-size: 20px;
         }
@@ -75,33 +88,38 @@
     }
 }
 
-.custom-select{
+.custom-select {
     height: calc(2.25rem + 9px);
 }
+
 /* input group End */
 /**====== Form Componant css end ======**/
 select.form-control:not([size]):not([multiple]) {
-    height: calc(2.55rem + 2px);
+    height: calc(1.65rem + 2px);
 }
-.input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]),
-.input-group-lg > .input-group-append > select.input-group-text:not([size]):not([multiple]),
-.input-group-lg > .input-group-prepend > select.btn:not([size]):not([multiple]),
-.input-group-lg > .input-group-prepend > select.input-group-text:not([size]):not([multiple]),
-.input-group-lg > select.form-control:not([size]):not([multiple]),
+
+.input-group-lg>.input-group-append>select.btn:not([size]):not([multiple]),
+.input-group-lg>.input-group-append>select.input-group-text:not([size]):not([multiple]),
+.input-group-lg>.input-group-prepend>select.btn:not([size]):not([multiple]),
+.input-group-lg>.input-group-prepend>select.input-group-text:not([size]):not([multiple]),
+.input-group-lg>select.form-control:not([size]):not([multiple]),
 select.form-control-lg:not([size]):not([multiple]) {
     height: calc(3.375rem + 2px);
 }
 
 .minicolors {
     .form-control {
-        padding: 6px 12px 5px 44px;
+        // padding: 6px 12px 5px 44px;
+        padding: 3px 6px 2px 22px;
     }
 }
+
 /* form-select */
 
 .select2-container {
     width: 100% !important;
 }
+
 .tt-menu {
     position: absolute;
     top: 100%;
@@ -121,24 +139,29 @@ select.form-control-lg:not([size]):not([multiple]) {
     background-clip: padding-box;
     cursor: pointer;
 }
+
 .bootstrap-tagsinput {
     width: 100%;
 }
-.custom-file-label{
+
+.custom-file-label {
     height: auto;
-    &:after{
+
+    &:after {
         height: auto;
         padding: 0.550rem 0.75rem;
     }
 }
-.form-control.is-invalid, .was-validated .form-control:invalid,
-.was-validated .form-control:valid, .form-control.is-valid {
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid,
+.was-validated .form-control:valid,
+.form-control.is-valid {
     background-position: calc(100% - 10px) calc(.375em + 0.4875rem);
 }
 
 .was-validated .form-control:invalid~.invalid-feedback {
-  background: #fff;
-  margin-top: 0;
-  padding-top: 0.25em;
+    background: #fff;
+    margin-top: 0;
+    padding-top: 0.25em;
 }
-

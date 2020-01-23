@@ -38,7 +38,6 @@ export default {
         }
       ]
     },
-
     {
       id: "License",
       title: "License",
@@ -54,24 +53,89 @@ export default {
       ]
     },
     {
-      id: "ui-forms",
-      title: "Forms & Tables",
+      id: "state_profession",
+      title: "State & Profession",
       type: "group",
-      icon: "icon-group",
+      icon: "icon-ui",
       children: [
         {
-          id: "form-basic",
-          title: "Form Elements",
-          type: "item",
-          url: "/forms/form-basic",
-          icon: "feather icon-file-text"
+          id: "state",
+          title: "State",
+          type: "costumDropBox",
+          url: "/basic/button"
         },
         {
-          id: "bootstrap",
-          title: "Table",
-          type: "item",
-          icon: "feather icon-server",
-          url: "/tables/bootstrap"
+          id: "profession",
+          title: "Profession",
+          type: "costumDropBox",
+          url: "/basic/button"
+        }
+      ]
+    },
+    {
+      id: "other",
+      title: "Other Filters",
+      type: "group",
+      icon: "icon-ui",
+      children: [
+        {
+          id: "otherColapse",
+          title: "Other Filters",
+          type: "collapse",
+          icon: "feather icon-box",
+          children: [
+            {
+              id: "zip",
+              title: "Zip Code",
+              type: "costumEditBox",
+              url: "/basic/button"
+            },
+            {
+              id: "City",
+              title: "City",
+              type: "costumEditBox",
+              url: "/basic/button"
+            },
+            {
+              id: "County",
+              title: "County",
+              type: "costumEditBox",
+              url: "/basic/button"
+            },
+            {
+              id: "Phone",
+              title: "Phone Number",
+              type: "costumEditBox",
+              url: "/basic/button"
+            },
+            {
+              id: "licOwnerName",
+              title: "License Owner Name",
+              type: "costumComboBox",
+              url: "/basic/button"
+            },
+            {
+              id: "CompanyName",
+              title: "Company Name",
+              type: "costumComboBox",
+              url: "/basic/button"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "getData",
+      title: "Get Data",
+      type: "group",
+      icon: "feather icon-search",
+      children: [
+        {
+          id: "search",
+          title: "Search",
+          type: "costumSrchBtn",
+          url: "/forms/form-basic",
+          icon: "feather icon-search"
         }
       ]
     },
