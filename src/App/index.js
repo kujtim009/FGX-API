@@ -1,13 +1,13 @@
 import React, { Component, Suspense } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Loadable from "react-loadable";
-
+import { connect } from "react-redux";
 import "../../node_modules/font-awesome/scss/font-awesome.scss";
 
 import Loader from "./layout/Loader";
 import Aux from "../hoc/_Aux";
 import ScrollToTop from "./layout/ScrollToTop";
-import routes from "../route";
+import authRoutes from "../route";
 
 const AdminLayout = Loadable({
   loader: () => import("./layout/AdminLayout"),
@@ -16,7 +16,8 @@ const AdminLayout = Loadable({
 
 class App extends Component {
   render() {
-    const menu = routes.map((route, index) => {
+    console.log("APP>JS RENDERING");
+    const menu = authRoutes.map((route, index) => {
       return route.component ? (
         <Route
           key={index}
@@ -27,15 +28,28 @@ class App extends Component {
         />
       ) : null;
     });
-
+    let routesMain = null;
+    if (!this.props.isAuthenticated) {
+      routesMain = menu;
+      routesMain.push(
+        <Redirect
+          key="rdr"
+          to={authRoutes.filter(item => item.name === "Signin")[0].path}
+        />
+      );
+    } else {
+      routesMain = <Route path="/" component={AdminLayout} />;
+    }
+    console.log("APP>JS", routesMain);
     return (
       <Aux>
         <ScrollToTop>
           <Suspense fallback={<Loader />}>
             <Switch>
-              {menu}
+              {/* {menu}
 
-              <Route path="/" component={AdminLayout} />
+              <Route path="/" component={AdminLayout} /> */}
+              {routesMain}
             </Switch>
           </Suspense>
         </ScrollToTop>
@@ -44,4 +58,9 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.authReducer.isAuthenticated
+  };
+};
+export default connect(mapStateToProps)(App);

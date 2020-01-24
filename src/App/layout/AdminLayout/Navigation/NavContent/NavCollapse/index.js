@@ -166,11 +166,10 @@ class NavCollapse extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("MAP STATE TO PROPS: ", state);
   return {
-    layout: state.layout,
-    isOpen: state.isOpen,
-    isTrigger: state.isTrigger
+    layout: state.mainReducer.layout,
+    isOpen: state.mainReducer.isOpen,
+    isTrigger: state.mainReducer.isTrigger
   };
 };
 

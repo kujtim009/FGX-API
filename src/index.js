@@ -9,7 +9,9 @@ import App from "./App/index";
 import * as serviceWorker from "./serviceWorker";
 import store from "./store/store";
 import config from "./config";
+import axios from "axios";
 
+axios.defaults.baseURL = "https://firmagraphix-api.com";
 // const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // const store = createStore(reducer, {}, composeEnhances(applyMiddleware(thunk)));
 // const store = createStore(reducer, ["Use Redux"], applyMiddleware(thunk));
