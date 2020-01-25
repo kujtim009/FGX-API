@@ -17,7 +17,6 @@ import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
 
 class NavCollapse extends Component {
   componentDidMount() {
-    console.log("NAV COLLAPSE: ", this.props);
     const currentIndex = document.location.pathname
       .toString()
       .split("/")
@@ -28,7 +27,6 @@ class NavCollapse extends Component {
   }
 
   render() {
-    console.log("NAV COLLAPSE: ", this.props);
     const { isOpen, isTrigger } = this.props;
     // alert(this.props.is);
     let navItems = "";

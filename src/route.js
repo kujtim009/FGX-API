@@ -1,7 +1,8 @@
 import React from "react";
-
-const SignUp1 = React.lazy(() => import("./App/Authentication/SignUp/SignUp1"));
-const Signin1 = React.lazy(() => import("./App/Authentication/SignIn/SignIn1"));
+import SignUp1 from "./App/Authentication/SignUp/SignUp1";
+import Signin1 from "./App/Authentication/SignIn/SignIn1";
+// const SignUp1 = React.lazy(() => import("./App/Authentication/SignUp/SignUp1"));
+// const Signin1 = React.lazy(() => import("./App/Authentication/SignIn/SignIn1"));
 
 const route = [
   { path: "/auth/signup", exact: true, name: "Signup", component: SignUp1 },

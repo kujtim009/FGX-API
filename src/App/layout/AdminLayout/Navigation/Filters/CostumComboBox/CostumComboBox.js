@@ -31,9 +31,7 @@ class CostumComboBox extends Component {
       inputName: this.props.item.id
     });
   }
-  componentDidUpdate() {
-    console.log("Component did updatee: ", this.state);
-  }
+
   onChangeTextHandler(event) {
     this.setState({
       inputValue: event.target.value,

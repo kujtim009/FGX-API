@@ -6,12 +6,10 @@ const initialState = {
   isTrigger: [], //for active default menu, set blank for horizontal
   ...config,
   isFullScreen: false, // static can't change
-  isAuthenticated: false,
   showSpinner: false
 };
 
 const reducer = (state = initialState, action) => {
-  console.log("REDUCER: ", action);
   let trigger = [];
   let open = [];
 
@@ -85,24 +83,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         layout: action.layout
-      };
-
-    case actionTypes.SUCCESS_LOGIN:
-      return {
-        ...state,
-        token: action.payload.token,
-        username: action.payload.username,
-        isAuthenticated: true,
-        showspinner: false
-      };
-    case actionTypes.START_LOGIN:
-      return { ...state, showSpinner: true };
-    case actionTypes.FAILD_LOGIN:
-      return {
-        ...state,
-        showSpinner: false,
-        isAuthenticated: false,
-        loginMessage: "Emri i përdoruesit ose fjalëkalimin i gabuar!"
       };
 
     default:

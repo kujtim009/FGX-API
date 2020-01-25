@@ -1,9 +1,11 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { postLoginCall } from "../../../store/ActionCreators/authAction";
 import "./../../../assets/scss/style.scss";
 import Aux from "../../../hoc/_Aux";
+import authRoutes from "../../../route";
 // import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 
 class SignUp1 extends React.Component {
@@ -19,9 +21,16 @@ class SignUp1 extends React.Component {
     });
   };
   render() {
+    let redirect = this.props.isAuthenticated ? (
+      <Redirect
+        key="rdr"
+        to={authRoutes.filter(item => item.name === "Signin")[0].path}
+      />
+    ) : null;
     return (
       <Aux>
         {/* <Breadcrumb /> */}
+        {redirect}
         <div className="auth-wrapper">
           <div className="auth-content">
             <div className="auth-bg">

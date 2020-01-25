@@ -9,18 +9,12 @@ class CostumSrchBtn extends Component {
     search: false
   };
 
-  componentDidUpdate() {
-    console.log("Component did updatee: ", this.state);
-  }
   onSearchHandler(event) {
-    console.log("CostumSrchBtn.js: ");
     this.setState({
       search: true
     });
   }
-  onClearHandler(event) {
-    console.log("CLear.js: ");
-  }
+  onClearHandler(event) {}
   render() {
     let compBody = (
       <div className="nav-link">

@@ -8,15 +8,21 @@ import Loader from "./layout/Loader";
 import Aux from "../hoc/_Aux";
 import ScrollToTop from "./layout/ScrollToTop";
 import authRoutes from "../route";
-
-const AdminLayout = Loadable({
-  loader: () => import("./layout/AdminLayout"),
-  loading: Loader
-});
+import AdminLayout from "./layout/AdminLayout";
+import getUserLicenseTypes from "../store/ActionCreators/filterActions";
+// const AdminLayout = Loadable({
+//   loader: () => import("./layout/AdminLayout"),
+//   loading: Loader
+// });
 
 class App extends Component {
+  checkLocalToken() {
+    return localStorage.getItem("token") ? true : false;
+  }
+  componentDidMount() {
+    console.log("APP COMPONENT DID MOUNT");
+  }
   render() {
-    console.log("APP>JS RENDERING");
     const menu = authRoutes.map((route, index) => {
       return route.component ? (
         <Route
@@ -28,30 +34,27 @@ class App extends Component {
         />
       ) : null;
     });
-    let routesMain = null;
-    if (!this.props.isAuthenticated) {
-      routesMain = menu;
-      routesMain.push(
+    const mainRedirect =
+      this.props.isAuthenticated || this.checkLocalToken() ? (
+        <Redirect to="/dashboard" />
+      ) : (
         <Redirect
-          key="rdr"
           to={authRoutes.filter(item => item.name === "Signin")[0].path}
         />
       );
-    } else {
-      routesMain = <Route path="/" component={AdminLayout} />;
-    }
-    console.log("APP>JS", routesMain);
+
+    let routeGuard =
+      this.props.isAuthenticated || this.checkLocalToken() ? (
+        <Route path="/" component={AdminLayout} />
+      ) : (
+        [...menu]
+      );
+
     return (
       <Aux>
         <ScrollToTop>
-          <Suspense fallback={<Loader />}>
-            <Switch>
-              {/* {menu}
-
-              <Route path="/" component={AdminLayout} /> */}
-              {routesMain}
-            </Switch>
-          </Suspense>
+          {mainRedirect}
+          <Switch>{routeGuard}</Switch>
         </ScrollToTop>
       </Aux>
     );
@@ -63,4 +66,5 @@ const mapStateToProps = state => {
     isAuthenticated: state.authReducer.isAuthenticated
   };
 };
+
 export default connect(mapStateToProps)(App);

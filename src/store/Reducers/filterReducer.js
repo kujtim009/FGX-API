@@ -1,34 +1,31 @@
 import * as actionTypes from "../actions";
 
 const initialState = {
-  isAuthenticated: false,
-  userName: null
+  availableLicTypes: null,
+  showSpinner: false
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SUCCESS_LOGIN:
+    case actionTypes.SUCCESS_GETLICTYPES:
       return {
         ...state,
-        token: action.payload.token,
-        userName: action.payload.username,
-        isAuthenticated: true,
-        showspinner: false
+        availableLicTypes: action.payload,
+        showSpinner: false
       };
-    case actionTypes.START_LOGIN:
+    case actionTypes.START_GETLICTYPES:
       return { ...state, showSpinner: true };
-    case actionTypes.FAILD_LOGIN:
+    case actionTypes.FAILD_GETLICTYPES:
       return {
         ...state,
         showSpinner: false,
-        isAuthenticated: false,
         loginMessage: "Emri i përdoruesit ose fjalëkalimin i gabuar!"
       };
-    case actionTypes.SUCCESS_LOGOUT:
+    case actionTypes.CHANGE_LICENSETYPE:
       return {
         ...state,
         showSpinner: false,
-        isAuthenticated: false
+        availableLicTypes: action.payload
       };
 
     default:

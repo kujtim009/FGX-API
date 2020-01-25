@@ -11,6 +11,8 @@ import Loader from "../Loader";
 import routes from "../../../routes";
 import Aux from "../../../hoc/_Aux";
 import * as actionTypes from "../../../store/actions";
+import authRoutes from "../../../route";
+import getUserLicenseTypes from "../../../store/ActionCreators/filterActions";
 
 import "./app.scss";
 
@@ -35,7 +37,9 @@ class AdminLayout extends Component {
       this.props.onComponentWillMount();
     }
   }
-
+  componentDidMount() {
+    this.props.getUserLicTypeAction();
+  }
   mobileOutClickHandler() {
     if (this.props.windowWidth < 992 && this.props.collapseMenu) {
       this.props.onComponentWillMount();
@@ -66,7 +70,6 @@ class AdminLayout extends Component {
         />
       ) : null;
     });
-
     return (
       <Aux>
         <Fullscreen enabled={this.props.isFullScreen}>
@@ -81,12 +84,10 @@ class AdminLayout extends Component {
                   {/* <Breadcrumb /> */}
                   <div className="main-body">
                     <div className="page-wrapper">
-                      <Suspense fallback={<Loader />}>
-                        <Switch>
-                          {menu}
-                          <Redirect from="/" to={this.props.defaultPath} />
-                        </Switch>
-                      </Suspense>
+                      <Switch>
+                        {/* <Redirect from="/" to={this.props.defaultPath} /> */}
+                        {menu}
+                      </Switch>
                     </div>
                   </div>
                 </div>
@@ -106,14 +107,16 @@ const mapStateToProps = state => {
     collapseMenu: state.mainReducer.collapseMenu,
     configBlock: state.mainReducer.configBlock,
     layout: state.mainReducer.layout,
-    isAuthenticated: state.authReducer.isAuthenticated
+    isAuthenticated: state.authReducer.isAuthenticated,
+    availableLicTypes: state.filterReducer.availableLicTypes
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onFullScreenExit: () => dispatch({ type: actionTypes.FULL_SCREEN_EXIT }),
-    onComponentWillMount: () => dispatch({ type: actionTypes.COLLAPSE_MENU })
+    onComponentWillMount: () => dispatch({ type: actionTypes.COLLAPSE_MENU }),
+    getUserLicTypeAction: () => dispatch(getUserLicenseTypes())
   };
 };
 

@@ -1,10 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-// import reducer from "./store/reducer";
-// import thunk from "redux-thunk";
 import App from "./App/index";
 import * as serviceWorker from "./serviceWorker";
 import store from "./store/store";
@@ -12,11 +9,6 @@ import config from "./config";
 import axios from "axios";
 
 axios.defaults.baseURL = "https://firmagraphix-api.com";
-// const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-// const store = createStore(reducer, {}, composeEnhances(applyMiddleware(thunk)));
-// const store = createStore(reducer, ["Use Redux"], applyMiddleware(thunk));
-console.log(store);
-// const store = createStore(reducer);
 const app = (
   <Provider store={store}>
     <BrowserRouter basename={config.basename}>
