@@ -11,7 +11,8 @@ import NavItem from "../NavItem";
 import LoopNavCollapse from "./index";
 import LicenseType from "./../../Filters/LicenseType/LicenseType";
 import CostumEditBox from "./../../Filters/CostumEditBox/CostumEditBox";
-import CostumDropBox from "./../../Filters/CostumDropBox/CostumDropBox";
+import CostumStateDropBox from "../../Filters/CostumStateDropBox/CostumStateDropBox";
+import CostumProfDropBox from "../../Filters/CostumProfDropBox/CostumProfDropBox";
 import CostumComboBox from "./../../Filters/CostumComboBox/CostumComboBox";
 import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
 
@@ -57,9 +58,17 @@ class NavCollapse extends Component {
                 item={item}
               />
             );
-          case "costumDropBox":
+          case "costumStateDropBox":
             return (
-              <CostumDropBox
+              <CostumStateDropBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "costumProfDropBox":
+            return (
+              <CostumProfDropBox
                 layout={this.props.layout}
                 key={item.id}
                 item={item}

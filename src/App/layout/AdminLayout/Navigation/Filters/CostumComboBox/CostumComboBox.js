@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actionTypes from "../../../../../../store/actions";
 // import NavIcon from "./../../../Navigation/NavContent/NavIcon";
 // import NavBadge from "./../../NavContent/NavBadge";
 // import { NavLink } from "react-router-dom";
@@ -18,7 +20,7 @@ class CostumComboBox extends Component {
   state = {
     inputName: null,
     inputValue: "",
-    selectedValue: "",
+    selectedValue: "1",
     selectItems: [
       { name: "Exact", value: 1, status: true },
       { name: "Begins", value: 2, status: false },
@@ -37,6 +39,15 @@ class CostumComboBox extends Component {
       inputValue: event.target.value,
       inputName: event.target.id
     });
+
+    const timer = setTimeout(() => {
+      this.props.changeComboFilters({
+        inputName: this.state.inputName,
+        inputValue: this.state.inputValue,
+        selectedValue: this.state.selectedValue
+      });
+      clearTimeout(timer);
+    }, 500);
   }
 
   radioNameParser(fullName) {
@@ -66,6 +77,15 @@ class CostumComboBox extends Component {
       selectItems: tempRadioItems,
       selectedValue: this.radioNameParser(event.target.id)
     });
+
+    const timer = setTimeout(() => {
+      this.props.changeComboFilters({
+        inputName: this.state.inputName,
+        inputValue: this.state.inputValue,
+        selectedValue: this.state.selectedValue
+      });
+      clearTimeout(timer);
+    }, 500);
   }
   render() {
     const dropElements = this.state.selectItems.map((item, indx) => (
@@ -103,4 +123,13 @@ class CostumComboBox extends Component {
   }
 }
 
-export default CostumComboBox;
+const mapDispatchToprops = dispatch => {
+  return {
+    changeComboFilters: filters =>
+      dispatch({
+        type: actionTypes.CHANGE_COMBO_FILTERS,
+        payload: filters
+      })
+  };
+};
+export default connect(null, mapDispatchToprops)(CostumComboBox);

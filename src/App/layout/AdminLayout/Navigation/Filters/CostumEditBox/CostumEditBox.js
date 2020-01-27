@@ -1,18 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actionTypes from "../../../../../../store/actions";
 // import NavIcon from "./../../../Navigation/NavContent/NavIcon";
 // import NavBadge from "./../../NavContent/NavBadge";
 // import { NavLink } from "react-router-dom";
-import {
-  Row,
-  Col,
-  Card,
-  Form,
-  Button,
-  InputGroup,
-  FormControl,
-  DropdownButton,
-  Dropdown
-} from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 class CostumEditBox extends Component {
   state = {
@@ -28,6 +20,11 @@ class CostumEditBox extends Component {
       inputValue: event.target.value,
       inputName: event.target.id
     });
+
+    let timer = setTimeout(() => {
+      this.props.changeOtherFilters(this.state);
+      clearTimeout(timer);
+    }, 500);
   }
   render() {
     let compBody = (
@@ -49,4 +46,13 @@ class CostumEditBox extends Component {
   }
 }
 
-export default CostumEditBox;
+const mapDispatchToprops = dispatch => {
+  return {
+    changeOtherFilters: filters =>
+      dispatch({
+        type: actionTypes.CHANGE_OTHERFILTERS,
+        payload: filters
+      })
+  };
+};
+export default connect(null, mapDispatchToprops)(CostumEditBox);

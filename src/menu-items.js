@@ -61,13 +61,13 @@ export default {
         {
           id: "state",
           title: "State",
-          type: "costumDropBox",
+          type: "costumStateDropBox",
           url: "/basic/button"
         },
         {
           id: "profession",
           title: "Profession",
-          type: "costumDropBox",
+          type: "costumProfDropBox",
           url: "/basic/button"
         }
       ]

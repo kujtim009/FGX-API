@@ -3,7 +3,7 @@ import * as actionTypes from "../actions";
 
 export const postLoginCall = (email, password) => {
   return dispatch => {
-    dispatch(addTodoStarted());
+    dispatch(loginStartAction());
     const data = {
       username: email,
       password: password
@@ -15,27 +15,29 @@ export const postLoginCall = (email, password) => {
         localStorage.clear();
         localStorage.setItem("token", res.data.access_token);
         localStorage.setItem("username", email);
+        localStorage.setItem("userid", res.data.userId);
+        localStorage.setItem("accesslevel", res.data.accessLevel);
         console.log("RESPONSE: ", res);
-        dispatch(addTodoSuccess({ ...res.data, username: email }));
+        dispatch(loginSuccessAction({ ...res.data, username: email }));
       })
       .catch(err => {
-        dispatch(addTodoFailure(err.message));
+        dispatch(loginFailedAction(err.message));
       });
   };
 };
 
-const addTodoSuccess = data => ({
+const loginSuccessAction = data => ({
   type: actionTypes.SUCCESS_LOGIN,
   payload: {
     ...data
   }
 });
 
-const addTodoStarted = () => ({
+const loginStartAction = () => ({
   type: actionTypes.START_LOGIN
 });
 
-const addTodoFailure = error => ({
+const loginFailedAction = error => ({
   type: actionTypes.FAILD_LOGIN,
   payload: {
     error

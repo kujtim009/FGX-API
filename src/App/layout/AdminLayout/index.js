@@ -12,7 +12,8 @@ import routes from "../../../routes";
 import Aux from "../../../hoc/_Aux";
 import * as actionTypes from "../../../store/actions";
 import authRoutes from "../../../route";
-import getUserLicenseTypes from "../../../store/ActionCreators/filterActions";
+import getUserLicenseTypes from "../../../store/ActionCreators/getLicenseTypesActions";
+import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthAction";
 
 import "./app.scss";
 
@@ -38,7 +39,10 @@ class AdminLayout extends Component {
     }
   }
   componentDidMount() {
-    this.props.getUserLicTypeAction();
+    // console.log("ADMIN LAYOUT: ", this.props.isAuthenticated);
+    this.props.isAuthenticated
+      ? this.props.getUserLicTypeAction()
+      : this.props.checkAauthAction();
   }
   mobileOutClickHandler() {
     if (this.props.windowWidth < 992 && this.props.collapseMenu) {
@@ -116,7 +120,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onFullScreenExit: () => dispatch({ type: actionTypes.FULL_SCREEN_EXIT }),
     onComponentWillMount: () => dispatch({ type: actionTypes.COLLAPSE_MENU }),
-    getUserLicTypeAction: () => dispatch(getUserLicenseTypes())
+    getUserLicTypeAction: () => dispatch(getUserLicenseTypes()),
+    checkAauthAction: () => dispatch(checkAauthActionCreator())
   };
 };
 

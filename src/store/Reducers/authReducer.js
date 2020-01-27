@@ -2,7 +2,10 @@ import * as actionTypes from "../actions";
 
 const initialState = {
   isAuthenticated: false,
-  userName: null
+  userName: null,
+  userId: null,
+  accessLevel: null,
+  showSpinner: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,10 +13,11 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SUCCESS_LOGIN:
       return {
         ...state,
-        token: action.payload.token,
         userName: action.payload.username,
+        userId: action.payload.userId,
+        accessLevel: action.payload.accessLevel,
         isAuthenticated: true,
-        showspinner: false
+        showSpinner: false
       };
     case actionTypes.START_LOGIN:
       return { ...state, showSpinner: true };
@@ -29,6 +33,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         showSpinner: false,
         isAuthenticated: false
+      };
+
+    case actionTypes.SUCCESS_CHECK_AUTH:
+      return {
+        ...state,
+        userName: action.payload.userName,
+        userId: action.payload.userId,
+        accessLevel: action.payload.accessLevel,
+        isAuthenticated: true,
+        showSpinner: false
+      };
+    case actionTypes.START_CHECK_AUTH:
+      return { ...state, showSpinner: true };
+    case actionTypes.FAILD_CHECK_AUTH:
+      return {
+        ...state,
+        showSpinner: false,
+        isAuthenticated: false,
+        loginMessage: "Emri i përdoruesit ose fjalëkalimin i gabuar!"
       };
 
     default:

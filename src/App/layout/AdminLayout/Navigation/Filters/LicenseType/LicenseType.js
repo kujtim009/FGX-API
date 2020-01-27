@@ -1,39 +1,45 @@
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
-import getUserLicenseTypes from "../../../../../../store/ActionCreators/filterActions";
 import * as actionTypes from "../../../../../../store/actions";
+import getUserProfessions from "../../../../../../store/ActionCreators/getProfessionAction";
 
 class LicenseType extends Component {
-  state = {
-    licenseType: [
-      { title: "Proffesional", id: "plf", Status: true },
-      { title: "Occupational", id: "ocl", Status: false },
-      { title: "Liquor", id: "liq", Status: false },
-      { title: "Business", id: "blf", Status: false }
-    ]
-  };
+  // state = {
+  //   licenseType: [
+  //     { title: "Proffesional", id: "plf", Status: true },
+  //     { title: "Occupational", id: "ocl", Status: false },
+  //     { title: "Liquor", id: "liq", Status: false },
+  //     { title: "Business", id: "blf", Status: false }
+  //   ]
+  // };
 
   componentDidUpdate() {}
   // componentWillMount() {
   //   this.props.getUserLicTypeAction();
   // }
-  componentDidMount() {
-    console.log("LICENSE TYPE COMPONENT DID MOUNT");
-    console.log("LICENSE TYPE", this.props.availableLicTypes);
-  }
+  componentDidMount() {}
+
+  getSelectedLicTypesToString = licTypes => {
+    return licTypes
+      .filter(item => {
+        return item.Status === true;
+      })
+      .map(item => item.id)
+      .join();
+  };
+
   onCheckboxCheckHandler(event) {
-    const tempLicTypes = this.state.licenseType.map(item => {
+    const tempLicTypes = this.props.availableLicTypes.map(item => {
       if (event.target.id === item.id) {
         return { title: item.title, id: item.id, Status: event.target.checked };
       } else {
         return item;
       }
     });
-    this.props.licenseChangeAction(tempLicTypes);
-    // this.setState({
-    //   licenseType: tempLicTypes
-    // });
+    const selLicTypes = this.getSelectedLicTypesToString(tempLicTypes);
+    this.props.licenseChangeAction(tempLicTypes, selLicTypes);
+    this.props.LoadProfessionAction(selLicTypes, this.props.selectedState);
   }
   render() {
     let licType = null;
@@ -63,17 +69,23 @@ class LicenseType extends Component {
 }
 const mapStateToProps = state => {
   return {
-    availableLicTypes: state.filterReducer.availableLicTypes
+    availableLicTypes: state.filterReducer.availableLicTypes,
+    selectedState: state.filterReducer.selectedState
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    licenseChangeAction: licenseTypes =>
+    licenseChangeAction: (licenseTypes, selectedTypes) =>
       dispatch({
         type: actionTypes.CHANGE_LICENSETYPE,
-        payload: licenseTypes
-      })
+        payload: {
+          licenseTypes: licenseTypes,
+          selectedLicenseTypes: selectedTypes
+        }
+      }),
+    LoadProfessionAction: (selectedTypes, selectedState) =>
+      dispatch(getUserProfessions(selectedTypes, selectedState))
   };
 };
 

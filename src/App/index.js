@@ -9,11 +9,6 @@ import Aux from "../hoc/_Aux";
 import ScrollToTop from "./layout/ScrollToTop";
 import authRoutes from "../route";
 import AdminLayout from "./layout/AdminLayout";
-import getUserLicenseTypes from "../store/ActionCreators/filterActions";
-// const AdminLayout = Loadable({
-//   loader: () => import("./layout/AdminLayout"),
-//   loading: Loader
-// });
 
 class App extends Component {
   checkLocalToken() {
@@ -42,7 +37,13 @@ class App extends Component {
           to={authRoutes.filter(item => item.name === "Signin")[0].path}
         />
       );
-
+    console.log(
+      "APP RENDER",
+      "isAuthenticated: ",
+      this.props.isAuthenticated,
+      "Is Local Storage Token: ",
+      this.checkLocalToken()
+    );
     let routeGuard =
       this.props.isAuthenticated || this.checkLocalToken() ? (
         <Route path="/" component={AdminLayout} />

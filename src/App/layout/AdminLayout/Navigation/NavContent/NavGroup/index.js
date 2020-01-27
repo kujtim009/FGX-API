@@ -4,7 +4,8 @@ import NavCollapse from "./../NavCollapse";
 import NavItem from "./../NavItem";
 import LicenseType from "./../../Filters/LicenseType/LicenseType";
 import CostumEditBox from "./../../Filters/CostumEditBox/CostumEditBox";
-import CostumDropBox from "./../../Filters/CostumDropBox/CostumDropBox";
+import CostumStateDropBox from "../../Filters/CostumStateDropBox/CostumStateDropBox";
+import CostumProfDropBox from "../../Filters/CostumProfDropBox/CostumProfDropBox";
 import CostumComboBox from "./../../Filters/CostumComboBox/CostumComboBox";
 import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
 
@@ -31,9 +32,21 @@ const navGroup = props => {
           return (
             <CostumEditBox layout={props.layout} key={item.id} item={item} />
           );
-        case "costumDropBox":
+        case "costumStateDropBox":
           return (
-            <CostumDropBox layout={props.layout} key={item.id} item={item} />
+            <CostumStateDropBox
+              layout={props.layout}
+              key={item.id}
+              item={item}
+            />
+          );
+        case "costumProfDropBox":
+          return (
+            <CostumProfDropBox
+              layout={props.layout}
+              key={item.id}
+              item={item}
+            />
           );
         case "costumComboBox":
           return (
