@@ -29,33 +29,55 @@ class App extends Component {
         />
       ) : null;
     });
-    const mainRedirect =
-      this.props.isAuthenticated || this.checkLocalToken() ? (
-        <Redirect to="/dashboard" />
-      ) : (
+    // const mainRedirect =
+    //   this.props.isAuthenticated || this.checkLocalToken() ? (
+    //     <Redirect to="/dashboard" />
+    //   ) : (
+    //     <Redirect
+    //       to={authRoutes.filter(item => item.name === "Signin")[0].path}
+    //     />
+    //   );
+    let mainRedirect = null;
+    let routeGuard = null;
+
+    if (this.props.isAuthenticated || this.checkLocalToken()) {
+      if (!this.props.tokenExpired) {
+        console.log("RRRRR 0");
+        routeGuard = <Route path="/" component={AdminLayout} />;
+        // mainRedirect = <Redirect to="/" />;
+      } else {
+        console.log("RRRRR 1");
+        routeGuard = [...menu];
+        mainRedirect = (
+          <Redirect
+            to={authRoutes.filter(item => item.name === "Signin")[0].path}
+          />
+        );
+      }
+    } else {
+      console.log("RRRRR 2");
+      routeGuard = [...menu];
+      mainRedirect = (
         <Redirect
           to={authRoutes.filter(item => item.name === "Signin")[0].path}
         />
       );
-    console.log(
-      "APP RENDER",
-      "isAuthenticated: ",
-      this.props.isAuthenticated,
-      "Is Local Storage Token: ",
-      this.checkLocalToken()
-    );
-    let routeGuard =
-      this.props.isAuthenticated || this.checkLocalToken() ? (
-        <Route path="/" component={AdminLayout} />
-      ) : (
-        [...menu]
-      );
+    }
+
+    // let routeGuard =
+    //   this.props.isAuthenticated ||
+    //   this.checkLocalToken() ||
+    //   !this.props.tokenExpired ? (
+    //     <Route path="/" component={AdminLayout} />
+    //   ) : (
+    //     [...menu]
+    //   );
 
     return (
       <Aux>
         <ScrollToTop>
-          {mainRedirect}
           <Switch>{routeGuard}</Switch>
+          {mainRedirect}
         </ScrollToTop>
       </Aux>
     );
@@ -64,7 +86,8 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.authReducer.isAuthenticated
+    isAuthenticated: state.authReducer.isAuthenticated,
+    tokenExpired: state.authReducer.tokenExpired
   };
 };
 

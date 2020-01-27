@@ -21,16 +21,16 @@ class SignUp1 extends React.Component {
     });
   };
   render() {
-    let redirect = this.props.isAuthenticated ? (
-      <Redirect
-        key="rdr"
-        to={authRoutes.filter(item => item.name === "Signin")[0].path}
-      />
-    ) : null;
+    // let redirect = !this.props.isAuthenticated ? (
+    //   <Redirect
+    //     key="rdr"
+    //     to={authRoutes.filter(item => item.name === "Signin")[0].path}
+    //   />
+    // ) : null;
     return (
       <Aux>
         {/* <Breadcrumb /> */}
-        {redirect}
+        {/* {redirect} */}
         <div className="auth-wrapper">
           <div className="auth-content">
             <div className="auth-bg">

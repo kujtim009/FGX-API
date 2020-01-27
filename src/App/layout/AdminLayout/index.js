@@ -89,8 +89,8 @@ class AdminLayout extends Component {
                   <div className="main-body">
                     <div className="page-wrapper">
                       <Switch>
-                        {/* <Redirect from="/" to={this.props.defaultPath} /> */}
                         {menu}
+                        <Redirect from="/" to={this.props.defaultPath} />
                       </Switch>
                     </div>
                   </div>

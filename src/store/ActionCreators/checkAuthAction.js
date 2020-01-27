@@ -22,7 +22,8 @@ const checkAuthActionCreator = () => {
       })
       .catch(err => {
         localStorage.clear();
-        dispatch(checkFailedAction(err.message));
+        console.log("CHECK AUTH ERROR: ", err.response);
+        dispatch(checkFailedAction(err.response));
       });
   };
 };
