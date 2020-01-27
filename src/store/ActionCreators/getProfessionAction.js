@@ -20,7 +20,7 @@ const getUserProfessions = (licenses, state) => {
         dispatch(successUserProfessions(res.data));
       })
       .catch(err => {
-        dispatch(failedUserProfessions(err.message));
+        dispatch(failedUserProfessions(err.response));
       });
   };
 };

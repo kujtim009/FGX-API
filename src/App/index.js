@@ -14,9 +14,6 @@ class App extends Component {
   checkLocalToken() {
     return localStorage.getItem("token") ? true : false;
   }
-  componentDidMount() {
-    console.log("APP COMPONENT DID MOUNT");
-  }
   render() {
     const menu = authRoutes.map((route, index) => {
       return route.component ? (
@@ -29,24 +26,31 @@ class App extends Component {
         />
       ) : null;
     });
-    // const mainRedirect =
-    //   this.props.isAuthenticated || this.checkLocalToken() ? (
-    //     <Redirect to="/dashboard" />
-    //   ) : (
-    //     <Redirect
-    //       to={authRoutes.filter(item => item.name === "Signin")[0].path}
-    //     />
-    //   );
+
     let mainRedirect = null;
     let routeGuard = null;
 
     if (this.props.isAuthenticated || this.checkLocalToken()) {
       if (!this.props.tokenExpired) {
-        console.log("RRRRR 0");
+        console.log(
+          "IS AUTHENTICATED:",
+          this.props.isAuthenticated,
+          "LOCAL STORAGE TOKEN: ",
+          this.checkLocalToken(),
+          "TOKEN EXPIRED1: ",
+          this.props.tokenExpired
+        );
         routeGuard = <Route path="/" component={AdminLayout} />;
         // mainRedirect = <Redirect to="/" />;
       } else {
-        console.log("RRRRR 1");
+        console.log(
+          "IS AUTHENTICATED:",
+          this.props.isAuthenticated,
+          "LOCAL STORAGE TOKEN: ",
+          this.checkLocalToken(),
+          "TOKEN EXPIRED2: ",
+          this.props.tokenExpired
+        );
         routeGuard = [...menu];
         mainRedirect = (
           <Redirect
@@ -55,7 +59,14 @@ class App extends Component {
         );
       }
     } else {
-      console.log("RRRRR 2");
+      console.log(
+        "IS AUTHENTICATED:",
+        this.props.isAuthenticated,
+        "LOCAL STORAGE TOKEN: ",
+        this.checkLocalToken(),
+        "TOKEN EXPIRED3: ",
+        this.props.tokenExpired
+      );
       routeGuard = [...menu];
       mainRedirect = (
         <Redirect
@@ -76,8 +87,10 @@ class App extends Component {
     return (
       <Aux>
         <ScrollToTop>
-          <Switch>{routeGuard}</Switch>
-          {mainRedirect}
+          <Switch>
+            {routeGuard}
+            {mainRedirect}
+          </Switch>
         </ScrollToTop>
       </Aux>
     );

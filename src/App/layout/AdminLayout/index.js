@@ -18,6 +18,25 @@ import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthActi
 import "./app.scss";
 
 class AdminLayout extends Component {
+  componentWillUnmount() {
+    document.removeEventListener(
+      "fullscreenchange",
+      this.fullScreenExitHandler
+    );
+    document.removeEventListener(
+      "webkitfullscreenchange",
+      this.fullScreenExitHandler
+    );
+    document.removeEventListener(
+      "mozfullscreenchange",
+      this.fullScreenExitHandler
+    );
+    document.removeEventListener(
+      "MSFullscreenChange",
+      this.fullScreenExitHandler
+    );
+  }
+
   fullScreenExitHandler = () => {
     if (
       !document.fullscreenElement &&
@@ -51,7 +70,8 @@ class AdminLayout extends Component {
   }
 
   render() {
-    /* full screen exit call */
+    if (this.props.checkAuth) this.props.checkAauthAction();
+
     document.addEventListener("fullscreenchange", this.fullScreenExitHandler);
     document.addEventListener(
       "webkitfullscreenchange",
@@ -74,6 +94,7 @@ class AdminLayout extends Component {
         />
       ) : null;
     });
+
     return (
       <Aux>
         <Fullscreen enabled={this.props.isFullScreen}>
@@ -112,6 +133,7 @@ const mapStateToProps = state => {
     configBlock: state.mainReducer.configBlock,
     layout: state.mainReducer.layout,
     isAuthenticated: state.authReducer.isAuthenticated,
+    checkAuth: state.filterReducer.checkAuth,
     availableLicTypes: state.filterReducer.availableLicTypes
   };
 };

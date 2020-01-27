@@ -21,6 +21,7 @@ class SignUp1 extends React.Component {
     });
   };
   render() {
+    console.log("SIGN IN RENDER");
     // let redirect = !this.props.isAuthenticated ? (
     //   <Redirect
     //     key="rdr"
@@ -63,6 +64,7 @@ class SignUp1 extends React.Component {
                     onChange={this.onInputChangeHandler}
                   />
                 </div>
+                <p className="cr loginDanger">{this.props.errorMessage}</p>
                 <div className="form-group text-left">
                   <div className="checkbox checkbox-fill d-inline">
                     <input
@@ -81,6 +83,7 @@ class SignUp1 extends React.Component {
                   onClick={this.onLoginHandler}>
                   Login
                 </button>
+
                 <p className="mb-2 text-muted">
                   Forgot password?{" "}
                   <NavLink to="/auth/reset-password-1">Reset</NavLink>
@@ -99,7 +102,8 @@ class SignUp1 extends React.Component {
 }
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.authReducer.isAuthenticated
+    isAuthenticated: state.authReducer.isAuthenticated,
+    errorMessage: state.authReducer.message
   };
 };
 

@@ -23,7 +23,7 @@ const getUserLicenseTypes = () => {
         dispatch(successUserLicTypes(tempLicTypes));
       })
       .catch(err => {
-        dispatch(failedUserLicTypes(err.message));
+        dispatch(failedUserLicTypes(err.response));
       });
   };
 };

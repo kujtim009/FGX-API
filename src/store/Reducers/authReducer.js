@@ -38,7 +38,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         showSpinner: false,
         isAuthenticated: false,
-        loginMessage: "Emri i përdoruesit ose fjalëkalimin i gabuar!"
+        message: action.payload.error.data.message
       };
     case actionTypes.SUCCESS_LOGOUT:
       return {
@@ -66,7 +66,7 @@ const reducer = (state = initialState, action) => {
         showSpinner: false,
         isAuthenticated: false,
         tokenExpired: checkTokenExpiration(action.payload),
-        loginMessage: "Emri i përdoruesit ose fjalëkalimin i gabuar!"
+        message: action.payload.error.data.message
       };
 
     default:

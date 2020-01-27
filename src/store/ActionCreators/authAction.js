@@ -21,7 +21,7 @@ export const postLoginCall = (email, password) => {
         dispatch(loginSuccessAction({ ...res.data, username: email }));
       })
       .catch(err => {
-        dispatch(loginFailedAction(err.message));
+        dispatch(loginFailedAction(err.response));
       });
   };
 };
@@ -43,48 +43,3 @@ const loginFailedAction = error => ({
     error
   }
 });
-
-// export const checkAuthenticityAction = () => {
-//   console.log("CHECKING AUTHENTICITY");
-
-//   return dispatch => {
-//     dispatch(checkStart());
-
-//     const token = localStorage.getItem("token");
-//     axios
-//       .get("/shitja", { headers: { Authorization: "Token " + token } })
-//       .then(res => {
-//         dispatch(checkSuccess());
-//       })
-//       .catch(err => {
-//         if (err.response.status === 401) {
-//           localStorage.removeItem("token");
-//           dispatch(checkFaild_401(err));
-//         } else {
-//           dispatch(checkFaild_403(err));
-//         }
-//       });
-//   };
-// };
-
-// const checkSuccess = () => ({
-//   type: "SUCCESS_CHECK"
-// });
-
-// const checkStart = () => ({
-//   type: "START_CHECK"
-// });
-
-// const checkFaild_401 = error => ({
-//   type: "FAILD_CHECK_401",
-//   payload: {
-//     error
-//   }
-// });
-
-// const checkFaild_403 = error => ({
-//   type: "FAILD_CHECK_403",
-//   payload: {
-//     error
-//   }
-// });
