@@ -9,7 +9,10 @@ const initialState = {
   selectedState: "all",
   showSpinner: false,
   message: null,
-  otherFilters: {}
+  otherFilters: {},
+  loadDataTable: false,
+  data: null,
+  columns: null
 };
 
 // const getSelectedLicTypesToString = licTypes => {
@@ -91,6 +94,23 @@ const reducer = (state = initialState, action) => {
           ...state.otherFilters,
           [action.payload.inputName]: action.payload
         }
+      };
+    case actionTypes.START_QUERY:
+      return {
+        ...state,
+        showSpinner: true
+      };
+    case actionTypes.SUCCESS_QUERY:
+      return {
+        ...state,
+        showSpinner: false,
+        data: action.payload
+      };
+    case actionTypes.FAILD_QUERY:
+      return {
+        ...state,
+        showSpinner: false,
+        message: action.payload
       };
     default:
       return state;

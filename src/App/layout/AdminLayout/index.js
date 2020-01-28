@@ -94,9 +94,10 @@ class AdminLayout extends Component {
         />
       ) : null;
     });
-
+    const showSpinner = this.props.showSpinner ? <Loader /> : null;
     return (
       <Aux>
+        {showSpinner}
         <Fullscreen enabled={this.props.isFullScreen}>
           <Navigation />
           <NavBar />
@@ -134,7 +135,8 @@ const mapStateToProps = state => {
     layout: state.mainReducer.layout,
     isAuthenticated: state.authReducer.isAuthenticated,
     checkAuth: state.filterReducer.checkAuth,
-    availableLicTypes: state.filterReducer.availableLicTypes
+    availableLicTypes: state.filterReducer.availableLicTypes,
+    showSpinner: state.filterReducer.showSpinner
   };
 };
 

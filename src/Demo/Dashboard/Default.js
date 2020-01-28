@@ -3,15 +3,18 @@ import {Row, Col, Card, Table, Tabs, Tab} from 'react-bootstrap';
 
 import Aux from "../../hoc/_Aux";
 import DEMO from "../../store/constant";
-
+import DataTable from '../../App/components/DataTable/DataTable'
+import {connect} from 'react-redux'
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';
 import avatar3 from '../../assets/images/user/avatar-3.jpg';
 
 class Dashboard extends React.Component {
     render() {
+        const dataTable = (this.props.loadDataTable)? <DataTable columns={this.props.columns} data={this.props.data}/>: null;
         const tabContent = (
             <Aux>
+                {dataTable}
                 <div className="media friendlist-box align-items-center justify-content-center m-b-20">
                     <div className="m-r-10 photo-table">
                         <a href={DEMO.BLANK_LINK}><img className="rounded-circle" style={{width: '40px'}} src={avatar1} alt="activity-user"/></a>
@@ -408,4 +411,12 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps=(state)=>{
+    return {
+        loadDataTable : state.filterReducer.loadDataTable,
+        data: state.filterReducer.data,
+        columns: state.filterReducer.columns
+    }
+}
+
+export default connect(mapStateToProps)(Dashboard);

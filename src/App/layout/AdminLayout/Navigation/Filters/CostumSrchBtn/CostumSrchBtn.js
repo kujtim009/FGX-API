@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 // import NavIcon from "./../../../Navigation/NavContent/NavIcon";
 // import NavBadge from "./../../NavContent/NavBadge";
 // import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import * as actionTypes from "../../../../../../store/actions";
+import runQueryActionCreator from "../../../../../../store/ActionCreators/queryAction";
 
 class CostumSrchBtn extends Component {
   state = {
@@ -13,6 +16,12 @@ class CostumSrchBtn extends Component {
     this.setState({
       search: true
     });
+    this.props.onClickAction(
+      this.props.selectedLicenseTypes,
+      this.props.selectedProfession,
+      this.props.selectedState,
+      this.props.otherFilters
+    );
   }
   onClearHandler(event) {}
   render() {
@@ -36,5 +45,31 @@ class CostumSrchBtn extends Component {
     return <React.Fragment>{compBody}</React.Fragment>;
   }
 }
+const mapStateToProps = state => {
+  return {
+    selectedLicenseTypes: state.filterReducer.selectedLicenseTypes,
+    selectedProfession: state.filterReducer.selectedProfession,
+    selectedState: state.filterReducer.selectedState,
+    otherFilters: state.filterReducer.otherFilters
+  };
+};
 
-export default CostumSrchBtn;
+const mapDispatchToProps = dispatch => {
+  return {
+    onClickAction: (
+      selectedLicenseTypes,
+      selectedProfession,
+      selectedState,
+      otherFilters
+    ) =>
+      dispatch(
+        runQueryActionCreator(
+          selectedLicenseTypes,
+          selectedProfession,
+          selectedState,
+          otherFilters
+        )
+      )
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CostumSrchBtn);
