@@ -42,7 +42,6 @@ class LicenseType extends Component {
     this.props.LoadProfessionAction(selLicTypes, this.props.selectedState);
   }
   render() {
-    console.log("LICENSE TYPE RENDER1");
     let licType = null;
     if (this.props.availableLicTypes) {
       licType = this.props.availableLicTypes.map((item, index) => (
@@ -65,7 +64,6 @@ class LicenseType extends Component {
         <Form.Group>{licType}</Form.Group>
       </div>
     );
-    console.log("LICENSE TYPE RENDER2");
     return <React.Fragment>{compBody}</React.Fragment>;
   }
 }

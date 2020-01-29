@@ -14,7 +14,7 @@ import * as actionTypes from "../../../store/actions";
 import authRoutes from "../../../route";
 import getUserLicenseTypes from "../../../store/ActionCreators/getLicenseTypesActions";
 import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthAction";
-
+import getUserColumnsActionCreator from "../../../store/ActionCreators/columnAction";
 import "./app.scss";
 
 class AdminLayout extends Component {
@@ -59,9 +59,13 @@ class AdminLayout extends Component {
   }
   componentDidMount() {
     // console.log("ADMIN LAYOUT: ", this.props.isAuthenticated);
-    this.props.isAuthenticated
-      ? this.props.getUserLicTypeAction()
-      : this.props.checkAauthAction();
+    // this.props.isAuthenticated
+    //   ? this.props.getUserLicTypeAction()
+    //   : this.props.checkAauthAction();
+    if (this.props.isAuthenticated) {
+      this.props.getUserLicTypeAction();
+      this.props.getUserColumnsAction();
+    } else this.props.checkAauthAction();
   }
   mobileOutClickHandler() {
     if (this.props.windowWidth < 992 && this.props.collapseMenu) {
@@ -145,6 +149,7 @@ const mapDispatchToProps = dispatch => {
     onFullScreenExit: () => dispatch({ type: actionTypes.FULL_SCREEN_EXIT }),
     onComponentWillMount: () => dispatch({ type: actionTypes.COLLAPSE_MENU }),
     getUserLicTypeAction: () => dispatch(getUserLicenseTypes()),
+    getUserColumnsAction: () => dispatch(getUserColumnsActionCreator()),
     checkAauthAction: () => dispatch(checkAauthActionCreator())
   };
 };

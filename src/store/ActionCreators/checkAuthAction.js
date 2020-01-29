@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "../actions";
 import getUserLicenseTypes from "./getLicenseTypesActions";
+import getUserColumnsActionCreator from "./columnAction";
 
 const checkAuthActionCreator = () => {
   return dispatch => {
@@ -19,6 +20,7 @@ const checkAuthActionCreator = () => {
       .then(res => {
         dispatch(checkSuccessAction({ ...res.data, userName: userName }));
         dispatch(getUserLicenseTypes());
+        dispatch(getUserColumnsActionCreator());
       })
       .catch(err => {
         localStorage.clear();

@@ -32,14 +32,6 @@ class App extends Component {
 
     if (this.props.isAuthenticated || this.checkLocalToken()) {
       if (!this.props.tokenExpired) {
-        console.log(
-          "IS AUTHENTICATED:",
-          this.props.isAuthenticated,
-          "LOCAL STORAGE TOKEN: ",
-          this.checkLocalToken(),
-          "TOKEN EXPIRED1: ",
-          this.props.tokenExpired
-        );
         routeGuard = <Route path="/" component={AdminLayout} />;
         // mainRedirect = <Redirect to="/" />;
       } else {
@@ -59,14 +51,6 @@ class App extends Component {
         );
       }
     } else {
-      console.log(
-        "IS AUTHENTICATED:",
-        this.props.isAuthenticated,
-        "LOCAL STORAGE TOKEN: ",
-        this.checkLocalToken(),
-        "TOKEN EXPIRED3: ",
-        this.props.tokenExpired
-      );
       routeGuard = [...menu];
       mainRedirect = (
         <Redirect

@@ -13,7 +13,6 @@ const getUserProfessions = (licenses, state) => {
       state === "all"
         ? "/professions?license_type=" + licenses
         : "/professions?license_type=" + licenses + "&state=" + state;
-    console.log("GET PROFESION ENDPOINT: ", endpoint);
     axios
       .get(endpoint, header)
       .then(res => {

@@ -73,11 +73,11 @@ const runQueryActionCreator = (
     axios
       .get("/mlf_filter?" + parameters, header)
       .then(res => {
-        console.log("PARAMETERS:", res.data.records[0]);
-        dispatch(successQuery(res.data.records[0]));
+        console.log("/mlf_filter?" + parameters);
+        dispatch(successQuery(res.data.Records[0]));
       })
       .catch(err => {
-        console.log("PARAMETERS:", err.response);
+        console.log("/mlf_filter?" + parameters);
         dispatch(failedQuery(err.response));
       });
   };

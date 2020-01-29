@@ -104,9 +104,29 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         showSpinner: false,
-        data: action.payload
+        data: action.payload,
+        loadDataTable: true
       };
     case actionTypes.FAILD_QUERY:
+      return {
+        ...state,
+        showSpinner: false,
+        loadDataTable: false,
+        message: action.payload
+      };
+
+    case actionTypes.START_USER_COLUMN:
+      return {
+        ...state,
+        showSpinner: true
+      };
+    case actionTypes.SUCCESS_USER_COLUMN:
+      return {
+        ...state,
+        showSpinner: false,
+        columns: action.payload
+      };
+    case actionTypes.FAILD_USER_COLUMN:
       return {
         ...state,
         showSpinner: false,

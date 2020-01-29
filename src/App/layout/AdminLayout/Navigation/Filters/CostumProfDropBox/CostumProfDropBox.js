@@ -17,7 +17,6 @@ class CostumProfDropBox extends Component {
         </option>
       );
       Object.keys(this.props.availableProfessions).forEach(key => {
-        console.log(key, this.props.availableProfessions[key]);
         dropElements.push(
           <option key={key} value={key}>
             {key + " (" + this.props.availableProfessions[key] + ")"}
