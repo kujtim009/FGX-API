@@ -12,7 +12,10 @@ const initialState = {
   otherFilters: {},
   loadDataTable: false,
   data: null,
-  columns: null
+  columns: null,
+  showcounter: false,
+  showCounterSpinner: false,
+  recordCount: null
 };
 
 // const getSelectedLicTypesToString = licTypes => {
@@ -88,6 +91,7 @@ const reducer = (state = initialState, action) => {
         }
       };
     case actionTypes.CHANGE_COMBO_FILTERS:
+      console.log({ [action.payload.inputName]: action.payload });
       return {
         ...state,
         otherFilters: {
@@ -95,6 +99,7 @@ const reducer = (state = initialState, action) => {
           [action.payload.inputName]: action.payload
         }
       };
+
     case actionTypes.START_QUERY:
       return {
         ...state,
@@ -113,6 +118,26 @@ const reducer = (state = initialState, action) => {
         showSpinner: false,
         loadDataTable: false,
         message: action.payload
+      };
+
+    case actionTypes.START_COUNT_QUERY:
+      return {
+        ...state,
+        showCounterSpinner: true
+      };
+    case actionTypes.SUCCESS_COUNT_QUERY:
+      return {
+        ...state,
+        showCounterSpinner: false,
+        recordCount: action.payload,
+        showcounter: true
+      };
+    case actionTypes.FAILD_COUNT_QUERY:
+      return {
+        ...state,
+        showCounterSpinner: false,
+        message: action.payload,
+        showcounter: false
       };
 
     case actionTypes.START_USER_COLUMN:

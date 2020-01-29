@@ -6,7 +6,6 @@ import Expand from "./Expand";
 const customStyles = {
   table: {
     style: {
-      overflowY: "scroll",
       backgroundColor: "gray"
     }
   },
@@ -46,7 +45,6 @@ const MyComponent = props => (
     paginationPerPage={15}
     customStyles={customStyles}
     className={classes.table}
-    fixedHeader
   />
 );
 

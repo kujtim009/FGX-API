@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "../actions";
+import runQueryCountActionCreator from "./queryCountAction";
 
 function isObject(val) {
   if (val === null) {
@@ -17,16 +18,12 @@ const paramCreator = data => {
   Object.keys(data.other).forEach(key => {
     if (isObject(data.other[key])) {
       const srchType =
-        key === "licOwnerName"
-          ? "&" +
-            key +
-            "=" +
+        key === "licowner"
+          ? "&lic_owner=" +
             data.other[key].inputValue +
             "&srch_type_licO=" +
             data.other[key].selectedValue
-          : "&" +
-            key +
-            "=" +
+          : "&company_name=" +
             data.other[key].inputValue +
             "&srch_type_comp=" +
             data.other[key].selectedValue;
@@ -69,7 +66,7 @@ const runQueryActionCreator = (
         Authorization: "Bearer " + localStorage.getItem("token")
       }
     };
-
+    dispatch(runQueryCountActionCreator(parameters));
     axios
       .get("/mlf_filter?" + parameters, header)
       .then(res => {

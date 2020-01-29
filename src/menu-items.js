@@ -45,7 +45,7 @@ export default {
       icon: "icon-ui",
       children: [
         {
-          id: "LicenseNumber",
+          id: "license",
           title: "License Number",
           type: "costumEditBox",
           url: "/basic/button"
@@ -85,37 +85,37 @@ export default {
           icon: "feather icon-box",
           children: [
             {
-              id: "zip",
+              id: "zipcode",
               title: "Zip Code",
               type: "costumEditBox",
               url: "/basic/button"
             },
             {
-              id: "City",
+              id: "city",
               title: "City",
               type: "costumEditBox",
               url: "/basic/button"
             },
             {
-              id: "County",
+              id: "county",
               title: "County",
               type: "costumEditBox",
               url: "/basic/button"
             },
             {
-              id: "Phone",
+              id: "phone",
               title: "Phone Number",
               type: "costumEditBox",
               url: "/basic/button"
             },
             {
-              id: "licOwnerName",
+              id: "licowner",
               title: "License Owner Name",
               type: "costumComboBox",
               url: "/basic/button"
             },
             {
-              id: "CompanyName",
+              id: "companyname",
               title: "Company Name",
               type: "costumComboBox",
               url: "/basic/button"
