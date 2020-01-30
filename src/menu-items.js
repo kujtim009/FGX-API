@@ -16,126 +16,101 @@ export default {
       ]
     },
     {
-      id: "licenseType",
-      title: "License Type",
+      id: "apis",
+      title: "FGX DATA",
       type: "group",
-      icon: "icon-charts",
+      icon: "icon-navigation",
       children: [
         {
-          id: "basic",
-          title: "Select License Type",
+          id: "api",
+          title: "FGX API",
           type: "collapse",
-          icon: "feather icon-box",
+          icon: "feather icon-menu",
           children: [
             {
-              id: "LicenseType",
-              title: "Select Type",
-              type: "costum",
-              icon: "feather icon-pie-chart",
-              url: "/charts/nvd3"
+              id: "mlf",
+              title: "MASTER LICENSE FILE",
+              type: "collapse",
+              children: [
+                {
+                  id: "LicenseType",
+                  title: "Select Type",
+                  type: "costum",
+                  icon: "feather icon-pie-chart",
+                  url: "/charts/nvd3"
+                },
+                {
+                  id: "license",
+                  title: "License Number",
+                  type: "costumEditBox",
+                  url: "/basic/button"
+                },
+                {
+                  id: "state",
+                  title: "State",
+                  type: "costumStateDropBox",
+                  url: "/basic/button"
+                },
+                {
+                  id: "profession",
+                  title: "Profession",
+                  type: "costumProfDropBox",
+                  url: "/basic/button"
+                },
+                {
+                  id: "otherColapse",
+                  title: "Other Filters",
+                  type: "collapse",
+                  icon: "feather icon-box",
+                  children: [
+                    {
+                      id: "zipcode",
+                      title: "Zip Code",
+                      type: "costumEditBox",
+                      url: "/basic/button"
+                    },
+                    {
+                      id: "city",
+                      title: "City",
+                      type: "costumEditBox",
+                      url: "/basic/button"
+                    },
+                    {
+                      id: "county",
+                      title: "County",
+                      type: "costumEditBox",
+                      url: "/basic/button"
+                    },
+                    {
+                      id: "phone",
+                      title: "Phone Number",
+                      type: "costumEditBox",
+                      url: "/basic/button"
+                    },
+                    {
+                      id: "licowner",
+                      title: "License Owner Name",
+                      type: "costumComboBox",
+                      url: "/basic/button"
+                    },
+                    {
+                      id: "companyname",
+                      title: "Company Name",
+                      type: "costumComboBox",
+                      url: "/basic/button"
+                    }
+                  ]
+                },
+                {
+                  id: "search",
+                  title: "Search",
+                  type: "costumSrchBtn",
+                  url: "/forms/form-basic",
+                  icon: "feather icon-search"
+                }
+              ]
             }
           ]
-        }
-      ]
-    },
-    {
-      id: "License",
-      title: "License",
-      type: "group",
-      icon: "icon-ui",
-      children: [
-        {
-          id: "license",
-          title: "License Number",
-          type: "costumEditBox",
-          url: "/basic/button"
-        }
-      ]
-    },
-    {
-      id: "state_profession",
-      title: "State & Profession",
-      type: "group",
-      icon: "icon-ui",
-      children: [
-        {
-          id: "state",
-          title: "State",
-          type: "costumStateDropBox",
-          url: "/basic/button"
-        },
-        {
-          id: "profession",
-          title: "Profession",
-          type: "costumProfDropBox",
-          url: "/basic/button"
-        }
-      ]
-    },
-    {
-      id: "other",
-      title: "Other Filters",
-      type: "group",
-      icon: "icon-ui",
-      children: [
-        {
-          id: "otherColapse",
-          title: "Other Filters",
-          type: "collapse",
-          icon: "feather icon-box",
-          children: [
-            {
-              id: "zipcode",
-              title: "Zip Code",
-              type: "costumEditBox",
-              url: "/basic/button"
-            },
-            {
-              id: "city",
-              title: "City",
-              type: "costumEditBox",
-              url: "/basic/button"
-            },
-            {
-              id: "county",
-              title: "County",
-              type: "costumEditBox",
-              url: "/basic/button"
-            },
-            {
-              id: "phone",
-              title: "Phone Number",
-              type: "costumEditBox",
-              url: "/basic/button"
-            },
-            {
-              id: "licowner",
-              title: "License Owner Name",
-              type: "costumComboBox",
-              url: "/basic/button"
-            },
-            {
-              id: "companyname",
-              title: "Company Name",
-              type: "costumComboBox",
-              url: "/basic/button"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "getData",
-      title: "Get Data",
-      type: "group",
-      icon: "feather icon-search",
-      children: [
-        {
-          id: "search",
-          title: "Search",
-          type: "costumSrchBtn",
-          url: "/forms/form-basic",
-          icon: "feather icon-search"
         }
       ]
     },
@@ -189,52 +164,6 @@ export default {
           url: "/docs",
           classes: "nav-item",
           icon: "feather icon-help-circle"
-        },
-        {
-          id: "menu-level",
-          title: "Menu Levels",
-          type: "collapse",
-          icon: "feather icon-menu",
-          children: [
-            {
-              id: "menu-level-1.1",
-              title: "Menu Level 1.1",
-              type: "item",
-              url: "#!"
-            },
-            {
-              id: "menu-level-1.2",
-              title: "Menu Level 2.2",
-              type: "collapse",
-              children: [
-                {
-                  id: "menu-level-2.1",
-                  title: "Menu Level 2.1",
-                  type: "item",
-                  url: "#"
-                },
-                {
-                  id: "menu-level-2.2",
-                  title: "Menu Level 2.2",
-                  type: "collapse",
-                  children: [
-                    {
-                      id: "menu-level-3.1",
-                      title: "Menu Level 3.1",
-                      type: "item",
-                      url: "#"
-                    },
-                    {
-                      id: "menu-level-3.2",
-                      title: "Menu Level 3.2",
-                      type: "item",
-                      url: "#"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
         },
         {
           id: "disabled-menu",

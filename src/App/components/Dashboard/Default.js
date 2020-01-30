@@ -1,12 +1,7 @@
 import React from "react";
-import { Row, Col, Card, Table, Tabs, Tab } from "react-bootstrap";
-
 import Aux from "../../../hoc/_Aux";
-import DEMO from "../../../store/constant";
-import DataTable from "../DataTable/DataTable";
 import DataGrid from "../DataTable/DataTableGrid";
 import { connect } from "react-redux";
-import Loader from "../../layout/Loader";
 import { BarLoader } from "react-spinners";
 import RecordCounter from "../RecordCount/RecordCount";
 
@@ -15,8 +10,8 @@ class Dashboard extends React.Component {
     const loader = (
       <div>
         <BarLoader
-          width={450}
-          color="olive"
+          width={100 + "%"}
+          color="gray"
           loading={this.props.showCounterSpinner}
         />
       </div>
