@@ -1,7 +1,7 @@
 import React from "react";
 import $ from "jquery";
 
-import DashboardDefault from "./Demo/Dashboard/Default";
+import DashboardDefault from "./App/components/Dashboard/Default";
 import UIBasicButton from "./Demo/UIElements/Basic/Button";
 import UIBasicBadges from "./Demo/UIElements/Basic/Badges";
 import UIBasicBreadcrumbPagination from "./Demo/UIElements/Basic/BreadcrumbPagination";

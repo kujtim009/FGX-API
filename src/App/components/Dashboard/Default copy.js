@@ -1,9 +1,9 @@
 import React from 'react';
 import {Row, Col, Card, Table, Tabs, Tab} from 'react-bootstrap';
 
-import Aux from "../../hoc/_Aux";
-import DEMO from "../../store/constant";
-import DataTable from '../../App/components/DataTable/DataTable'
+import Aux from "../../../hoc/_Aux";
+import DEMO from "../../../store/constant";
+import DataTable from '../DataTable/DataTable'
 import {connect} from 'react-redux'
 import avatar1 from '../../assets/images/user/avatar-1.jpg';
 import avatar2 from '../../assets/images/user/avatar-2.jpg';

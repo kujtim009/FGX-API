@@ -13,7 +13,7 @@ const initialState = {
   loadDataTable: false,
   data: null,
   columns: null,
-  showcounter: false,
+  showCounter: false,
   showCounterSpinner: false,
   recordCount: null
 };
@@ -103,11 +103,13 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_QUERY:
       return {
         ...state,
+        checkAuth: false,
         showSpinner: true
       };
     case actionTypes.SUCCESS_QUERY:
       return {
         ...state,
+        checkAuth: false,
         showSpinner: false,
         data: action.payload,
         loadDataTable: true
@@ -116,6 +118,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         showSpinner: false,
+        checkAuth: true,
         loadDataTable: false,
         message: action.payload
       };
@@ -123,38 +126,38 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_COUNT_QUERY:
       return {
         ...state,
+        checkAuth: false,
         showCounterSpinner: true
       };
     case actionTypes.SUCCESS_COUNT_QUERY:
       return {
         ...state,
         showCounterSpinner: false,
+        checkAuth: false,
         recordCount: action.payload,
-        showcounter: true
+        showCounter: true
       };
     case actionTypes.FAILD_COUNT_QUERY:
       return {
         ...state,
         showCounterSpinner: false,
+        checkAuth: true,
         message: action.payload,
-        showcounter: false
+        showCounter: false
       };
 
     case actionTypes.START_USER_COLUMN:
       return {
-        ...state,
-        showSpinner: true
+        ...state
       };
     case actionTypes.SUCCESS_USER_COLUMN:
       return {
         ...state,
-        showSpinner: false,
         columns: action.payload
       };
     case actionTypes.FAILD_USER_COLUMN:
       return {
         ...state,
-        showSpinner: false,
         message: action.payload
       };
     default:
