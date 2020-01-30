@@ -23,9 +23,15 @@ class Dashboard extends React.Component {
       />
     ) : null;
 
-    const dataTable = this.props.loadDataTable ? (
-      <DataGrid columns={this.props.columns} data={this.props.data} />
-    ) : null;
+    const dataTable =
+      this.props.loadDataTable || this.props.loadProfessionDataTable ? (
+        <DataGrid
+          columns={this.props.columns}
+          data={this.props.data}
+          availableProfessions={this.props.availableProfessions}
+          profession={this.props.loadProfessionDataTable}
+        />
+      ) : null;
 
     return (
       <Aux>
@@ -44,7 +50,9 @@ const mapStateToProps = state => {
     columns: state.filterReducer.columns,
     recordCount: state.filterReducer.recordCount,
     showCounter: state.filterReducer.showCounter,
-    showCounterSpinner: state.filterReducer.showCounterSpinner
+    showCounterSpinner: state.filterReducer.showCounterSpinner,
+    loadProfessionDataTable: state.filterReducer.loadProfessionDataTable,
+    availableProfessions: state.filterReducer.availableProfessions
   };
 };
 

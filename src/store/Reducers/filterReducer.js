@@ -13,6 +13,9 @@ const initialState = {
   loadDataTable: false,
   data: null,
   columns: null,
+  loadProfessionDataTable: false,
+  professionData: null,
+  professionColumns: null,
   showCounter: false,
   showCounterSpinner: false,
   recordCount: null
@@ -64,15 +67,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         checkAuth: false,
         availableProfessions: action.payload,
+        loadProfessionDataTable: true,
         showSpinner: false
       };
     case actionTypes.START_GETPROFESSIONS:
-      return { ...state, showSpinner: true };
+      return { ...state, showSpinner: true, loadProfessionDataTable: false };
     case actionTypes.FAILD_GETPROFESSIONS:
       return {
         ...state,
         showSpinner: false,
         checkAuth: true,
+        loadProfessionDataTable: false,
         loginMessage: action.payload.error.data.message
       };
 
@@ -112,6 +117,7 @@ const reducer = (state = initialState, action) => {
         checkAuth: false,
         showSpinner: false,
         data: action.payload,
+        loadProfessionDataTable: false,
         loadDataTable: true
       };
     case actionTypes.FAILD_QUERY:
