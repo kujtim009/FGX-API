@@ -59,22 +59,11 @@ class App extends Component {
       );
     }
 
-    // let routeGuard =
-    //   this.props.isAuthenticated ||
-    //   this.checkLocalToken() ||
-    //   !this.props.tokenExpired ? (
-    //     <Route path="/" component={AdminLayout} />
-    //   ) : (
-    //     [...menu]
-    //   );
-
     return (
       <Aux>
         <ScrollToTop>
-          <Switch>
-            {routeGuard}
-            {mainRedirect}
-          </Switch>
+          <Switch>{routeGuard}</Switch>
+          {mainRedirect}
         </ScrollToTop>
       </Aux>
     );

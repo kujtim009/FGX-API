@@ -17,6 +17,9 @@ import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthActi
 import getUserColumnsActionCreator from "../../../store/ActionCreators/columnAction";
 import "./app.scss";
 
+import DashboardDefault from "../../components/Dashboard";
+import Cpanel from "../../components/Cpanel";
+
 class AdminLayout extends Component {
   componentWillUnmount() {
     document.removeEventListener(
@@ -35,6 +38,7 @@ class AdminLayout extends Component {
       "MSFullscreenChange",
       this.fullScreenExitHandler
     );
+    console.log("ADDMIN LAYOUT UNMOUNTED");
   }
 
   fullScreenExitHandler = () => {
@@ -58,6 +62,7 @@ class AdminLayout extends Component {
     }
   }
   componentDidMount() {
+    console.log("ADDMIN LAYOUT MOUNTED");
     // console.log("ADMIN LAYOUT: ", this.props.isAuthenticated);
     // this.props.isAuthenticated
     //   ? this.props.getUserLicTypeAction()
@@ -99,6 +104,12 @@ class AdminLayout extends Component {
       ) : null;
     });
     const showSpinner = this.props.showSpinner ? <Loader /> : null;
+    const redirectToDash =
+      this.props.isAuthenticated &&
+      this.props.location.pathname === "/auth/signin"
+        ? this.props.history.push("/dashboard")
+        : null;
+
     return (
       <Aux>
         {showSpinner}
@@ -114,10 +125,18 @@ class AdminLayout extends Component {
                   {/* <Breadcrumb /> */}
                   <div className="main-body">
                     <div className="page-wrapper">
+                      <h5>ADMIN LAYOUT PAGE</h5>
                       <Switch>
-                        {menu}
-                        <Redirect from="/" to={this.props.defaultPath} />
+                        {/* {menu} */}
+
+                        <Route
+                          path="/dashboard"
+                          exact={true}
+                          component={DashboardDefault}
+                        />
+                        <Route path="/cpanel" exact={true} component={Cpanel} />
                       </Switch>
+                      {redirectToDash}
                     </div>
                   </div>
                 </div>

@@ -10,7 +10,14 @@ export default {
           id: "dashboard",
           title: "Dashboard",
           type: "item",
-          url: "/dashboard/default",
+          url: "/dashboard",
+          icon: "feather icon-home"
+        },
+        {
+          id: "cpanel",
+          title: "CPanel",
+          type: "item",
+          url: "/cpanel",
           icon: "feather icon-home"
         }
       ]

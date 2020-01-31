@@ -14,7 +14,6 @@ const DataGrid = props => {
       sortable: true,
       filter: true
     }));
-    console.log("DATA COLUMNS:", columns, "ROWS:", data);
   } else {
     columns = [
       {
@@ -35,7 +34,6 @@ const DataGrid = props => {
       profession: key,
       count: props.availableProfessions[key]
     }));
-    console.log("PROFESSIONs COLUMNS:", columns, "ROWS:", data);
   }
 
   return (
