@@ -126,16 +126,7 @@ class AdminLayout extends Component {
                   <div className="main-body">
                     <div className="page-wrapper">
                       <h5>ADMIN LAYOUT PAGE</h5>
-                      <Switch>
-                        {/* {menu} */}
-
-                        <Route
-                          path="/dashboard"
-                          exact={true}
-                          component={DashboardDefault}
-                        />
-                        <Route path="/cpanel" exact={true} component={Cpanel} />
-                      </Switch>
+                      <Switch>{menu}</Switch>
                       {redirectToDash}
                     </div>
                   </div>
