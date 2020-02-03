@@ -5,6 +5,7 @@ const initialState = {
   userName: null,
   userId: null,
   accessLevel: null,
+  isAdmin: false,
   showSpinner: false,
   message: null,
   tokenExpired: false
@@ -28,6 +29,7 @@ const reducer = (state = initialState, action) => {
         userId: action.payload.userId,
         accessLevel: action.payload.accessLevel,
         isAuthenticated: true,
+        isAdmin: action.payload.accessLevel === "1" ? true : false,
         showSpinner: false,
         tokenExpired: false
       };
@@ -54,6 +56,7 @@ const reducer = (state = initialState, action) => {
         userId: action.payload.userId,
         accessLevel: action.payload.accessLevel,
         isAuthenticated: true,
+        isAdmin: action.payload.accessLevel === "1" ? true : false,
         showSpinner: false,
         tokenExpired: false
       };

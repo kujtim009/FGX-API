@@ -6,12 +6,8 @@ import { BarLoader } from "react-spinners";
 import RecordCounter from "../RecordCount/RecordCount";
 
 class Dashboard extends React.Component {
-  componentDidMount() {
-    console.log("DASHBOUARD MOUNTED", this.props.location);
-  }
-  componentWillUnmount() {
-    console.log("DASHBOUARD UNMOUNTED");
-  }
+  componentDidMount() {}
+  componentWillUnmount() {}
   render() {
     const loader = (
       <div>

@@ -3,16 +3,16 @@ import thunk from "redux-thunk";
 import mainReducer from "./Reducers/mainReducer";
 import authReducer from "./Reducers/authReducer";
 import filterReducer from "./Reducers/filterReducer";
+import cpanelReducer from "./Reducers/cpanelReducer";
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   mainReducer: mainReducer,
   authReducer: authReducer,
-  filterReducer: filterReducer
+  filterReducer: filterReducer,
+  cpanelReducer: cpanelReducer
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));
-// const store = createStore(reducer, ["Use Redux"], applyMiddleware(thunk));
-// const store = createStore(reducer);
 export default store;
