@@ -19,7 +19,7 @@ class ReactSortList extends Component {
   };
   componentDidMount() {
     this.setState({
-      layout: this.props.layout,
+      layout: this.props.unAsignedColumns,
       columns: this.props.asignedColumnsList
     });
   }
@@ -36,11 +36,11 @@ class ReactSortList extends Component {
             delayOnTouchStart={true}
             delay={2}
             sort={false}
-            list={this.props.layout}
-            setList={newState => this.setState({ layout: newState })}>
-            {this.props.layout.map(item => (
+            list={this.props.unAsignedColumns}
+            setList={newState => this.props.unAsignedColumnsHandler(newState)}>
+            {this.props.unAsignedColumns.map(item => (
               <div className={classes.listElementlayout} key={item.FieldID}>
-                {item.LayoutField}
+                {item.ExportField}
               </div>
             ))}
           </ReactSortable>

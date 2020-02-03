@@ -4,6 +4,7 @@ const initialState = {
   cpanelSpinner: false,
   registredUsers: [],
   layout: [],
+  unAsignedColumns: [],
   asignedColumns: [],
   selectedUserId: ""
 };
@@ -46,10 +47,28 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.SUCCESS_GET_LAYOUT:
+      const tempLayout = action.payload.map(item => ({
+        LayoutField: item.LayoutField,
+        FieldID: item.FieldID,
+        ExportField: item.ExportField.replace(/ /g, "_")
+          .replace(/-/g, "")
+          .replace("/", "")
+          .replace("__", "_")
+          .trim(),
+        ExportID: item.ExportID
+      }));
+
+      const unAsignedColumnsTemp = tempLayout.filter(layoutItem => {
+        return state.asignedColumns.every(userItem => {
+          console.log(layoutItem.LayoutField, userItem.Field_name);
+          return layoutItem.ExportField !== userItem.Field_name;
+        });
+      });
       return {
         ...state,
         cpanelSpinner: false,
-        layout: action.payload
+        layout: tempLayout,
+        unAsignedColumns: unAsignedColumnsTemp
       };
     case actionTypes.START_GET_LAYOUT:
       return { ...state, cpanelSpinner: true };
@@ -60,7 +79,6 @@ const reducer = (state = initialState, action) => {
         message: action.payload.error.data.message
       };
     case actionTypes.CHANGE_USER_ASIGNED_COLUMNS:
-      console.log(actionTypes.CHANGE_USER_ASIGNED_COLUMNS, action.payload);
       const updated = action.payload.map(item => {
         if ("LayoutField" in item) {
           return {
@@ -71,11 +89,31 @@ const reducer = (state = initialState, action) => {
             User_id: state.selectedUserId,
             Order: 0
           };
+        } else {
+          return item;
         }
       });
       return {
         ...state,
         asignedColumns: updated
+      };
+    case actionTypes.CHANGE_UNASIGNED_COLUMNS:
+      console.log(actionTypes.CHANGE_UNASIGNED_COLUMNS, action.payload);
+      const unAsignedUpdated = action.payload.map(firstItem => {
+        if ("View_state" in firstItem) {
+          console.log("REDUCER CHANGE UNASIGNED:", firstItem);
+          const fieldDataToReturn = state.layout.filter(
+            item => item.ExportField === firstItem.Field_name
+          );
+          console.log("REDUCER CHANGE UNASIGNED:", fieldDataToReturn);
+          return fieldDataToReturn[0];
+        } else {
+          return firstItem;
+        }
+      });
+      return {
+        ...state,
+        unAsignedColumns: unAsignedUpdated
       };
     default:
       return state;

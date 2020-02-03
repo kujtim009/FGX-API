@@ -92,10 +92,13 @@ class Cpanel extends React.Component {
               <Card.Body>
                 {dropDownUsers}
                 <SortableList
-                  layout={this.props.layout}
+                  unAsignedColumns={this.props.unAsignedColumns}
                   asignedColumnsList={this.props.asignedColumns}
                   asignedColumnsChangehandler={
                     this.props.asignedUserColumnChangeAction
+                  }
+                  unAsignedColumnsHandler={
+                    this.props.unAsignedColumnChangeAction
                   }
                 />
                 <Card.Text>
@@ -138,7 +141,7 @@ const mapStateToProps = state => {
     cpanelSpinner: state.cpanelReducer.cpanelSpinner,
     registredUsers: state.cpanelReducer.registredUsers,
     selectedUserId: state.cpanelReducer.selectedUserId,
-    layout: state.cpanelReducer.layout,
+    unAsignedColumns: state.cpanelReducer.unAsignedColumns,
     asignedColumns: state.cpanelReducer.asignedColumns
   };
 };
@@ -157,6 +160,11 @@ const mapDispatchToProps = dispatch => {
     asignedUserColumnChangeAction: columns =>
       dispatch({
         type: actionTypes.CHANGE_USER_ASIGNED_COLUMNS,
+        payload: columns
+      }),
+    unAsignedColumnChangeAction: columns =>
+      dispatch({
+        type: actionTypes.CHANGE_UNASIGNED_COLUMNS,
         payload: columns
       })
   };
