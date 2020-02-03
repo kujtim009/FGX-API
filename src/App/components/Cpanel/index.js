@@ -3,10 +3,12 @@ import { connect } from "react-redux";
 import { BarLoader } from "react-spinners";
 import { Form, Row, Col, Button, Card, Collapse } from "react-bootstrap";
 import DEMO from "../../../store/constant";
+
 import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthAction";
-import getAsignedUserColumnsActionCreator from "../../../store/ActionCreators/cpanelAction/registredUsersAction";
+import getAsignedUserColumnsActionCreator from "../../../store/ActionCreators/cpanelAction/columnAction";
 import getRegistredUsersActionCreator from "../../../store/ActionCreators/cpanelAction/registredUsersAction";
 import * as actionTypes from "../../../store/actions";
+import SortableList from "../../components/SortableList/SortableList";
 
 class Cpanel extends React.Component {
   state = {
@@ -34,11 +36,9 @@ class Cpanel extends React.Component {
   };
   onChangeHandler(event) {
     this.props.registredUserChangeAction(event.target.value);
-    console.log(event.target.value);
     this.props.getUserColumnsAction(event.target.value);
   }
   render() {
-    console.log(this.state.registredUsersCollapse);
     const loader = (
       <div>
         <BarLoader
@@ -60,6 +60,14 @@ class Cpanel extends React.Component {
         {dropDownUsersElements}
       </Form.Control>
     );
+    // const asignedColumnsList = this.props.asignedColumns.map(item => ({
+    //   id: item.ID,
+    //   name: item.Field_name
+    // }));
+    // const layoutList = this.props.layout.map(item => ({
+    //   id: item.FieldID,
+    //   name: item.LayoutField
+    // }));
 
     const { registredUsersCollapse } = this.state;
 
@@ -83,6 +91,13 @@ class Cpanel extends React.Component {
             <div id="accordion2">
               <Card.Body>
                 {dropDownUsers}
+                <SortableList
+                  layout={this.props.layout}
+                  asignedColumnsList={this.props.asignedColumns}
+                  asignedColumnsChangehandler={
+                    this.props.asignedUserColumnChangeAction
+                  }
+                />
                 <Card.Text>
                   Anim pariatur cliche reprehenderit, enim eiusmod high life
                   accusamus terry richardson ad squid. 3 wolf moon officia aute,
@@ -138,6 +153,11 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: actionTypes.CHANGE_REG_USER,
         payload: userId
+      }),
+    asignedUserColumnChangeAction: columns =>
+      dispatch({
+        type: actionTypes.CHANGE_USER_ASIGNED_COLUMNS,
+        payload: columns
       })
   };
 };

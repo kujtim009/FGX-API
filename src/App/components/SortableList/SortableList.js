@@ -1,0 +1,70 @@
+import React, { Component } from "react";
+import { ReactSortable, Sortable } from "react-sortablejs";
+import { Form, Row, Col, Button, Card, Collapse } from "react-bootstrap";
+import classes from "./SortableList.module.css";
+// new Sortable(example4Left, {
+//     group: {
+//         name: 'shared',
+//         pull: 'clone',
+//         put: false // Do not allow items to be put into this list
+//     },
+//     animation: 150,
+//     sort: false // To disable sorting: set sort to false
+// });
+
+class ReactSortList extends Component {
+  state = {
+    layout: [],
+    columns: []
+  };
+  componentDidMount() {
+    this.setState({
+      layout: this.props.layout,
+      columns: this.props.asignedColumnsList
+    });
+  }
+  componentDidUpdate() {}
+  render() {
+    console.log(this.state);
+    return (
+      <Card className="mt-2">
+        <div id="container" className={classes.container}>
+          <ReactSortable
+            className={classes.layout}
+            group="shared"
+            animation={200}
+            delayOnTouchStart={true}
+            delay={2}
+            sort={false}
+            list={this.props.layout}
+            setList={newState => this.setState({ layout: newState })}>
+            {this.props.layout.map(item => (
+              <div className={classes.listElementlayout} key={item.FieldID}>
+                {item.LayoutField}
+              </div>
+            ))}
+          </ReactSortable>
+
+          <ReactSortable
+            className={classes.asignedFields}
+            group="shared"
+            animation={200}
+            delayOnTouchStart={true}
+            delay={2}
+            list={this.props.asignedColumnsList}
+            setList={newState =>
+              this.props.asignedColumnsChangehandler(newState)
+            }>
+            {this.props.asignedColumnsList.map(item => (
+              <div className={classes.listElementasignedFields} key={item.ID}>
+                {item.Field_name}
+              </div>
+            ))}
+          </ReactSortable>
+        </div>
+      </Card>
+    );
+  }
+}
+
+export default ReactSortList;

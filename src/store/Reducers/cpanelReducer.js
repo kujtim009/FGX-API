@@ -3,8 +3,8 @@ import * as actionTypes from "../actions";
 const initialState = {
   cpanelSpinner: false,
   registredUsers: [],
-  layout: null,
-  asignedColumns: null,
+  layout: [],
+  asignedColumns: [],
   selectedUserId: ""
 };
 
@@ -58,6 +58,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         cpanelSpinner: false,
         message: action.payload.error.data.message
+      };
+    case actionTypes.CHANGE_USER_ASIGNED_COLUMNS:
+      console.log(actionTypes.CHANGE_USER_ASIGNED_COLUMNS, action.payload);
+      const updated = action.payload.map(item => {
+        if ("LayoutField" in item) {
+          return {
+            ID: item.fieldID,
+            View_state: 1,
+            Field_name: item.LayoutField,
+            File_name: "MLF",
+            User_id: state.selectedUserId,
+            Order: 0
+          };
+        }
+      });
+      return {
+        ...state,
+        asignedColumns: updated
       };
     default:
       return state;

@@ -125,7 +125,6 @@ class AdminLayout extends Component {
                   {/* <Breadcrumb /> */}
                   <div className="main-body">
                     <div className="page-wrapper">
-                      <h5>ADMIN LAYOUT PAGE</h5>
                       <Switch>{menu}</Switch>
                       {redirectToDash}
                     </div>

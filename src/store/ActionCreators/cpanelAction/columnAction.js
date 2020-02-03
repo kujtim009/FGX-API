@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "../../actions";
+import getLayoutActionCreator from "./getLayoutAction";
 
 const getAsignedUserColumnsActionCreator = userId => {
   return dispatch => {
@@ -12,9 +13,10 @@ const getAsignedUserColumnsActionCreator = userId => {
     };
 
     axios
-      .get("/usersField/" + userId, header)
+      .get("/usersField??uid=" + userId, header)
       .then(res => {
         dispatch(successUserColumn(res.data.User_fields));
+        dispatch(getLayoutActionCreator());
       })
       .catch(err => {
         dispatch(failedUserColumn(err.response));

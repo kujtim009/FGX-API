@@ -1,0 +1,58 @@
+.container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+
+}
+
+.layout {
+    width: 300px;
+    min-height: 300px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 20px;
+    border: 0.3px solid rgb(219, 219, 219);
+
+}
+
+.asignedFields {
+    vertical-align: top;
+    width: 300px;
+    height: 100%;
+    min-height: 300px;
+    cursor: pointer;
+    display: inline-block;
+    border: 0.3px solid rgb(219, 219, 219);
+}
+
+.listElementlayout {
+    border: 0.3px solid rgb(202, 202, 202);
+    background-color: rgb(241, 239, 239);
+
+    min-height: 30px;
+    font-size: 14;
+    color: dimgrey;
+    padding: 5px;
+    margin: 2px;
+}
+
+.listElementlayout:hover {
+    background-color: dodgerblue;
+    color: white;
+}
+
+.listElementasignedFields {
+    border: 0.3px solid rgb(205, 206, 172);
+    background-color: rgb(221, 236, 197);
+
+    min-height: 30px;
+    font-size: 14;
+    color: dimgrey;
+    padding: 5px;
+    margin: 2px;
+}
+
+.listElementasignedFields:hover {
+    background-color: dodgerblue;
+    color: white;
+}
