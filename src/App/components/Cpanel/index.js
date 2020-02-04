@@ -9,13 +9,14 @@ import getAsignedUserColumnsActionCreator from "../../../store/ActionCreators/cp
 import getRegistredUsersActionCreator from "../../../store/ActionCreators/cpanelAction/registredUsersAction";
 import postColumnsActionCreator from "../../../store/ActionCreators/cpanelAction/postColumnsAction";
 import * as actionTypes from "../../../store/actions";
-import SortableList from "../../components/SortableList/SortableList";
-
+import SortableAsignUserColumns from "../SortableList/sortableAsignUserColumns";
+import UserAsignedLicenseType from "../../components/UserAsignedLicenseType/UserAsignedLicenseType";
+import getAsignedUserLicTypeActionCreator from "../../../store/ActionCreators/cpanelAction/postColumnsAction";
+getAsignedUserLicTypeActionCreator;
 class Cpanel extends React.Component {
   state = {
-    isBasic: false,
-    isMultiTarget: [],
-    registredUsersCollapse: 1
+    userAsighnColumns: 1,
+    licenseTypeAsign: 1
   };
 
   componentDidMount() {
@@ -25,13 +26,23 @@ class Cpanel extends React.Component {
   componentWillUnmount() {}
 
   onAsignUserColumnsHandler = () => {
-    const { registredUsersCollapse } = this.state;
+    const userAsighnColumns = this.state.userAsighnColumns;
     this.setState({
-      registredUsersCollapse: registredUsersCollapse !== 2 ? 2 : 0
+      userAsighnColumns: userAsighnColumns !== 2 ? 2 : 0
     });
 
-    if (registredUsersCollapse <= 1) this.props.getRegistredUsersAction();
+    if (userAsighnColumns <= 1) this.props.getRegistredUsersAction();
   };
+
+  onLicenseTypeChangeHandler = () => {
+    const licenseTypeAsign = this.state.licenseTypeAsign;
+    this.setState({
+      licenseTypeAsign: licenseTypeAsign !== 2 ? 2 : 0
+    });
+
+    if (licenseTypeAsign <= 1) this.props.getRegistredUsersAction();
+  };
+
   onChangeHandler(event) {
     this.props.registredUserChangeAction(event.target.value);
     this.props.getUserColumnsAction(event.target.value);
@@ -59,19 +70,12 @@ class Cpanel extends React.Component {
         className="mb-3"
         value={this.props.selectedUserId}
         onChange={e => this.onChangeHandler(e)}>
+        <option value={0}>Select user</option>
         {dropDownUsersElements}
       </Form.Control>
     );
-    // const asignedColumnsList = this.props.asignedColumns.map(item => ({
-    //   id: item.ID,
-    //   name: item.Field_name
-    // }));
-    // const layoutList = this.props.layout.map(item => ({
-    //   id: item.FieldID,
-    //   name: item.LayoutField
-    // }));
 
-    const { registredUsersCollapse } = this.state;
+    const { userAsighnColumns, licenseTypeAsign } = this.state;
 
     const content = this.props.isAdmin ? (
       <React.Fragment>
@@ -84,16 +88,59 @@ class Cpanel extends React.Component {
                 href={DEMO.BLANK_LINK}
                 onClick={this.onAsignUserColumnsHandler}
                 aria-controls="accordion2"
-                aria-expanded={registredUsersCollapse === 2}>
+                aria-expanded={userAsighnColumns === 2}>
+                Assign License Types!
+              </a>
+            </Card.Title>
+          </Card.Header>
+          <Collapse in={this.state.userAsighnColumns === 2}>
+            <div id="accordion2">
+              <Card.Body>
+                {dropDownUsers}
+                <UserAsignedLicenseType
+                  unAsignedColumns={this.props.unAsignedColumns}
+                  asignedColumnsList={this.props.asignedColumns}
+                  asignedColumnsChangehandler={
+                    this.props.asignedUserColumnChangeAction
+                  }
+                  unAsignedColumnsHandler={
+                    this.props.unAsignedColumnChangeAction
+                  }
+                />
+
+                <Card.Footer>
+                  <Button
+                    onClick={() =>
+                      this.props.postUserColumnAction(
+                        this.props.asignedColumns,
+                        this.props.selectedUserId
+                      )
+                    }>
+                    SAVE CHANGES
+                  </Button>
+                </Card.Footer>
+              </Card.Body>
+            </div>
+          </Collapse>
+        </Card>
+
+        <Card className="mt-2">
+          <Card.Header>
+            <Card.Title as="h5">
+              <a
+                href={DEMO.BLANK_LINK}
+                onClick={this.onLicenseTypeChangeHandler}
+                aria-controls="accordion2"
+                aria-expanded={licenseTypeAsign === 2}>
                 Assign User Columns!
               </a>
             </Card.Title>
           </Card.Header>
-          <Collapse in={this.state.registredUsersCollapse === 2}>
+          <Collapse in={this.state.licenseTypeAsign === 2}>
             <div id="accordion2">
               <Card.Body>
                 {dropDownUsers}
-                <SortableList
+                <SortableAsignUserColumns
                   unAsignedColumns={this.props.unAsignedColumns}
                   asignedColumnsList={this.props.asignedColumns}
                   asignedColumnsChangehandler={
@@ -138,12 +185,12 @@ const mapStateToProps = state => {
   return {
     isAdmin: state.authReducer.isAdmin,
     columns: state.filterReducer.columns,
-    availableProfessions: state.filterReducer.availableProfessions,
     cpanelSpinner: state.cpanelReducer.cpanelSpinner,
     registredUsers: state.cpanelReducer.registredUsers,
     selectedUserId: state.cpanelReducer.selectedUserId,
     unAsignedColumns: state.cpanelReducer.unAsignedColumns,
-    asignedColumns: state.cpanelReducer.asignedColumns
+    asignedColumns: state.cpanelReducer.asignedColumns,
+    userAsignedLicenseTypes: state.cpanelReducer.userAsignedLicenseTypes
   };
 };
 
@@ -169,7 +216,9 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: actionTypes.CHANGE_UNASIGNED_COLUMNS,
         payload: columns
-      })
+      }),
+    getUserAsignedLicenseTypeAction: userId =>
+      dispatch(getAsignedUserLicTypeActionCreator(userId))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cpanel);

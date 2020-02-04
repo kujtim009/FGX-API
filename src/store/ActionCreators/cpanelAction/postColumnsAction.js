@@ -23,7 +23,7 @@ const postColumnsActionCreator = (columns, userID) => {
         }));
         console.log("COLUMS:", columnsToPost);
         axios
-          .post("/addUserFields", columnsToPost, header)
+          .post("/addUserFields?uid=" + userID, columnsToPost, header)
           .then(res => {
             console.log("SUCCESS:", columnsToPost);
             dispatch(successPostColumns(res));

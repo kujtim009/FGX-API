@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ReactSortable, Sortable } from "react-sortablejs";
 import { Form, Row, Col, Button, Card, Collapse } from "react-bootstrap";
-import classes from "./SortableList.module.css";
+import classes from "./sortableAsignUserColumns.module.css";
 // new Sortable(example4Left, {
 //     group: {
 //         name: 'shared',
@@ -12,7 +12,7 @@ import classes from "./SortableList.module.css";
 //     sort: false // To disable sorting: set sort to false
 // });
 
-class ReactSortList extends Component {
+class SortableAsignUserColumns extends Component {
   state = {
     layout: [],
     columns: []
@@ -42,7 +42,7 @@ class ReactSortList extends Component {
               }>
               {this.props.unAsignedColumns.map(item => (
                 <div className={classes.listElementlayout} key={item.FieldID}>
-                  {item.FieldID + " / " + item.ExportField}
+                  {item.ExportField}
                 </div>
               ))}
             </ReactSortable>
@@ -60,7 +60,7 @@ class ReactSortList extends Component {
               }>
               {this.props.asignedColumnsList.map(item => (
                 <div className={classes.listElementasignedFields} key={item.ID}>
-                  {item.ID + " / " + item.Field_name}
+                  {item.Field_name}
                 </div>
               ))}
             </ReactSortable>
@@ -71,4 +71,4 @@ class ReactSortList extends Component {
   }
 }
 
-export default ReactSortList;
+export default SortableAsignUserColumns;
