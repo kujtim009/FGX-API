@@ -48,9 +48,13 @@ class Cpanel extends React.Component {
         />
       </div>
     );
-    const dropDownUsersElements = this.props.registredUsers.map(item => (
-      <option value={item.id}>{item.username}</option>
-    ));
+    const dropDownUsersElements = this.props.registredUsers.map(
+      (item, indx) => (
+        <option key={indx} value={item.id}>
+          {item.username}
+        </option>
+      )
+    );
     const dropDownUsers = (
       <Form.Control
         as="select"
@@ -101,7 +105,7 @@ class Cpanel extends React.Component {
                     this.props.unAsignedColumnChangeAction
                   }
                 />
-                <Card.Text>
+                {/* <Card.Text>
                   Anim pariatur cliche reprehenderit, enim eiusmod high life
                   accusamus terry richardson ad squid. 3 wolf moon officia aute,
                   non cupidatat skateboard dolor brunch. Food truck quinoa
@@ -113,7 +117,10 @@ class Cpanel extends React.Component {
                   beer farm-to-table, raw denim aesthetic synth nesciunt you
                   probably haven't heard of them accusamus labore sustainable
                   VHS.
-                </Card.Text>
+                </Card.Text> */}
+                <Card.Footer>
+                  <Button>SAVE CHANGES</Button>
+                </Card.Footer>
               </Card.Body>
             </div>
           </Collapse>

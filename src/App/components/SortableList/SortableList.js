@@ -29,38 +29,43 @@ class ReactSortList extends Component {
     return (
       <Card className="mt-2">
         <div id="container" className={classes.container}>
-          <ReactSortable
-            className={classes.layout}
-            group="shared"
-            animation={200}
-            delayOnTouchStart={true}
-            delay={2}
-            sort={false}
-            list={this.props.unAsignedColumns}
-            setList={newState => this.props.unAsignedColumnsHandler(newState)}>
-            {this.props.unAsignedColumns.map(item => (
-              <div className={classes.listElementlayout} key={item.FieldID}>
-                {item.ExportField}
-              </div>
-            ))}
-          </ReactSortable>
-
-          <ReactSortable
-            className={classes.asignedFields}
-            group="shared"
-            animation={200}
-            delayOnTouchStart={true}
-            delay={2}
-            list={this.props.asignedColumnsList}
-            setList={newState =>
-              this.props.asignedColumnsChangehandler(newState)
-            }>
-            {this.props.asignedColumnsList.map(item => (
-              <div className={classes.listElementasignedFields} key={item.ID}>
-                {item.Field_name}
-              </div>
-            ))}
-          </ReactSortable>
+          <div className={classes.layout}>
+            <h5>Un-asigned columns</h5>
+            <ReactSortable
+              group="shared"
+              animation={200}
+              delayOnTouchStart={true}
+              delay={2}
+              sort={false}
+              list={this.props.unAsignedColumns}
+              setList={newState =>
+                this.props.unAsignedColumnsHandler(newState)
+              }>
+              {this.props.unAsignedColumns.map(item => (
+                <div className={classes.listElementlayout} key={item.ExportID}>
+                  {item.ExportField}
+                </div>
+              ))}
+            </ReactSortable>
+          </div>
+          <div className={classes.asignedFields}>
+            <h5>Asigned columns</h5>
+            <ReactSortable
+              group="shared"
+              animation={200}
+              delayOnTouchStart={true}
+              delay={2}
+              list={this.props.asignedColumnsList}
+              setList={newState =>
+                this.props.asignedColumnsChangehandler(newState)
+              }>
+              {this.props.asignedColumnsList.map(item => (
+                <div className={classes.listElementasignedFields} key={item.ID}>
+                  {item.Field_name}
+                </div>
+              ))}
+            </ReactSortable>
+          </div>
         </div>
       </Card>
     );

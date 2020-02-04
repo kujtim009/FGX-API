@@ -60,7 +60,6 @@ const reducer = (state = initialState, action) => {
 
       const unAsignedColumnsTemp = tempLayout.filter(layoutItem => {
         return state.asignedColumns.every(userItem => {
-          console.log(layoutItem.LayoutField, userItem.Field_name);
           return layoutItem.ExportField !== userItem.Field_name;
         });
       });
@@ -79,18 +78,26 @@ const reducer = (state = initialState, action) => {
         message: action.payload.error.data.message
       };
     case actionTypes.CHANGE_USER_ASIGNED_COLUMNS:
-      const updated = action.payload.map(item => {
+      const updated = action.payload.map((item, indx) => {
         if ("LayoutField" in item) {
+          console.log("checkFor:", item);
           return {
-            ID: item.fieldID,
+            ID: item.FieldID,
             View_state: 1,
-            Field_name: item.LayoutField,
+            Field_name: item.ExportField,
             File_name: "MLF",
             User_id: state.selectedUserId,
-            Order: 0
+            Order: indx
           };
         } else {
-          return item;
+          return {
+            ID: item.ID,
+            View_state: item.View_state,
+            Field_name: item.Field_name,
+            File_name: item.File_name,
+            User_id: item.User_id,
+            Order: indx
+          };
         }
       });
       return {
@@ -98,14 +105,11 @@ const reducer = (state = initialState, action) => {
         asignedColumns: updated
       };
     case actionTypes.CHANGE_UNASIGNED_COLUMNS:
-      console.log(actionTypes.CHANGE_UNASIGNED_COLUMNS, action.payload);
       const unAsignedUpdated = action.payload.map(firstItem => {
         if ("View_state" in firstItem) {
-          console.log("REDUCER CHANGE UNASIGNED:", firstItem);
           const fieldDataToReturn = state.layout.filter(
             item => item.ExportField === firstItem.Field_name
           );
-          console.log("REDUCER CHANGE UNASIGNED:", fieldDataToReturn);
           return fieldDataToReturn[0];
         } else {
           return firstItem;
@@ -115,6 +119,22 @@ const reducer = (state = initialState, action) => {
         ...state,
         unAsignedColumns: unAsignedUpdated
       };
+
+    case actionTypes.SUCCESS_POST_COLUMN:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        asignedColumns: action.payload
+      };
+    case actionTypes.START_POST_COLUMN:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_POST_COLUMN:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.error.data.message
+      };
+
     default:
       return state;
   }
