@@ -7,6 +7,7 @@ import DEMO from "../../../store/constant";
 import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthAction";
 import getAsignedUserColumnsActionCreator from "../../../store/ActionCreators/cpanelAction/columnAction";
 import getRegistredUsersActionCreator from "../../../store/ActionCreators/cpanelAction/registredUsersAction";
+import postColumnsActionCreator from "../../../store/ActionCreators/cpanelAction/postColumnsAction";
 import * as actionTypes from "../../../store/actions";
 import SortableList from "../../components/SortableList/SortableList";
 
@@ -19,12 +20,9 @@ class Cpanel extends React.Component {
 
   componentDidMount() {
     this.props.checkAauthAction();
-    console.log("CPANEL MOUNTED", this.props.location);
   }
 
-  componentWillUnmount() {
-    console.log("CPANEL UNMOUNTED");
-  }
+  componentWillUnmount() {}
 
   onAsignUserColumnsHandler = () => {
     const { registredUsersCollapse } = this.state;
@@ -105,21 +103,17 @@ class Cpanel extends React.Component {
                     this.props.unAsignedColumnChangeAction
                   }
                 />
-                {/* <Card.Text>
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. 3 wolf moon officia aute,
-                  non cupidatat skateboard dolor brunch. Food truck quinoa
-                  nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                  aliqua put a bird on it squid single-origin coffee nulla
-                  assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
-                  beer labore wes anderson cred nesciunt sapiente ea proident.
-                  Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                  beer farm-to-table, raw denim aesthetic synth nesciunt you
-                  probably haven't heard of them accusamus labore sustainable
-                  VHS.
-                </Card.Text> */}
+
                 <Card.Footer>
-                  <Button>SAVE CHANGES</Button>
+                  <Button
+                    onClick={() =>
+                      this.props.postUserColumnAction(
+                        this.props.asignedColumns,
+                        this.props.selectedUserId
+                      )
+                    }>
+                    SAVE CHANGES
+                  </Button>
                 </Card.Footer>
               </Card.Body>
             </div>
@@ -159,6 +153,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(getAsignedUserColumnsActionCreator(userId)),
     getRegistredUsersAction: () => dispatch(getRegistredUsersActionCreator()),
     checkAauthAction: () => dispatch(checkAauthActionCreator()),
+    postUserColumnAction: (column, userId) =>
+      dispatch(postColumnsActionCreator(column, userId)),
     registredUserChangeAction: userId =>
       dispatch({
         type: actionTypes.CHANGE_REG_USER,

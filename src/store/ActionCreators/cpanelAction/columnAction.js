@@ -13,7 +13,7 @@ const getAsignedUserColumnsActionCreator = userId => {
     };
 
     axios
-      .get("/usersField??uid=" + userId, header)
+      .get("/usersField?uid=" + userId, header)
       .then(res => {
         dispatch(successUserColumn(res.data.User_fields));
         dispatch(getLayoutActionCreator());

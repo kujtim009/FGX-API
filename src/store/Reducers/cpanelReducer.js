@@ -80,7 +80,6 @@ const reducer = (state = initialState, action) => {
     case actionTypes.CHANGE_USER_ASIGNED_COLUMNS:
       const updated = action.payload.map((item, indx) => {
         if ("LayoutField" in item) {
-          console.log("checkFor:", item);
           return {
             ID: item.FieldID,
             View_state: 1,
@@ -123,16 +122,15 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SUCCESS_POST_COLUMN:
       return {
         ...state,
-        cpanelSpinner: false,
-        asignedColumns: action.payload
+        cpanelSpinner: false
       };
     case actionTypes.START_POST_COLUMN:
       return { ...state, cpanelSpinner: true };
     case actionTypes.FAILD_POST_COLUMN:
       return {
         ...state,
-        cpanelSpinner: false,
-        message: action.payload.error.data.message
+        cpanelSpinner: false
+        // message: action.payload.error.data.message
       };
 
     default:

@@ -25,7 +25,6 @@ class ReactSortList extends Component {
   }
   componentDidUpdate() {}
   render() {
-    console.log(this.state);
     return (
       <Card className="mt-2">
         <div id="container" className={classes.container}>
@@ -42,8 +41,8 @@ class ReactSortList extends Component {
                 this.props.unAsignedColumnsHandler(newState)
               }>
               {this.props.unAsignedColumns.map(item => (
-                <div className={classes.listElementlayout} key={item.ExportID}>
-                  {item.ExportField}
+                <div className={classes.listElementlayout} key={item.FieldID}>
+                  {item.FieldID + " / " + item.ExportField}
                 </div>
               ))}
             </ReactSortable>
@@ -61,7 +60,7 @@ class ReactSortList extends Component {
               }>
               {this.props.asignedColumnsList.map(item => (
                 <div className={classes.listElementasignedFields} key={item.ID}>
-                  {item.Field_name}
+                  {item.ID + " / " + item.Field_name}
                 </div>
               ))}
             </ReactSortable>
