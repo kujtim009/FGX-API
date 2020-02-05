@@ -147,6 +147,27 @@ const reducer = (state = initialState, action) => {
         cpanelSpinner: false
         // message: action.payload.error.data.message
       };
+    case actionTypes.CHANGE_USER_LIC_TYPE:
+      console.log("CHANGED LIC TYPES:", action.payload);
+      return {
+        ...state,
+        cpanelSpinner: false,
+        userAsignedLicenseTypes: action.payload
+      };
+
+    case actionTypes.SUCCESS_POST_USER_LIC_TYPES:
+      return {
+        ...state,
+        cpanelSpinner: false
+      };
+    case actionTypes.START_POST_USER_LIC_TYPES:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_POST_USER_LIC_TYPES:
+      return {
+        ...state,
+        cpanelSpinner: false
+        // message: action.payload.error.data.message
+      };
     default:
       return state;
   }

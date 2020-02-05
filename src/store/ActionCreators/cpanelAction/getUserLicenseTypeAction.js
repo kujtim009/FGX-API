@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as actionTypes from "../actions";
+import * as actionTypes from "../../actions";
 const getAsignedUserLicTypeActionCreator = userID => {
   return dispatch => {
     dispatch(startUserLicTypes());

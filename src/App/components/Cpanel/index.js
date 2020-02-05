@@ -11,8 +11,9 @@ import postColumnsActionCreator from "../../../store/ActionCreators/cpanelAction
 import * as actionTypes from "../../../store/actions";
 import SortableAsignUserColumns from "../SortableList/sortableAsignUserColumns";
 import UserAsignedLicenseType from "../../components/UserAsignedLicenseType/UserAsignedLicenseType";
-import getAsignedUserLicTypeActionCreator from "../../../store/ActionCreators/cpanelAction/postColumnsAction";
-getAsignedUserLicTypeActionCreator;
+import getAsignedUserLicTypeActionCreator from "../../../store/ActionCreators/cpanelAction/getUserLicenseTypeAction";
+import postAsignLicType from "../../../store/ActionCreators/cpanelAction/postAssignLicType";
+
 class Cpanel extends React.Component {
   state = {
     userAsighnColumns: 1,
@@ -45,7 +46,10 @@ class Cpanel extends React.Component {
 
   onChangeHandler(event) {
     this.props.registredUserChangeAction(event.target.value);
-    this.props.getUserColumnsAction(event.target.value);
+    if (this.state.userAsighnColumns === 2)
+      this.props.getUserColumnsAction(event.target.value);
+    if (this.state.licenseTypeAsign === 2)
+      this.props.getUserAsignedLicenseTypeAction(event.target.value);
   }
   render() {
     const loader = (
@@ -86,33 +90,26 @@ class Cpanel extends React.Component {
             <Card.Title as="h5">
               <a
                 href={DEMO.BLANK_LINK}
-                onClick={this.onAsignUserColumnsHandler}
+                onClick={this.onLicenseTypeChangeHandler}
                 aria-controls="accordion2"
-                aria-expanded={userAsighnColumns === 2}>
+                aria-expanded={licenseTypeAsign === 2}>
                 Assign License Types!
               </a>
             </Card.Title>
           </Card.Header>
-          <Collapse in={this.state.userAsighnColumns === 2}>
+          <Collapse in={this.state.licenseTypeAsign === 2}>
             <div id="accordion2">
               <Card.Body>
                 {dropDownUsers}
                 <UserAsignedLicenseType
-                  unAsignedColumns={this.props.unAsignedColumns}
-                  asignedColumnsList={this.props.asignedColumns}
-                  asignedColumnsChangehandler={
-                    this.props.asignedUserColumnChangeAction
-                  }
-                  unAsignedColumnsHandler={
-                    this.props.unAsignedColumnChangeAction
-                  }
+                  usersLicType={this.props.userAsignedLicenseTypes}
                 />
 
                 <Card.Footer>
                   <Button
                     onClick={() =>
-                      this.props.postUserColumnAction(
-                        this.props.asignedColumns,
+                      this.props.postUserLicTypeAction(
+                        this.props.userAsignedLicenseTypes,
                         this.props.selectedUserId
                       )
                     }>
@@ -129,14 +126,14 @@ class Cpanel extends React.Component {
             <Card.Title as="h5">
               <a
                 href={DEMO.BLANK_LINK}
-                onClick={this.onLicenseTypeChangeHandler}
+                onClick={this.onAsignUserColumnsHandler}
                 aria-controls="accordion2"
-                aria-expanded={licenseTypeAsign === 2}>
+                aria-expanded={userAsighnColumns === 2}>
                 Assign User Columns!
               </a>
             </Card.Title>
           </Card.Header>
-          <Collapse in={this.state.licenseTypeAsign === 2}>
+          <Collapse in={this.state.userAsighnColumns === 2}>
             <div id="accordion2">
               <Card.Body>
                 {dropDownUsers}
@@ -218,7 +215,9 @@ const mapDispatchToProps = dispatch => {
         payload: columns
       }),
     getUserAsignedLicenseTypeAction: userId =>
-      dispatch(getAsignedUserLicTypeActionCreator(userId))
+      dispatch(getAsignedUserLicTypeActionCreator(userId)),
+    postUserLicTypeAction: (lic, userId) =>
+      dispatch(postAsignLicType(lic, userId))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cpanel);

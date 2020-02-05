@@ -12,7 +12,7 @@ class UserAsignedLicenseType extends Component {
         Status: false
       },
       {
-        title: "Busyness",
+        title: "Business",
         id: "blf",
         Status: false
       },
@@ -29,49 +29,48 @@ class UserAsignedLicenseType extends Component {
     ]
   };
 
-  getSelectedLicTypesToString = licTypes => {
-    return licTypes
-      .filter(item => {
-        return item.Status === true;
-      })
-      .map(item => item.id)
-      .join();
-  };
-
-  onCheckboxCheckHandler(event) {
-    const tempLicTypes = this.props.availableLicTypes.map(item => {
-      if (event.target.id === item.id) {
-        return { title: item.title, id: item.id, Status: event.target.checked };
-      } else {
-        return item;
-      }
-    });
-    const selLicTypes = this.getSelectedLicTypesToString(tempLicTypes);
-    this.props.licenseChangeAction(tempLicTypes, selLicTypes);
-    this.props.LoadProfessionAction(selLicTypes, this.props.selectedState);
-  }
-
-  render() {
-    let licType = null;
-    if (this.props.availableLicTypes) {
-      licType = this.state.availableLicenseTypes.map((item, index) => {
+  onCheckboxHandler(event) {
+    let tempLicTypes = [];
+    if (event.target.checked) {
+      console.log("EVENT TARGET1: ", event.target.checked);
+      tempLicTypes = this.state.availableLicenseTypes.filter(item => {
+        const targetId = event.target.id.split("_")[0];
         return (
-          <Form.Check
-            custom
-            key={index}
-            type="checkbox"
-            id={item.id}
-            label={item.title}
-            checked={this.props.availableLicTypes.some(
-              everyItem => item.id === everyItem.id
-            )}
-            onChange={e => this.onCheckboxCheckHandler(e)}
-          />
+          targetId === item.id ||
+          this.props.usersLicType.some(everyItem => item.id === everyItem.id)
         );
       });
     } else {
-      licType = null;
+      console.log("EVENT TARGET2: ", event.target.checked);
+      tempLicTypes = this.props.usersLicType.filter(item => {
+        const targetId = event.target.id.split("_")[0];
+        return targetId !== item.id;
+      });
     }
+
+    // const selLicTypes = this.getSelectedLicTypesToString(tempLicTypes);
+    console.log("USER ASIGN LIC TYPE CHECKBOX CHECKED", tempLicTypes);
+    this.props.changeUserLicTypeAction(tempLicTypes);
+  }
+
+  render() {
+    // let licType = null;
+    console.log("USER ASIGN LIC TYPE RENDER");
+    const licType = this.state.availableLicenseTypes.map((item, index) => {
+      return (
+        <Form.Check
+          custom
+          key={"urs" + index}
+          type="checkbox"
+          id={item.id + "_usr"}
+          label={item.title}
+          checked={this.props.usersLicType.some(
+            everyItem => item.id === everyItem.id
+          )}
+          onChange={e => this.onCheckboxHandler(e)}
+        />
+      );
+    });
 
     let compBody = (
       <div className="nav-link">
@@ -87,13 +86,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    licenseChangeAction: (licenseTypes, selectedTypes) =>
+    changeUserLicTypeAction: updatedLicTypes =>
       dispatch({
-        type: actionTypes.CHANGE_LICENSETYPE,
-        payload: {
-          licenseTypes: licenseTypes,
-          selectedLicenseTypes: selectedTypes
-        }
+        type: actionTypes.CHANGE_USER_LIC_TYPE,
+        payload: updatedLicTypes
       })
   };
 };
