@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-// import { ReactSortable, Sortable } from "react-sortablejs";
 import { AgGridReact } from "ag-grid-react";
-import { Form, Row, Col, Button, Card, Collapse } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import classes from "./SortableProfessionAssign.module.css";
 
 class SortableProfessionAssign extends Component {
@@ -17,20 +16,22 @@ class SortableProfessionAssign extends Component {
   }
 
   onUnAsignedButtonClick = e => {
-    console.log(this.gridApi.getSelectedNodes());
-    const selectedProfessions = this.gridApi.getSelectedNodes().map(item => ({
-      title: item.data.title
-    }));
-    console.log(selectedProfessions);
-    this.props.unAsignedProfessionHandler(selectedProfessions);
+    if (this.gridApi.getSelectedNodes().length >= 1) {
+      const selectedProfessions = this.gridApi.getSelectedNodes().map(item => ({
+        title: item.data.title
+      }));
+      this.props.unAsignedProfessionHandler(selectedProfessions);
+    }
   };
   onAsignedButtonClick = e => {
-    console.log(this.gridApi2.getSelectedNodes());
-    const selectedProfessions = this.gridApi2.getSelectedNodes().map(item => ({
-      title: item.data.title
-    }));
-    console.log(selectedProfessions);
-    this.props.asignedProfessionChangehandler(selectedProfessions);
+    if (this.gridApi2.getSelectedNodes().length >= 1) {
+      const selectedProfessions = this.gridApi2
+        .getSelectedNodes()
+        .map(item => ({
+          title: item.data.title
+        }));
+      this.props.asignedProfessionChangehandler(selectedProfessions);
+    }
   };
 
   render() {
@@ -66,9 +67,6 @@ class SortableProfessionAssign extends Component {
                 height: "500px",
                 maxWidth: "100%"
               }}>
-              <button onClick={this.onUnAsignedButtonClick}>
-                Get selected rows
-              </button>
               <AgGridReact
                 key="0"
                 rowSelection="multiple"
@@ -76,6 +74,9 @@ class SortableProfessionAssign extends Component {
                 rowData={this.props.unAsignedProfessions}
                 onGridReady={params => (this.gridApi = params.api)}
               />
+              <Button onClick={this.onUnAsignedButtonClick}>
+                Add Selected Professions
+              </Button>
             </div>
           </div>
           <div className={classes.asignedFields}>
@@ -86,9 +87,6 @@ class SortableProfessionAssign extends Component {
                 height: "500px",
                 maxWidth: "100%"
               }}>
-              <button onClick={this.onAsignedButtonClick}>
-                Get selected rows
-              </button>
               <AgGridReact
                 key="1"
                 rowSelection="multiple"
@@ -96,6 +94,9 @@ class SortableProfessionAssign extends Component {
                 rowData={this.props.asignedProfessions}
                 onGridReady={params => (this.gridApi2 = params.api)}
               />
+              <Button onClick={this.onAsignedButtonClick}>
+                Remove Selected Professions
+              </Button>
             </div>
           </div>
         </div>

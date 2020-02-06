@@ -14,6 +14,7 @@ const getProfessionActionCreator = userID => {
     axios
       .get("/professions", header)
       .then(res => {
+        console.log("GET USER PROFESSION: ", res.data);
         const tempProfessions = Object.keys(res.data).map(item => ({
           title: item
         }));
@@ -21,6 +22,10 @@ const getProfessionActionCreator = userID => {
         axios
           .get("/getuserprm?prmname=Professions&uid=" + userID, header)
           .then(res => {
+            console.log(
+              "USER ASIGNED PROFESSION:",
+              res.data.prm_value.professions
+            );
             const tempUserProfessions = res.data.prm_value.professions
               .split(",")
               .map(item => ({

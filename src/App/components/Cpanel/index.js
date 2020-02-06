@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { BarLoader } from "react-spinners";
-import { Form, Row, Col, Button, Card, Collapse } from "react-bootstrap";
+import { Form, Button, Card, Collapse } from "react-bootstrap";
 import DEMO from "../../../store/constant";
 
 import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthAction";
@@ -21,7 +21,8 @@ class Cpanel extends React.Component {
   state = {
     userAsighnColumns: 1,
     licenseTypeAsign: 1,
-    professionAsign: 1
+    professionAsign: 1,
+    enableProfessionSaveButton: true
   };
 
   componentDidMount() {
@@ -63,8 +64,12 @@ class Cpanel extends React.Component {
       this.props.getUserColumnsAction(event.target.value);
     if (this.state.licenseTypeAsign === 2)
       this.props.getUserAsignedLicenseTypeAction(event.target.value);
-    if (this.state.professionAsign === 2)
+    if (this.state.professionAsign === 2) {
       this.props.getAllProfessions(event.target.value);
+      this.setState({
+        enableProfessionSaveButton: false
+      });
+    }
   }
   render() {
     const loader = (
@@ -209,6 +214,7 @@ class Cpanel extends React.Component {
 
                 <Card.Footer>
                   <Button
+                    disabled={this.state.enableProfessionSaveButton}
                     onClick={() =>
                       this.props.postUserProfessions(
                         this.props.asignedProfessions,

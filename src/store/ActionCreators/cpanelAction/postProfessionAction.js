@@ -14,7 +14,7 @@ const postProfessionActionCreator = (professions, userID) => {
 
     const postLicData = {
       prm_name: "Professions",
-      prm_value: { profession: professions.map(item => item.title).join(",") },
+      prm_value: { professions: professions.map(item => item.title).join(",") },
       prm_description: "Professions allowed for user"
     };
     console.log("GENERATEOD POST: ", postLicData);
