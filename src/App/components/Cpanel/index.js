@@ -13,11 +13,13 @@ import SortableAsignUserColumns from "../SortableList/sortableAsignUserColumns";
 import UserAsignedLicenseType from "../../components/UserAsignedLicenseType/UserAsignedLicenseType";
 import getAsignedUserLicTypeActionCreator from "../../../store/ActionCreators/cpanelAction/getUserLicenseTypeAction";
 import postAsignLicType from "../../../store/ActionCreators/cpanelAction/postAssignLicType";
+import SortableProfessionAssign from "../../components/SortableProfessionAssign/SortableProfessionAssign";
 
 class Cpanel extends React.Component {
   state = {
     userAsighnColumns: 1,
-    licenseTypeAsign: 1
+    licenseTypeAsign: 1,
+    professionAsign: 1
   };
 
   componentDidMount() {
@@ -33,6 +35,15 @@ class Cpanel extends React.Component {
     });
 
     if (userAsighnColumns <= 1) this.props.getRegistredUsersAction();
+  };
+
+  onProfessionAsignHandler = () => {
+    const professionAsign = this.state.professionAsign;
+    this.setState({
+      professionAsign: professionAsign !== 2 ? 2 : 0
+    });
+
+    if (professionAsign <= 1) this.props.getRegistredUsersAction();
   };
 
   onLicenseTypeChangeHandler = () => {
@@ -79,12 +90,13 @@ class Cpanel extends React.Component {
       </Form.Control>
     );
 
-    const { userAsighnColumns, licenseTypeAsign } = this.state;
+    const { userAsighnColumns, licenseTypeAsign, professionAsign } = this.state;
 
     const content = this.props.isAdmin ? (
       <React.Fragment>
         <h5>Control Panel</h5>
         {loader}
+        {/* ASSIIGN LICENSE TYPES */}
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
@@ -120,7 +132,7 @@ class Cpanel extends React.Component {
             </div>
           </Collapse>
         </Card>
-
+        {/* ASSIIGN USER COLUMNS */}
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
@@ -138,6 +150,49 @@ class Cpanel extends React.Component {
               <Card.Body>
                 {dropDownUsers}
                 <SortableAsignUserColumns
+                  unAsignedColumns={this.props.unAsignedColumns}
+                  asignedColumnsList={this.props.asignedColumns}
+                  asignedColumnsChangehandler={
+                    this.props.asignedUserColumnChangeAction
+                  }
+                  unAsignedColumnsHandler={
+                    this.props.unAsignedColumnChangeAction
+                  }
+                />
+
+                <Card.Footer>
+                  <Button
+                    onClick={() =>
+                      this.props.postUserColumnAction(
+                        this.props.asignedColumns,
+                        this.props.selectedUserId
+                      )
+                    }>
+                    SAVE CHANGES
+                  </Button>
+                </Card.Footer>
+              </Card.Body>
+            </div>
+          </Collapse>
+        </Card>
+        {/* ASSIIGN PROFESSIONS */}
+        <Card className="mt-2">
+          <Card.Header>
+            <Card.Title as="h5">
+              <a
+                href={DEMO.BLANK_LINK}
+                onClick={this.onProfessionAsignHandler}
+                aria-controls="accordion2"
+                aria-expanded={professionAsign === 2}>
+                Assign Professions to User!
+              </a>
+            </Card.Title>
+          </Card.Header>
+          <Collapse in={this.state.professionAsign === 2}>
+            <div id="accordion2">
+              <Card.Body>
+                {dropDownUsers}
+                <SortableProfessionAssign
                   unAsignedColumns={this.props.unAsignedColumns}
                   asignedColumnsList={this.props.asignedColumns}
                   asignedColumnsChangehandler={

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { ReactSortable, Sortable } from "react-sortablejs";
 import { Form, Row, Col, Button, Card, Collapse } from "react-bootstrap";
-import classes from "./sortableAsignUserColumns.module.css";
+import classes from "./SortableProfessionAssign.module.css";
 
-class SortableAsignUserColumns extends Component {
+class SortableProfessionAssign extends Component {
   state = {
     layout: [],
     columns: []
@@ -14,15 +14,13 @@ class SortableAsignUserColumns extends Component {
       columns: this.props.asignedColumnsList
     });
   }
-  componentDidUpdate() {}
   render() {
     return (
       <Card className="mt-2">
         <div id="container" className={classes.container}>
           <div className={classes.layout}>
-            <h5>Un-asigned columns</h5>
+            <h5>Un-asigned Professions</h5>
             <ReactSortable
-              className={classes.layoutInternal}
               group="shared"
               animation={200}
               delayOnTouchStart={true}
@@ -40,9 +38,8 @@ class SortableAsignUserColumns extends Component {
             </ReactSortable>
           </div>
           <div className={classes.asignedFields}>
-            <h5>Asigned columns</h5>
+            <h5>Asigned Professions</h5>
             <ReactSortable
-              className={classes.asignedFieldsInternal}
               group="shared"
               animation={200}
               delayOnTouchStart={true}
@@ -64,4 +61,4 @@ class SortableAsignUserColumns extends Component {
   }
 }
 
-export default SortableAsignUserColumns;
+export default SortableProfessionAssign;
