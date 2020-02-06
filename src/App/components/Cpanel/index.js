@@ -14,6 +14,8 @@ import UserAsignedLicenseType from "../../components/UserAsignedLicenseType/User
 import getAsignedUserLicTypeActionCreator from "../../../store/ActionCreators/cpanelAction/getUserLicenseTypeAction";
 import postAsignLicType from "../../../store/ActionCreators/cpanelAction/postAssignLicType";
 import SortableProfessionAssign from "../../components/SortableProfessionAssign/SortableProfessionAssign";
+import getProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/getProfessionsAction";
+import postProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/postProfessionAction";
 
 class Cpanel extends React.Component {
   state = {
@@ -61,6 +63,8 @@ class Cpanel extends React.Component {
       this.props.getUserColumnsAction(event.target.value);
     if (this.state.licenseTypeAsign === 2)
       this.props.getUserAsignedLicenseTypeAction(event.target.value);
+    if (this.state.professionAsign === 2)
+      this.props.getAllProfessions(event.target.value);
   }
   render() {
     const loader = (
@@ -193,21 +197,21 @@ class Cpanel extends React.Component {
               <Card.Body>
                 {dropDownUsers}
                 <SortableProfessionAssign
-                  unAsignedColumns={this.props.unAsignedColumns}
-                  asignedColumnsList={this.props.asignedColumns}
-                  asignedColumnsChangehandler={
-                    this.props.asignedUserColumnChangeAction
+                  unAsignedProfessions={this.props.unAsignedProfessions}
+                  asignedProfessions={this.props.asignedProfessions}
+                  asignedProfessionChangehandler={
+                    this.props.asignedUserProfessionChangeAction
                   }
-                  unAsignedColumnsHandler={
-                    this.props.unAsignedColumnChangeAction
+                  unAsignedProfessionHandler={
+                    this.props.unAsignedUserProfessionChangeAction
                   }
                 />
 
                 <Card.Footer>
                   <Button
                     onClick={() =>
-                      this.props.postUserColumnAction(
-                        this.props.asignedColumns,
+                      this.props.postUserProfessions(
+                        this.props.asignedProfessions,
                         this.props.selectedUserId
                       )
                     }>
@@ -242,7 +246,9 @@ const mapStateToProps = state => {
     selectedUserId: state.cpanelReducer.selectedUserId,
     unAsignedColumns: state.cpanelReducer.unAsignedColumns,
     asignedColumns: state.cpanelReducer.asignedColumns,
-    userAsignedLicenseTypes: state.cpanelReducer.userAsignedLicenseTypes
+    userAsignedLicenseTypes: state.cpanelReducer.userAsignedLicenseTypes,
+    unAsignedProfessions: state.cpanelReducer.unAsignedProfessions,
+    asignedProfessions: state.cpanelReducer.asignedProfessions
   };
 };
 
@@ -272,7 +278,20 @@ const mapDispatchToProps = dispatch => {
     getUserAsignedLicenseTypeAction: userId =>
       dispatch(getAsignedUserLicTypeActionCreator(userId)),
     postUserLicTypeAction: (lic, userId) =>
-      dispatch(postAsignLicType(lic, userId))
+      dispatch(postAsignLicType(lic, userId)),
+    getAllProfessions: userId => dispatch(getProfessionActionCreator(userId)),
+    asignedUserProfessionChangeAction: professions =>
+      dispatch({
+        type: actionTypes.CHANGE_USER_ASIGNED_PROFESSIONS,
+        payload: professions
+      }),
+    unAsignedUserProfessionChangeAction: professions =>
+      dispatch({
+        type: actionTypes.CHANGE_UNASIGNED_PROFESSIONS,
+        payload: professions
+      }),
+    postUserProfessions: (professions, userId) =>
+      dispatch(postProfessionActionCreator(professions, userId))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cpanel);

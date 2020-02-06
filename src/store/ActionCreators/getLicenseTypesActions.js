@@ -13,9 +13,11 @@ const getUserLicenseTypes = () => {
       .get("/getuserprm?prmname=Lic_types", header)
       .then(res => {
         const tempLicTypes = [];
-        for (let key in res.data.prm_value) {
+        const licObject = JSON.parse(res.data.prm_value);
+        console.log("LICENSE TYPES", licObject);
+        for (let key in licObject) {
           tempLicTypes.push({
-            title: res.data.prm_value[key],
+            title: licObject[key],
             id: key,
             Status: false
           });

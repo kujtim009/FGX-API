@@ -7,7 +7,9 @@ const initialState = {
   unAsignedColumns: [],
   asignedColumns: [],
   selectedUserId: "",
-  userAsignedLicenseTypes: []
+  userAsignedLicenseTypes: [],
+  unAsignedProfessions: [],
+  asignedProfessions: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -167,6 +169,60 @@ const reducer = (state = initialState, action) => {
         ...state,
         cpanelSpinner: false
         // message: action.payload.error.data.message
+      };
+
+    case actionTypes.SUCCESS_GET_PROFESSIONS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        unAsignedProfessions: action.payload
+      };
+    case actionTypes.START_GET_PROFESSIONS:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_GET_PROFESSIONS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.error.data.message
+      };
+
+    case actionTypes.SUCCESS_GET_USER_PROFESSIONS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        asignedProfessions: action.payload
+      };
+    case actionTypes.START_GET_USER_PROFESSIONS:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_GET_USER_PROFESSIONS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.error.data.message
+      };
+
+    case actionTypes.CHANGE_UNASIGNED_PROFESSIONS:
+      console.log("CPANEL REDUCER: ", action.payload);
+      const tempUnasignedProf = state.unAsignedProfessions.filter(item =>
+        action.payload.every(someItem => item.title !== someItem.title)
+      );
+
+      return {
+        ...state,
+        unAsignedProfessions: tempUnasignedProf,
+        asignedProfessions: [...state.asignedProfessions, ...action.payload]
+      };
+    case actionTypes.CHANGE_USER_ASIGNED_PROFESSIONS:
+      const tempAsignedProf = state.asignedProfessions.filter(item =>
+        action.payload.every(someItem => item.title !== someItem.title)
+      );
+      return {
+        ...state,
+        unAsignedProfessions: [
+          ...state.unAsignedProfessions,
+          ...action.payload
+        ],
+        asignedProfessions: tempAsignedProf
       };
     default:
       return state;
