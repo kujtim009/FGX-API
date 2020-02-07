@@ -26,7 +26,7 @@ export default {
       id: "apis",
       title: "FGX DATA",
       type: "group",
-      icon: "icon-navigation",
+      icon: "feather icon-navigation",
       children: [
         {
           id: "api",
