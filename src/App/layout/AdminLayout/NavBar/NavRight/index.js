@@ -11,6 +11,7 @@ import Avatar3 from "../../../../../assets/images/user/avatar-3.jpg";
 import authRoutes from "../../../../../route";
 import * as actionTypes from "../../../../../store/actions";
 import { connect } from "react-redux";
+
 class NavRight extends Component {
   state = {
     listOpen: false,
@@ -157,9 +158,9 @@ class NavRight extends Component {
                 </div>
                 <ul className="pro-body">
                   <li>
-                    <a href={DEMO.BLANK_LINK} className="dropdown-item">
+                    <Link to="/cpanel" className="dropdown-item">
                       <i className="feather icon-settings" /> Settings
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a href={DEMO.BLANK_LINK} className="dropdown-item">

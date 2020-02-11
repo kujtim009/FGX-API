@@ -18,7 +18,7 @@ export default {
           title: "CPanel",
           type: "item",
           url: "/cpanel",
-          icon: "feather icon-check"
+          icon: "feather icon-settings"
         }
       ]
     },
