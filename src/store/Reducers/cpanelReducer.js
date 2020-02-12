@@ -9,7 +9,8 @@ const initialState = {
   selectedUserId: "",
   userAsignedLicenseTypes: [],
   unAsignedProfessions: [],
-  asignedProfessions: []
+  asignedProfessions: [],
+  message: ""
 };
 
 const reducer = (state = initialState, action) => {
@@ -223,6 +224,21 @@ const reducer = (state = initialState, action) => {
           ...action.payload
         ],
         asignedProfessions: tempAsignedProf
+      };
+    case actionTypes.SUCCESS_POST_REGISTER_USER:
+      console.log("REDUCER: ", action.payload);
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.data.message
+      };
+    case actionTypes.START_POST_REGISTER_USER:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_POST_REGISTER_USER:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.error.data.message
       };
     default:
       return state;

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+
 import { BarLoader } from "react-spinners";
 import { Form, Button, Card, Collapse } from "react-bootstrap";
 import DEMO from "../../../store/constant";
@@ -16,12 +17,15 @@ import postAsignLicType from "../../../store/ActionCreators/cpanelAction/postAss
 import SortableProfessionAssign from "../../components/SortableProfessionAssign/SortableProfessionAssign";
 import getProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/getProfessionsAction";
 import postProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/postProfessionAction";
+import SignUp from "../../components/SignUp/SignUp";
+import postRegisterUserActionCreator from "../../../store/ActionCreators/cpanelAction/postRegisterUserAction";
 
 class Cpanel extends React.Component {
   state = {
     userAsighnColumns: 1,
     licenseTypeAsign: 1,
     professionAsign: 1,
+    registerNewUser: 1,
     enableProfessionSaveButton: true
   };
 
@@ -58,12 +62,20 @@ class Cpanel extends React.Component {
     if (licenseTypeAsign <= 1) this.props.getRegistredUsersAction();
   };
 
+  onRegisterNewUserHandler = () => {
+    const registerNewUser = this.state.registerNewUser;
+    this.setState({
+      registerNewUser: registerNewUser !== 2 ? 2 : 0
+    });
+  };
+
   onChangeHandler(event) {
     this.props.registredUserChangeAction(event.target.value);
     if (this.state.userAsighnColumns === 2)
       this.props.getUserColumnsAction(event.target.value);
     if (this.state.licenseTypeAsign === 2)
       this.props.getUserAsignedLicenseTypeAction(event.target.value);
+
     if (this.state.professionAsign === 2) {
       this.props.getAllProfessions(event.target.value);
       this.setState({
@@ -99,7 +111,12 @@ class Cpanel extends React.Component {
       </Form.Control>
     );
 
-    const { userAsighnColumns, licenseTypeAsign, professionAsign } = this.state;
+    const {
+      userAsighnColumns,
+      licenseTypeAsign,
+      professionAsign,
+      registerNewUser
+    } = this.state;
 
     const content = this.props.isAdmin ? (
       <React.Fragment>
@@ -228,6 +245,30 @@ class Cpanel extends React.Component {
             </div>
           </Collapse>
         </Card>
+        {/* REGISTER NEW USER */}
+        <Card className="mt-2">
+          <Card.Header>
+            <Card.Title as="h5">
+              <a
+                href={DEMO.BLANK_LINK}
+                onClick={this.onRegisterNewUserHandler}
+                aria-controls="accordion2"
+                aria-expanded={registerNewUser === 2}>
+                Register New User
+              </a>
+            </Card.Title>
+          </Card.Header>
+          <Collapse in={this.state.registerNewUser === 2}>
+            <div id="accordion2">
+              <Card.Body>
+                <SignUp
+                  message={this.props.message}
+                  addUserAction={this.props.postRegisterUser}
+                />
+              </Card.Body>
+            </div>
+          </Collapse>
+        </Card>
       </React.Fragment>
     ) : (
       <h3 style={{ color: "red" }}>
@@ -254,7 +295,8 @@ const mapStateToProps = state => {
     asignedColumns: state.cpanelReducer.asignedColumns,
     userAsignedLicenseTypes: state.cpanelReducer.userAsignedLicenseTypes,
     unAsignedProfessions: state.cpanelReducer.unAsignedProfessions,
-    asignedProfessions: state.cpanelReducer.asignedProfessions
+    asignedProfessions: state.cpanelReducer.asignedProfessions,
+    message: state.cpanelReducer.message
   };
 };
 
@@ -297,7 +339,9 @@ const mapDispatchToProps = dispatch => {
         payload: professions
       }),
     postUserProfessions: (professions, userId) =>
-      dispatch(postProfessionActionCreator(professions, userId))
+      dispatch(postProfessionActionCreator(professions, userId)),
+    postRegisterUser: userData =>
+      dispatch(postRegisterUserActionCreator(userData))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cpanel);
