@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import DEMO from "../../../store/constant";
-import { Link } from "react-router-dom";
-import { Form } from "react-bootstrap";
 
-class SignUp extends Component {
+class RegisterUser extends Component {
   state = {
     username: "",
     email: "",
@@ -13,7 +10,8 @@ class SignUp extends Component {
     confirmPasswordStyle: {
       backgroundColor: "",
       confirm: true
-    }
+    },
+    ready: false
   };
 
   checkForConfPassword = () => {
@@ -34,12 +32,33 @@ class SignUp extends Component {
         }
       });
   };
+  validateEmail = email => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  checkIfFormIsReady = () => {
+    if (
+      this.state.username.length >= 3 &&
+      this.validateEmail(this.state.email) &&
+      this.state.confirmPasswordStyle.confirm &&
+      this.state.userAccessType !== "0"
+    )
+      this.setState({
+        ready: true
+      });
+    else
+      this.setState({
+        ready: false
+      });
+  };
   onChangeHandler = e => {
     this.setState({
       [e.target.id]: e.target.value
     });
     const timer = setTimeout(() => {
       this.checkForConfPassword();
+      this.checkIfFormIsReady();
       console.log(this.state);
       clearTimeout(timer);
     }, 200);
@@ -105,6 +124,7 @@ class SignUp extends Component {
             </div>
             <p>{this.props.message}</p>
             <button
+              disabled={!this.state.ready}
               onClick={() => this.props.addUserAction(this.state)}
               className="btn btn-primary shadow-2 mb-4">
               Register
@@ -116,4 +136,4 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+export default RegisterUser;

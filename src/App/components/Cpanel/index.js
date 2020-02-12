@@ -17,7 +17,7 @@ import postAsignLicType from "../../../store/ActionCreators/cpanelAction/postAss
 import SortableProfessionAssign from "../../components/SortableProfessionAssign/SortableProfessionAssign";
 import getProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/getProfessionsAction";
 import postProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/postProfessionAction";
-import SignUp from "../../components/SignUp/SignUp";
+import RegisterUser from "../../components/RegisterUser/RegisterUser";
 import postRegisterUserActionCreator from "../../../store/ActionCreators/cpanelAction/postRegisterUserAction";
 
 class Cpanel extends React.Component {
@@ -261,7 +261,7 @@ class Cpanel extends React.Component {
           <Collapse in={this.state.registerNewUser === 2}>
             <div id="accordion2">
               <Card.Body>
-                <SignUp
+                <RegisterUser
                   message={this.props.message}
                   addUserAction={this.props.postRegisterUser}
                 />
