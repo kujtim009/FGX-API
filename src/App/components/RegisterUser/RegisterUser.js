@@ -87,7 +87,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: true,
-          style: { color: "white", backgroundColor: "#FFFF33" }
+          style: { color: "", backgroundColor: "" }
         }
       });
     else
@@ -95,7 +95,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: false,
-          style: { color: "", backgroundColor: "" }
+          style: { color: "", backgroundColor: "#FEC2C2" }
         }
       });
   };
@@ -106,7 +106,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: true,
-          style: { color: "white", backgroundColor: "#FFFF33" }
+          style: { color: "", backgroundColor: "" }
         }
       });
     else
@@ -114,7 +114,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: false,
-          style: { color: "", backgroundColor: "" }
+          style: { color: "", backgroundColor: "#FEC2C2" }
         }
       });
   };
@@ -125,7 +125,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: true,
-          style: { color: "white", backgroundColor: "#FFFF33" }
+          style: { color: "", backgroundColor: "" }
         }
       });
     else
@@ -133,7 +133,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: false,
-          style: { color: "", backgroundColor: "" }
+          style: { color: "", backgroundColor: "#FEC2C2" }
         }
       });
   };
@@ -145,7 +145,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: true,
-          style: { color: "white", backgroundColor: "#FFFF33" }
+          style: { color: "", backgroundColor: "" }
         }
       });
     else
@@ -153,7 +153,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: false,
-          style: { color: "", backgroundColor: "" }
+          style: { color: "", backgroundColor: "#FEC2C2" }
         }
       });
   };
@@ -163,7 +163,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: true,
-          style: { color: "white", backgroundColor: "#FFFF33" }
+          style: { color: "", backgroundColor: "" }
         }
       });
     else
@@ -171,7 +171,7 @@ class RegisterUser extends Component {
         [id]: {
           ...this.state[id],
           valid: false,
-          style: { color: "", backgroundColor: "" }
+          style: { color: "", backgroundColor: "#FEC2C2" }
         }
       });
   };

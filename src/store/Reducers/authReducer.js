@@ -11,13 +11,21 @@ const initialState = {
   tokenExpired: false
 };
 
-const checkTokenExpiration = data => {
-  console.log(
-    data.error.data.error,
-    "token_expired",
-    data.error.data.error === "token_expired"
-  );
-  return data.error.data.error === "token_expired";
+const checkTokenExpiration = response => {
+  console.log("CHECKING TOKEN: ", response);
+  if ("error" in response && response.error !== undefined) {
+    if ("data" in response.error)
+      return response.error.data.error === "token_expired";
+  }
+};
+
+const faildRequestMessage = response => {
+  console.log(response);
+  if ("error" in response && response.error !== undefined) {
+    if ("data" in response.error) return response.error.data.message;
+  } else {
+    return "Connection to the server is lost, please try again in a few seconds!";
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,7 +48,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         showSpinner: false,
         isAuthenticated: false,
-        message: action.payload.error.data.message
+        // message: action.payload.error.data.message
+        message: faildRequestMessage(action.payload)
       };
     case actionTypes.SUCCESS_LOGOUT:
       return {
@@ -69,7 +78,7 @@ const reducer = (state = initialState, action) => {
         showSpinner: false,
         isAuthenticated: false,
         tokenExpired: checkTokenExpiration(action.payload),
-        message: action.payload.error.data.message
+        message: faildRequestMessage(action.payload)
       };
 
     default:

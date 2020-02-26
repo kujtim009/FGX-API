@@ -21,15 +21,14 @@ const initialState = {
   recordCount: null
 };
 
-// const getSelectedLicTypesToString = licTypes => {
-//   console.log("REDUCER CHANGE LICENSE: ", licTypes);
-//   return licTypes
-//     .filter(item => {
-//       return item.Status === true;
-//     })
-//     .map(item => item.id)
-//     .join();
-// };
+const faildRequestMessage = response => {
+  console.log(response);
+  if ("error" in response && response.error !== undefined) {
+    if ("data" in response.error) return response.error.data.message;
+  } else {
+    return "Connection to the server is lost, please try again in a few seconds!";
+  }
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -47,7 +46,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         showSpinner: false,
         checkAuth: true,
-        message: action.payload.error.data.message
+        message: faildRequestMessage(action.payload)
       };
 
     case actionTypes.CHANGE_LICENSETYPE:
@@ -63,6 +62,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case actionTypes.SUCCESS_GETPROFESSIONS:
+      console.log("FIlterReducer:", action.payload);
       return {
         ...state,
         checkAuth: false,
@@ -78,7 +78,7 @@ const reducer = (state = initialState, action) => {
         showSpinner: false,
         checkAuth: true,
         loadProfessionDataTable: false,
-        loginMessage: action.payload.error.data.message
+        loginMessage: faildRequestMessage(action.payload)
       };
 
     case actionTypes.CHANGE_PROFESSION:

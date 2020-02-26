@@ -32,7 +32,7 @@ const paramCreator = data => {
       prm.push("&" + key + "=" + data.other[key]);
     }
   });
-  return prm.join("");
+  return prm.join("").substring(1, prm.join("").length);
 };
 
 const runQueryActionCreator = (
@@ -43,16 +43,6 @@ const runQueryActionCreator = (
 ) => {
   return dispatch => {
     dispatch(startQuery());
-    // console.log(
-    //   "selectedLicenseTypes:",
-    //   selectedLicenseTypes,
-    //   "selectedProfession:",
-    //   selectedProfession,
-    //   "selectedState:",
-    //   selectedState,
-    //   "otherFilters:",
-    //   otherFilters
-    // );
     const rawQueryData = {
       licenseType: selectedLicenseTypes,
       profession: selectedProfession,
@@ -67,6 +57,7 @@ const runQueryActionCreator = (
       }
     };
     dispatch(runQueryCountActionCreator(parameters));
+    console.log("PARAMETERS", parameters);
     axios
       .get("/mlf_filter?" + parameters, header)
       .then(res => {

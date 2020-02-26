@@ -126,6 +126,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.SUCCESS_POST_COLUMN:
       return {
         ...state,
+        checkAuth: true,
         cpanelSpinner: false
       };
     case actionTypes.START_POST_COLUMN:
@@ -196,6 +197,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_GET_USER_PROFESSIONS:
       return { ...state, cpanelSpinner: true };
     case actionTypes.FAILD_GET_USER_PROFESSIONS:
+      console.log(action.payload);
       return {
         ...state,
         cpanelSpinner: false,

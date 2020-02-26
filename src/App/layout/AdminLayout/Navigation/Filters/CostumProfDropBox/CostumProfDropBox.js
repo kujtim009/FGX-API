@@ -16,6 +16,7 @@ class CostumProfDropBox extends Component {
           All professions
         </option>
       );
+      console.log("COSTUM DROP DOWN:", this.props.availableProfessions);
       Object.keys(this.props.availableProfessions).forEach(key => {
         dropElements.push(
           <option key={key} value={key}>

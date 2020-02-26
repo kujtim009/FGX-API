@@ -1,6 +1,10 @@
 import axios from "axios";
 import * as actionTypes from "../../actions";
 
+const isObject = o => {
+  return o !== null && typeof o === "object" && Array.isArray(o) === false;
+};
+
 const getProfessionActionCreator = userID => {
   return dispatch => {
     dispatch(startGetProfessions());
@@ -22,19 +26,17 @@ const getProfessionActionCreator = userID => {
         axios
           .get("/getuserprm?prmname=Professions&uid=" + userID, header)
           .then(res => {
-            console.log(
-              "USER ASIGNED PROFESSION:",
-              res.data.prm_value.professions
-            );
-            const tempUserProfessions = res.data.prm_value.professions
-              .split(",")
-              .map(item => ({
-                title: item
-              }));
+            console.log("CPANEL USER ASIGNED PROFESSION:", res.data.prm_value);
+            const tempUserProfessions = isObject(res.data.prm_value)
+              ? res.data.prm_value.professions.split(",").map(item => ({
+                  title: item
+                }))
+              : [];
 
             const unAsignedProfessions = tempProfessions.filter(profs =>
               tempUserProfessions.every(item => profs.title !== item.title)
             );
+
             dispatch(successGetProfessions(unAsignedProfessions));
             dispatch(successGetUserProfessions(tempUserProfessions));
           })

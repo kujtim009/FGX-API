@@ -16,6 +16,7 @@ const getUserProfessions = (licenses, state) => {
     axios
       .get(endpoint, header)
       .then(res => {
+        console.log("getPRofessionAction:", res.data);
         dispatch(successUserProfessions(res.data));
       })
       .catch(err => {

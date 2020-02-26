@@ -12,9 +12,9 @@ const postRegisterUserActionCreator = userInfo => {
     };
     console.log("USER INFO: ", userInfo);
     const userData = {
-      username: userInfo.username,
-      password: userInfo.password,
-      access_level: userInfo.userAccessType
+      username: userInfo.username.value,
+      password: userInfo.password.value,
+      access_level: userInfo.userAccessType.value
     };
     axios
       .post("/register", userData, header)
