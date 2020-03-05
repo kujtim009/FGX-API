@@ -22,7 +22,6 @@ const initialState = {
 };
 
 const faildRequestMessage = response => {
-  console.log(response);
   if ("error" in response && response.error !== undefined) {
     if ("data" in response.error) return response.error.data.message;
   } else {

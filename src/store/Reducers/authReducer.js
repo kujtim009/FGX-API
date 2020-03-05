@@ -5,6 +5,7 @@ const initialState = {
   userName: null,
   userId: null,
   accessLevel: null,
+  expiresIn: null,
   isAdmin: false,
   showSpinner: false,
   message: null,
@@ -12,7 +13,6 @@ const initialState = {
 };
 
 const checkTokenExpiration = response => {
-  console.log("CHECKING TOKEN: ", response);
   if ("error" in response && response.error !== undefined) {
     if ("data" in response.error)
       return response.error.data.error === "token_expired";
@@ -20,7 +20,6 @@ const checkTokenExpiration = response => {
 };
 
 const faildRequestMessage = response => {
-  console.log(response);
   if ("error" in response && response.error !== undefined) {
     if ("data" in response.error) return response.error.data.message;
   } else {
@@ -36,6 +35,7 @@ const reducer = (state = initialState, action) => {
         userName: action.payload.username,
         userId: action.payload.userId,
         accessLevel: action.payload.accessLevel,
+        expiresIn: action.payload.expiresIn,
         isAuthenticated: true,
         isAdmin: action.payload.accessLevel === "1" ? true : false,
         showSpinner: false,
@@ -64,6 +64,7 @@ const reducer = (state = initialState, action) => {
         userName: action.payload.userName,
         userId: action.payload.userId,
         accessLevel: action.payload.accessLevel,
+        expiresIn: action.payload.expiresIn,
         isAuthenticated: true,
         isAdmin: action.payload.accessLevel === "1" ? true : false,
         showSpinner: false,

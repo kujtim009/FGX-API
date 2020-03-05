@@ -20,12 +20,17 @@ import postProfessionActionCreator from "../../../store/ActionCreators/cpanelAct
 import RegisterUser from "../../components/RegisterUser/RegisterUser";
 import postRegisterUserActionCreator from "../../../store/ActionCreators/cpanelAction/postRegisterUserAction";
 
+import UserTimePeriod from "../../components/UserTimePeriod/UserTImePeriod";
+import getUserTimePeriodActionCreator from "../../../store/ActionCreators/cpanelAction/getUserTimePeridAction";
+import postTimePeriodActionCreator from "../../../store/ActionCreators/cpanelAction/postUserTimerPeriodAction";
+
 class Cpanel extends React.Component {
   state = {
     userAsighnColumns: 1,
     licenseTypeAsign: 1,
     professionAsign: 1,
     registerNewUser: 1,
+    userTimePeriodAsign: 1,
     enableProfessionSaveButton: true
   };
 
@@ -69,12 +74,25 @@ class Cpanel extends React.Component {
     });
   };
 
+  onUserTimePeriodHandler = () => {
+    const userTimePeriodAsign = this.state.userTimePeriodAsign;
+    this.setState({
+      userTimePeriodAsign: userTimePeriodAsign !== 2 ? 2 : 0
+    });
+    if (userTimePeriodAsign <= 1) this.props.getRegistredUsersAction();
+  };
+
   onChangeHandler(event) {
     this.props.registredUserChangeAction(event.target.value);
+
     if (this.state.userAsighnColumns === 2)
       this.props.getUserColumnsAction(event.target.value);
+
     if (this.state.licenseTypeAsign === 2)
       this.props.getUserAsignedLicenseTypeAction(event.target.value);
+
+    if (this.state.userTimePeriodAsign === 2)
+      this.props.getUserAsignedTimePeriodAction(event.target.value);
 
     if (this.state.professionAsign === 2) {
       this.props.getAllProfessions(event.target.value);
@@ -115,7 +133,8 @@ class Cpanel extends React.Component {
       userAsighnColumns,
       licenseTypeAsign,
       professionAsign,
-      registerNewUser
+      registerNewUser,
+      userTimePeriodAsign
     } = this.state;
 
     const content = this.props.isAdmin ? (
@@ -269,6 +288,41 @@ class Cpanel extends React.Component {
             </div>
           </Collapse>
         </Card>
+        {/* USER TIME PERIOD ASIGN */}
+        <Card className="mt-2">
+          <Card.Header>
+            <Card.Title as="h5">
+              <a
+                href={DEMO.BLANK_LINK}
+                onClick={this.onUserTimePeriodHandler}
+                aria-controls="accordion2"
+                aria-expanded={userTimePeriodAsign === 2}>
+                Asign Time Period
+              </a>
+            </Card.Title>
+          </Card.Header>
+          <Collapse in={this.state.userTimePeriodAsign === 2}>
+            <div id="accordion2">
+              <Card.Body>
+                {dropDownUsers}
+                <UserTimePeriod
+                  userID={this.props.selectedUserId}
+                  message={this.props.message}
+                  createdDate={this.props.timePeriodCreatedDate}
+                  expirationDate={this.props.timePeriodExpirationDate}
+                  dayesLeft={this.props.timePeriodDayes}
+                  postTimePeriod={this.props.postTimePeriod}
+                  changeTimePeriodCrtd={
+                    this.props.changeUserAsignedTimePeriodCrtdAction
+                  }
+                  changeTimePeriodExpr={
+                    this.props.changeUserAsignedTimePeriodExprAction
+                  }
+                />
+              </Card.Body>
+            </div>
+          </Collapse>
+        </Card>
       </React.Fragment>
     ) : (
       <h3 style={{ color: "red" }}>
@@ -296,7 +350,10 @@ const mapStateToProps = state => {
     userAsignedLicenseTypes: state.cpanelReducer.userAsignedLicenseTypes,
     unAsignedProfessions: state.cpanelReducer.unAsignedProfessions,
     asignedProfessions: state.cpanelReducer.asignedProfessions,
-    message: state.cpanelReducer.message
+    message: state.cpanelReducer.message,
+    timePeriodCreatedDate: state.cpanelReducer.timePeriodCreatedDate,
+    timePeriodExpirationDate: state.cpanelReducer.timePeriodExpirationDate,
+    timePeriodDayes: state.cpanelReducer.timePeriodDayes
   };
 };
 
@@ -341,7 +398,29 @@ const mapDispatchToProps = dispatch => {
     postUserProfessions: (professions, userId) =>
       dispatch(postProfessionActionCreator(professions, userId)),
     postRegisterUser: userData =>
-      dispatch(postRegisterUserActionCreator(userData))
+      dispatch(postRegisterUserActionCreator(userData)),
+    postTimePeriod: (userid, createdDate, expirationDate) =>
+      dispatch(
+        postTimePeriodActionCreator(userid, createdDate, expirationDate)
+      ),
+    getUserAsignedTimePeriodAction: userID =>
+      dispatch(getUserTimePeriodActionCreator(userID)),
+    changeUserAsignedTimePeriodCrtdAction: data =>
+      dispatch({
+        type: actionTypes.CHANGE_TIME_PERIOD,
+        payload: {
+          createdDate: data.createdDate,
+          timePeriodDayes: data.dayes
+        }
+      }),
+    changeUserAsignedTimePeriodExprAction: data =>
+      dispatch({
+        type: actionTypes.CHANGE_TIME_PERIOD,
+        payload: {
+          expirationData: data.expirationDate,
+          timePeriodDayes: data.dayes
+        }
+      })
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cpanel);

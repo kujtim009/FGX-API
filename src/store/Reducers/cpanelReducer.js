@@ -10,7 +10,19 @@ const initialState = {
   userAsignedLicenseTypes: [],
   unAsignedProfessions: [],
   asignedProfessions: [],
+
+  timePeriodCreatedDate: "",
+  timePeriodExpirationDate: "",
+  timePeriodDayes: "",
   message: ""
+};
+
+const faildRequestMessage = response => {
+  if ("error" in response && response.error !== undefined) {
+    if ("data" in response.error) return response.error.data.message;
+  } else {
+    return "Connection to the server is lost, please try again in a few seconds!";
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -228,7 +240,6 @@ const reducer = (state = initialState, action) => {
         asignedProfessions: tempAsignedProf
       };
     case actionTypes.SUCCESS_POST_REGISTER_USER:
-      console.log("REDUCER: ", action.payload);
       return {
         ...state,
         cpanelSpinner: false,
@@ -240,6 +251,59 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
+        message: action.payload.error.data.message
+      };
+
+    case actionTypes.SUCCESS_GET_TIME_PERIOD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        timePeriodCreatedDate: action.payload.CreatedDate,
+        timePeriodExpirationDate: action.payload.ExpirationDate,
+        timePeriodDayes: action.payload.Dayes
+      };
+    case actionTypes.START_GET_TIME_PERIOD:
+      return { ...state, cpanelSpinner: true, message: "" };
+    case actionTypes.FAILD_GET_TIME_PERIOD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        timePeriodCreatedDate: "",
+        timePeriodExpirationDate: "",
+        timePeriodDayes: "",
+        message: action.payload.error.data.message
+      };
+    case actionTypes.CHANGE_TIME_PERIOD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        timePeriodCreatedDate:
+          "createdDate" in action.payload
+            ? action.payload.createdDate
+            : state.timePeriodCreatedDate,
+        timePeriodExpirationDate:
+          "expirationData" in action.payload
+            ? action.payload.expirationData
+            : state.timePeriodExpirationDate,
+        timePeriodDayes: !isNaN(action.payload.timePeriodDayes)
+          ? action.payload.timePeriodDayes
+          : ""
+      };
+    case actionTypes.SUCCESS_POST_TIME_PERIOD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.data.message
+      };
+    case actionTypes.START_POST_TIME_PERIOD:
+      return { ...state, cpanelSpinner: true, message: "" };
+    case actionTypes.FAILD_POST_TIME_PERIOD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        timePeriodCreatedDate: "",
+        timePeriodExpirationDate: "",
+        timePeriodDayes: "",
         message: action.payload.error.data.message
       };
     default:

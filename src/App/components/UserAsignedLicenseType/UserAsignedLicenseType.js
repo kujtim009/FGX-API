@@ -32,7 +32,6 @@ class UserAsignedLicenseType extends Component {
   onCheckboxHandler(event) {
     let tempLicTypes = [];
     if (event.target.checked) {
-      console.log("EVENT TARGET1: ", event.target.checked);
       tempLicTypes = this.state.availableLicenseTypes.filter(item => {
         const targetId = event.target.id.split("_")[0];
         return (
@@ -41,7 +40,6 @@ class UserAsignedLicenseType extends Component {
         );
       });
     } else {
-      console.log("EVENT TARGET2: ", event.target.checked);
       tempLicTypes = this.props.usersLicType.filter(item => {
         const targetId = event.target.id.split("_")[0];
         return targetId !== item.id;
@@ -49,13 +47,11 @@ class UserAsignedLicenseType extends Component {
     }
 
     // const selLicTypes = this.getSelectedLicTypesToString(tempLicTypes);
-    console.log("USER ASIGN LIC TYPE CHECKBOX CHECKED", tempLicTypes);
     this.props.changeUserLicTypeAction(tempLicTypes);
   }
 
   render() {
     // let licType = null;
-    console.log("USER ASIGN LIC TYPE RENDER");
     const licType = this.state.availableLicenseTypes.map((item, index) => {
       return (
         <Form.Check
