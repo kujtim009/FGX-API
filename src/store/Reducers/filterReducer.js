@@ -13,12 +13,14 @@ const initialState = {
   loadDataTable: false,
   data: null,
   columns: null,
+  queryPrm: null,
   loadProfessionDataTable: false,
   professionData: null,
   professionColumns: null,
   showCounter: false,
   showCounterSpinner: false,
-  recordCount: null
+  recordCount: null,
+  downloadStatus: false
 };
 
 const faildRequestMessage = response => {
@@ -107,15 +109,18 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_QUERY:
       return {
         ...state,
+        parameters: null,
         checkAuth: false,
         showSpinner: true
       };
     case actionTypes.SUCCESS_QUERY:
+      console.log("FILTER REDUCER:", action.payload);
       return {
         ...state,
         checkAuth: false,
         showSpinner: false,
-        data: action.payload,
+        data: action.payload.data,
+        queryPrm: action.payload.queryPrm,
         loadProfessionDataTable: false,
         loadDataTable: true
       };
@@ -163,6 +168,26 @@ const reducer = (state = initialState, action) => {
     case actionTypes.FAILD_USER_COLUMN:
       return {
         ...state,
+        message: action.payload
+      };
+
+    case actionTypes.START_DOWNLOAD_QUERY:
+      return {
+        showCounterSpinner: true,
+        downloadStatus: false,
+        ...state
+      };
+    case actionTypes.SUCCESS_DOWNLOAD_QUERY:
+      return {
+        ...state,
+        showCounterSpinner: false,
+        downloadStatus: true
+      };
+    case actionTypes.FAILD_DOWNLOAD_QUERY:
+      return {
+        ...state,
+        showCounterSpinner: false,
+        downloadStatus: false,
         message: action.payload
       };
     default:

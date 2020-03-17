@@ -4,10 +4,9 @@ import DataGrid from "../DataTable/DataTableGrid";
 import { connect } from "react-redux";
 import { BarLoader } from "react-spinners";
 import RecordCounter from "../RecordCount/RecordCount";
+import MainDownloadButton from "../MainDownloadButton/MainDownloadButton";
 
 class Dashboard extends React.Component {
-  componentDidMount() {}
-  componentWillUnmount() {}
   render() {
     const loader = (
       <div>
@@ -27,19 +26,31 @@ class Dashboard extends React.Component {
 
     const dataTable =
       this.props.loadDataTable || this.props.loadProfessionDataTable ? (
-        <DataGrid
-          columns={this.props.columns}
-          data={this.props.data}
-          availableProfessions={this.props.availableProfessions}
-          profession={this.props.loadProfessionDataTable}
-        />
+        <React.Fragment>
+          <DataGrid
+            columns={this.props.columns}
+            data={this.props.data}
+            availableProfessions={this.props.availableProfessions}
+            profession={this.props.loadProfessionDataTable}
+          />
+        </React.Fragment>
       ) : null;
+
+    const dwnldButton = this.props.loadDataTable ? (
+      <MainDownloadButton
+        prms={this.props.queryPrm}
+        status={this.props.downloadStatus}
+        dnldData={this.props.data}
+        dnldColumns={this.props.columns}
+      />
+    ) : null;
 
     return (
       <Aux>
         {loader}
         {recordCounter}
         {dataTable}
+        {dwnldButton}
       </Aux>
     );
   }
@@ -54,7 +65,9 @@ const mapStateToProps = state => {
     showCounter: state.filterReducer.showCounter,
     showCounterSpinner: state.filterReducer.showCounterSpinner,
     loadProfessionDataTable: state.filterReducer.loadProfessionDataTable,
-    availableProfessions: state.filterReducer.availableProfessions
+    availableProfessions: state.filterReducer.availableProfessions,
+    queryPrm: state.filterReducer.queryPrm,
+    downloadStatus: state.filterReducer.downloadStatus
   };
 };
 

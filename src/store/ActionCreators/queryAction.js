@@ -62,7 +62,7 @@ const runQueryActionCreator = (
       .get("/mlf_filter?" + parameters, header)
       .then(res => {
         console.log("/mlf_filter?" + parameters);
-        dispatch(successQuery(res.data.Records[0]));
+        dispatch(successQuery(res.data.Records[0], parameters));
       })
       .catch(err => {
         console.log("/mlf_filter?" + parameters);
@@ -71,9 +71,9 @@ const runQueryActionCreator = (
   };
 };
 
-const successQuery = data => ({
+const successQuery = (data, prm) => ({
   type: actionTypes.SUCCESS_QUERY,
-  payload: data
+  payload: { data: data, queryPrm: prm }
 });
 
 const startQuery = () => ({
