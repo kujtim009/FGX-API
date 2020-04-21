@@ -6,22 +6,36 @@ const queryDownloadActionCreator = parameters => {
     dispatch(startQuery());
     const header = {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        pragma: "no-cache",
+        "Cache-Control": "no-cache"
+      },
+      responseType: "blob"
     };
 
+    // const method = "GET";
+
+    const url = "/mlf_dnld?" + parameters;
+    console.log(header);
     axios
-      .get("/mlf_dnld?" + parameters, header)
-      .then(res => {
+      .get(url, header)
+      .then(({ data }) => {
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", "FGX_MLF_DATA.csv"); //any other extension
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
         dispatch(successQuery());
       })
       .catch(err => {
-        dispatch(failedQuery(err.response));
+        failedQuery(err.response);
       });
   };
 };
 
-const successQuery = () => ({
+const successQuery = file => ({
   type: actionTypes.SUCCESS_DOWNLOAD_QUERY
 });
 

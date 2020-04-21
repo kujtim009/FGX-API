@@ -5,9 +5,27 @@ import { connect } from "react-redux";
 import { BarLoader } from "react-spinners";
 import RecordCounter from "../RecordCount/RecordCount";
 import MainDownloadButton from "../MainDownloadButton/MainDownloadButton";
+import Dialog from "react-dialog";
 
 class Dashboard extends React.Component {
+  handleClose = () => alert("CLose");
   render() {
+    const showDownloadProgress = this.props.downloadStatus ? (
+      <Dialog
+        title="Data Downloading Progress"
+        modal={false}
+        onClose={this.handleClose}
+        buttons={[
+          {
+            text: "Close",
+            onClick: () => this.handleClose()
+          }
+        ]}>
+        <h1>Dialog Content</h1>
+        <p>More Content. Anything goes here</p>
+      </Dialog>
+    ) : null;
+
     const loader = (
       <div>
         <BarLoader
@@ -51,6 +69,7 @@ class Dashboard extends React.Component {
         {recordCounter}
         {dataTable}
         {dwnldButton}
+        {showDownloadProgress}
       </Aux>
     );
   }

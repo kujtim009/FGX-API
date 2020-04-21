@@ -20,7 +20,10 @@ const initialState = {
   showCounter: false,
   showCounterSpinner: false,
   recordCount: null,
-  downloadStatus: false
+  downloadStatus: false,
+  dnldData: null,
+  dnldColumns: null,
+  file: null
 };
 
 const faildRequestMessage = response => {
@@ -173,22 +176,22 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.START_DOWNLOAD_QUERY:
       return {
+        ...state,
         showCounterSpinner: true,
-        downloadStatus: false,
-        ...state
+        downloadStatus: true
       };
     case actionTypes.SUCCESS_DOWNLOAD_QUERY:
       return {
         ...state,
         showCounterSpinner: false,
-        downloadStatus: true
+        downloadStatus: false
       };
     case actionTypes.FAILD_DOWNLOAD_QUERY:
       return {
         ...state,
         showCounterSpinner: false,
         downloadStatus: false,
-        message: action.payload
+        message: action.payload.error.data.message
       };
     default:
       return state;

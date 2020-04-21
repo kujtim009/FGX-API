@@ -1,18 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Card, Button } from "react-bootstrap";
-import CsvDownloader from "react-csv-downloader";
 import queryDownloadActionCreator from "../../../store/ActionCreators/queryDownloadAction";
 
 class MainDownloadButton extends Component {
   render() {
-    const startDownload = this.props.status ? (
-      <CsvDownloader
-        columns={this.props.dnldColumns}
-        datas={this.props.dnldData}
-        filename="myfile"
-      />
-    ) : null;
     return (
       <React.Fragment>
         <Card>
@@ -33,7 +25,6 @@ class MainDownloadButton extends Component {
             <Button onClick={() => this.props.downloadQuery(this.props.prms)}>
               Download
             </Button>
-            {startDownload}
           </Card.Body>
         </Card>
       </React.Fragment>
