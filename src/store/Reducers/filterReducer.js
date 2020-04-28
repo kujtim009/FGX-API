@@ -177,19 +177,16 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_DOWNLOAD_QUERY:
       return {
         ...state,
-        showCounterSpinner: true,
         downloadStatus: true
       };
     case actionTypes.SUCCESS_DOWNLOAD_QUERY:
       return {
         ...state,
-        showCounterSpinner: false,
         downloadStatus: false
       };
     case actionTypes.FAILD_DOWNLOAD_QUERY:
       return {
         ...state,
-        showCounterSpinner: false,
         downloadStatus: false,
         message: action.payload.error.data.message
       };
