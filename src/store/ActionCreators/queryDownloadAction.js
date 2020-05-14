@@ -1,22 +1,21 @@
 import axios from "axios";
 import * as actionTypes from "../actions";
 
-const queryDownloadActionCreator = parameters => {
-  return dispatch => {
+const queryDownloadActionCreator = (parameters) => {
+  return (dispatch) => {
     dispatch(startQuery());
     const header = {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
         pragma: "no-cache",
-        "Cache-Control": "no-cache"
+        "Cache-Control": "no-cache",
       },
-      responseType: "blob"
+      responseType: "blob",
     };
 
     // const method = "GET";
 
     const url = "/mlf_dnld?" + parameters;
-    console.log(header);
     axios
       .get(url, header)
       .then(({ data }) => {
@@ -29,25 +28,23 @@ const queryDownloadActionCreator = parameters => {
         link.remove();
         dispatch(successQuery());
       })
-      .catch(err => {
-        failedQuery(err.response);
+      .catch(() => {
+        failedQuery("Something went wrong with the download!");
       });
   };
 };
 
-const successQuery = file => ({
-  type: actionTypes.SUCCESS_DOWNLOAD_QUERY
+const successQuery = (file) => ({
+  type: actionTypes.SUCCESS_DOWNLOAD_QUERY,
 });
 
 const startQuery = () => ({
-  type: actionTypes.START_DOWNLOAD_QUERY
+  type: actionTypes.START_DOWNLOAD_QUERY,
 });
 
-const failedQuery = error => ({
+const failedQuery = (error) => ({
   type: actionTypes.FAILD_DOWNLOAD_QUERY,
-  payload: {
-    error
-  }
+  payload: error,
 });
 
 export default queryDownloadActionCreator;

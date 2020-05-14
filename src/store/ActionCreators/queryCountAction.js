@@ -1,43 +1,41 @@
 import axios from "axios";
 import * as actionTypes from "../actions";
 
-const runQueryCountActionCreator = parameters => {
-  return dispatch => {
+const runQueryCountActionCreator = (parameters) => {
+  return (dispatch) => {
     dispatch(startCountQuery());
 
     const header = {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     };
 
     axios
       .get("/mlf_count?" + parameters, header)
-      .then(res => {
+      .then((res) => {
         console.log("RECORD COUNT: " + res.data.count);
         dispatch(successCountQuery(res.data.count));
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("/mlf_countfilter?" + parameters);
-        dispatch(failedCountQuery(err.response));
+        dispatch(failedCountQuery(err));
       });
   };
 };
 
-const successCountQuery = data => ({
+const successCountQuery = (data) => ({
   type: actionTypes.SUCCESS_COUNT_QUERY,
-  payload: data
+  payload: data,
 });
 
 const startCountQuery = () => ({
-  type: actionTypes.START_COUNT_QUERY
+  type: actionTypes.START_COUNT_QUERY,
 });
 
-const failedCountQuery = error => ({
+const failedCountQuery = (error) => ({
   type: actionTypes.FAILD_COUNT_QUERY,
-  payload: {
-    error
-  }
+  payload: error,
 });
 
 export default runQueryCountActionCreator;

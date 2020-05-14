@@ -2,12 +2,12 @@ import axios from "axios";
 import * as actionTypes from "../actions";
 
 const getUserProfessions = (licenses, state) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(startUserProfessions());
     const header = {
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
     };
     let endpoint =
       state === "all"
@@ -15,30 +15,30 @@ const getUserProfessions = (licenses, state) => {
         : "/professions?license_type=" + licenses + "&state=" + state;
     axios
       .get(endpoint, header)
-      .then(res => {
+      .then((res) => {
         console.log("getPRofessionAction:", res.data);
         dispatch(successUserProfessions(res.data));
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(failedUserProfessions(err.response));
       });
   };
 };
 
-const successUserProfessions = data => ({
+const successUserProfessions = (data) => ({
   type: actionTypes.SUCCESS_GETPROFESSIONS,
-  payload: data
+  payload: data,
 });
 
 const startUserProfessions = () => ({
-  type: actionTypes.START_GETPROFESSIONS
+  type: actionTypes.START_GETPROFESSIONS,
 });
 
-const failedUserProfessions = error => ({
+const failedUserProfessions = (error) => ({
   type: actionTypes.FAILD_GETPROFESSIONS,
   payload: {
-    error
-  }
+    error,
+  },
 });
 
 export default getUserProfessions;

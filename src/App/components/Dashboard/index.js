@@ -7,6 +7,7 @@ import RecordCounter from "../RecordCount/RecordCount";
 import MainDownloadButton from "../MainDownloadButton/MainDownloadButton";
 // import Dialog from "react-dialog";
 import DownloadingBox from "../DownloadingBox/DownloadingBox";
+import ApiAlert from "../Alert";
 
 class Dashboard extends React.Component {
   handleClose = () => alert("CLose");
@@ -59,12 +60,13 @@ class Dashboard extends React.Component {
         {dataTable}
         {dwnldButton}
         {showDownloadProgress}
+        {<ApiAlert show={this.props.showErrorMessage} />}
       </Aux>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     loadDataTable: state.filterReducer.loadDataTable,
     data: state.filterReducer.data,
@@ -75,7 +77,8 @@ const mapStateToProps = state => {
     loadProfessionDataTable: state.filterReducer.loadProfessionDataTable,
     availableProfessions: state.filterReducer.availableProfessions,
     queryPrm: state.filterReducer.queryPrm,
-    downloadStatus: state.filterReducer.downloadStatus
+    downloadStatus: state.filterReducer.downloadStatus,
+    showErrorMessage: state.filterReducer.showErrorMessage,
   };
 };
 
