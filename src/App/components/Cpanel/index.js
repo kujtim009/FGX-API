@@ -23,6 +23,7 @@ import postRegisterUserActionCreator from "../../../store/ActionCreators/cpanelA
 import UserTimePeriod from "../../components/UserTimePeriod/UserTImePeriod";
 import getUserTimePeriodActionCreator from "../../../store/ActionCreators/cpanelAction/getUserTimePeridAction";
 import postTimePeriodActionCreator from "../../../store/ActionCreators/cpanelAction/postUserTimerPeriodAction";
+import ApiAlert from "../Alert";
 
 class Cpanel extends React.Component {
   state = {
@@ -31,7 +32,7 @@ class Cpanel extends React.Component {
     professionAsign: 1,
     registerNewUser: 1,
     userTimePeriodAsign: 1,
-    enableProfessionSaveButton: true
+    enableProfessionSaveButton: true,
   };
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class Cpanel extends React.Component {
   onAsignUserColumnsHandler = () => {
     const userAsighnColumns = this.state.userAsighnColumns;
     this.setState({
-      userAsighnColumns: userAsighnColumns !== 2 ? 2 : 0
+      userAsighnColumns: userAsighnColumns !== 2 ? 2 : 0,
     });
 
     if (userAsighnColumns <= 1) this.props.getRegistredUsersAction();
@@ -52,7 +53,7 @@ class Cpanel extends React.Component {
   onProfessionAsignHandler = () => {
     const professionAsign = this.state.professionAsign;
     this.setState({
-      professionAsign: professionAsign !== 2 ? 2 : 0
+      professionAsign: professionAsign !== 2 ? 2 : 0,
     });
 
     if (professionAsign <= 1) this.props.getRegistredUsersAction();
@@ -61,7 +62,7 @@ class Cpanel extends React.Component {
   onLicenseTypeChangeHandler = () => {
     const licenseTypeAsign = this.state.licenseTypeAsign;
     this.setState({
-      licenseTypeAsign: licenseTypeAsign !== 2 ? 2 : 0
+      licenseTypeAsign: licenseTypeAsign !== 2 ? 2 : 0,
     });
 
     if (licenseTypeAsign <= 1) this.props.getRegistredUsersAction();
@@ -70,14 +71,14 @@ class Cpanel extends React.Component {
   onRegisterNewUserHandler = () => {
     const registerNewUser = this.state.registerNewUser;
     this.setState({
-      registerNewUser: registerNewUser !== 2 ? 2 : 0
+      registerNewUser: registerNewUser !== 2 ? 2 : 0,
     });
   };
 
   onUserTimePeriodHandler = () => {
     const userTimePeriodAsign = this.state.userTimePeriodAsign;
     this.setState({
-      userTimePeriodAsign: userTimePeriodAsign !== 2 ? 2 : 0
+      userTimePeriodAsign: userTimePeriodAsign !== 2 ? 2 : 0,
     });
     if (userTimePeriodAsign <= 1) this.props.getRegistredUsersAction();
   };
@@ -97,7 +98,7 @@ class Cpanel extends React.Component {
     if (this.state.professionAsign === 2) {
       this.props.getAllProfessions(event.target.value);
       this.setState({
-        enableProfessionSaveButton: false
+        enableProfessionSaveButton: false,
       });
     }
   }
@@ -123,7 +124,7 @@ class Cpanel extends React.Component {
         as="select"
         className="mb-3"
         value={this.props.selectedUserId}
-        onChange={e => this.onChangeHandler(e)}>
+        onChange={(e) => this.onChangeHandler(e)}>
         <option value={0}>Select user</option>
         {dropDownUsersElements}
       </Form.Control>
@@ -134,7 +135,7 @@ class Cpanel extends React.Component {
       licenseTypeAsign,
       professionAsign,
       registerNewUser,
-      userTimePeriodAsign
+      userTimePeriodAsign,
     } = this.state;
 
     const content = this.props.isAdmin ? (
@@ -333,12 +334,19 @@ class Cpanel extends React.Component {
     return (
       <React.Fragment>
         <div>{content}</div>
+        {
+          <ApiAlert
+            show={this.props.showErrorMessage}
+            positive={this.props.positiveMessage}
+            cpanelError={true}
+          />
+        }
       </React.Fragment>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isAdmin: state.authReducer.isAdmin,
     columns: state.filterReducer.columns,
@@ -353,74 +361,76 @@ const mapStateToProps = state => {
     message: state.cpanelReducer.message,
     timePeriodCreatedDate: state.cpanelReducer.timePeriodCreatedDate,
     timePeriodExpirationDate: state.cpanelReducer.timePeriodExpirationDate,
-    timePeriodDayes: state.cpanelReducer.timePeriodDayes
+    timePeriodDayes: state.cpanelReducer.timePeriodDayes,
+    showErrorMessage: state.cpanelReducer.showErrorMessage,
+    positiveMessage: state.cpanelReducer.positiveMessage,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    getUserColumnsAction: userId =>
+    getUserColumnsAction: (userId) =>
       dispatch(getAsignedUserColumnsActionCreator(userId)),
     getRegistredUsersAction: () => dispatch(getRegistredUsersActionCreator()),
     checkAauthAction: () => dispatch(checkAauthActionCreator()),
     postUserColumnAction: (column, userId) =>
       dispatch(postColumnsActionCreator(column, userId)),
-    registredUserChangeAction: userId =>
+    registredUserChangeAction: (userId) =>
       dispatch({
         type: actionTypes.CHANGE_REG_USER,
-        payload: userId
+        payload: userId,
       }),
-    asignedUserColumnChangeAction: columns =>
+    asignedUserColumnChangeAction: (columns) =>
       dispatch({
         type: actionTypes.CHANGE_USER_ASIGNED_COLUMNS,
-        payload: columns
+        payload: columns,
       }),
-    unAsignedColumnChangeAction: columns =>
+    unAsignedColumnChangeAction: (columns) =>
       dispatch({
         type: actionTypes.CHANGE_UNASIGNED_COLUMNS,
-        payload: columns
+        payload: columns,
       }),
-    getUserAsignedLicenseTypeAction: userId =>
+    getUserAsignedLicenseTypeAction: (userId) =>
       dispatch(getAsignedUserLicTypeActionCreator(userId)),
     postUserLicTypeAction: (lic, userId) =>
       dispatch(postAsignLicType(lic, userId)),
-    getAllProfessions: userId => dispatch(getProfessionActionCreator(userId)),
-    asignedUserProfessionChangeAction: professions =>
+    getAllProfessions: (userId) => dispatch(getProfessionActionCreator(userId)),
+    asignedUserProfessionChangeAction: (professions) =>
       dispatch({
         type: actionTypes.CHANGE_USER_ASIGNED_PROFESSIONS,
-        payload: professions
+        payload: professions,
       }),
-    unAsignedUserProfessionChangeAction: professions =>
+    unAsignedUserProfessionChangeAction: (professions) =>
       dispatch({
         type: actionTypes.CHANGE_UNASIGNED_PROFESSIONS,
-        payload: professions
+        payload: professions,
       }),
     postUserProfessions: (professions, userId) =>
       dispatch(postProfessionActionCreator(professions, userId)),
-    postRegisterUser: userData =>
+    postRegisterUser: (userData) =>
       dispatch(postRegisterUserActionCreator(userData)),
     postTimePeriod: (userid, createdDate, expirationDate) =>
       dispatch(
         postTimePeriodActionCreator(userid, createdDate, expirationDate)
       ),
-    getUserAsignedTimePeriodAction: userID =>
+    getUserAsignedTimePeriodAction: (userID) =>
       dispatch(getUserTimePeriodActionCreator(userID)),
-    changeUserAsignedTimePeriodCrtdAction: data =>
+    changeUserAsignedTimePeriodCrtdAction: (data) =>
       dispatch({
         type: actionTypes.CHANGE_TIME_PERIOD,
         payload: {
           createdDate: data.createdDate,
-          timePeriodDayes: data.dayes
-        }
+          timePeriodDayes: data.dayes,
+        },
       }),
-    changeUserAsignedTimePeriodExprAction: data =>
+    changeUserAsignedTimePeriodExprAction: (data) =>
       dispatch({
         type: actionTypes.CHANGE_TIME_PERIOD,
         payload: {
           expirationData: data.expirationDate,
-          timePeriodDayes: data.dayes
-        }
-      })
+          timePeriodDayes: data.dayes,
+        },
+      }),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Cpanel);

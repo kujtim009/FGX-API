@@ -4,14 +4,19 @@ import { useAlert } from "react-alert";
 import * as actionTypes from "../../../store/actions";
 
 function ApiAlert(props) {
-  const message = useSelector((state) => state.filterReducer.message);
+  const messageFilter = useSelector((state) => state.filterReducer.message);
+  const messageCpanel = useSelector((state) => state.cpanelReducer.message);
+
+  const message = props.cpanelError ? messageCpanel : messageFilter;
   const dispatch = useDispatch();
 
   const alert = useAlert();
+  const positive = props.positive ? "success" : "error";
+  console.log("PROPS.SHOW", positive);
   if (props.show)
     alert.show(message, {
-      timeout: 2000, // custom timeout just for this one alert
-      type: "error",
+      timeout: 4000, // custom timeout just for this one alert
+      type: positive,
       onOpen: () => {
         console.log(message);
       }, // callback that will be executed after this alert open

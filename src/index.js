@@ -15,8 +15,9 @@ const options = {
   position: positions.BOTTOM_CENTER,
   timeout: 5000,
   offset: "30px",
+  width: "600px",
   // you can also just use 'scale'
-  transition: transitions.SCALE
+  transition: transitions.SCALE,
 };
 
 // axios.defaults.baseURL = "https://firmagraphix-api.com";

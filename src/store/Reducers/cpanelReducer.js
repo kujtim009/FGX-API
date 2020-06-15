@@ -14,10 +14,12 @@ const initialState = {
   timePeriodCreatedDate: "",
   timePeriodExpirationDate: "",
   timePeriodDayes: "",
-  message: ""
+  message: "",
+  showErrorMessage: false,
+  positiveMessage: false,
 };
 
-const faildRequestMessage = response => {
+const faildRequestMessage = (response) => {
   if ("error" in response && response.error !== undefined) {
     if ("data" in response.error) return response.error.data.message;
   } else {
@@ -31,7 +33,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        registredUsers: action.payload
+        registredUsers: action.payload,
       };
     case actionTypes.START_GET_REGISTRED_USERS:
       return { ...state, cpanelSpinner: true };
@@ -39,19 +41,19 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
       };
     case actionTypes.CHANGE_REG_USER:
       return {
         ...state,
-        selectedUserId: action.payload
+        selectedUserId: action.payload,
       };
 
     case actionTypes.SUCCESS_USER_ASIGNED_COLUMNS:
       return {
         ...state,
         cpanelSpinner: false,
-        asignedColumns: action.payload
+        asignedColumns: action.payload,
       };
     case actionTypes.START_USER_ASIGNED_COLUMNS:
       return { ...state, cpanelSpinner: true };
@@ -59,11 +61,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
       };
 
     case actionTypes.SUCCESS_GET_LAYOUT:
-      const tempLayout = action.payload.map(item => ({
+      const tempLayout = action.payload.map((item) => ({
         LayoutField: item.LayoutField,
         FieldID: item.FieldID,
         ExportField: item.ExportField.replace(/ /g, "_")
@@ -71,11 +73,11 @@ const reducer = (state = initialState, action) => {
           .replace("/", "")
           .replace("__", "_")
           .trim(),
-        ExportID: item.ExportID
+        ExportID: item.ExportID,
       }));
 
-      const unAsignedColumnsTemp = tempLayout.filter(layoutItem => {
-        return state.asignedColumns.every(userItem => {
+      const unAsignedColumnsTemp = tempLayout.filter((layoutItem) => {
+        return state.asignedColumns.every((userItem) => {
           return layoutItem.ExportField !== userItem.Field_name;
         });
       });
@@ -83,7 +85,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         cpanelSpinner: false,
         layout: tempLayout,
-        unAsignedColumns: unAsignedColumnsTemp
+        unAsignedColumns: unAsignedColumnsTemp,
       };
     case actionTypes.START_GET_LAYOUT:
       return { ...state, cpanelSpinner: true };
@@ -91,7 +93,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
       };
     case actionTypes.CHANGE_USER_ASIGNED_COLUMNS:
       const updated = action.payload.map((item, indx) => {
@@ -102,7 +104,7 @@ const reducer = (state = initialState, action) => {
             Field_name: item.ExportField,
             File_name: "MLF",
             User_id: state.selectedUserId,
-            Order: indx
+            Order: indx,
           };
         } else {
           return {
@@ -111,19 +113,19 @@ const reducer = (state = initialState, action) => {
             Field_name: item.Field_name,
             File_name: item.File_name,
             User_id: item.User_id,
-            Order: indx
+            Order: indx,
           };
         }
       });
       return {
         ...state,
-        asignedColumns: updated
+        asignedColumns: updated,
       };
     case actionTypes.CHANGE_UNASIGNED_COLUMNS:
-      const unAsignedUpdated = action.payload.map(firstItem => {
+      const unAsignedUpdated = action.payload.map((firstItem) => {
         if ("View_state" in firstItem) {
           const fieldDataToReturn = state.layout.filter(
-            item => item.ExportField === firstItem.Field_name
+            (item) => item.ExportField === firstItem.Field_name
           );
           return fieldDataToReturn[0];
         } else {
@@ -132,35 +134,41 @@ const reducer = (state = initialState, action) => {
       });
       return {
         ...state,
-        unAsignedColumns: unAsignedUpdated
+        unAsignedColumns: unAsignedUpdated,
       };
 
     case actionTypes.SUCCESS_POST_COLUMN:
       return {
         ...state,
         checkAuth: true,
-        cpanelSpinner: false
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Your changes have been saved successfully!",
+        positiveMessage: true,
       };
     case actionTypes.START_POST_COLUMN:
       return { ...state, cpanelSpinner: true };
     case actionTypes.FAILD_POST_COLUMN:
       return {
         ...state,
-        cpanelSpinner: false
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Error!",
+        positiveMessage: false,
         // message: action.payload.error.data.message
       };
     case actionTypes.SUCCESS_GET_USER_LIC_TYPES:
       return {
         ...state,
         cpanelSpinner: false,
-        userAsignedLicenseTypes: action.payload
+        userAsignedLicenseTypes: action.payload,
       };
     case actionTypes.START_GET_USER_LIC_TYPES:
       return { ...state, cpanelSpinner: true };
     case actionTypes.FAILD_GET_USER_LIC_TYPES:
       return {
         ...state,
-        cpanelSpinner: false
+        cpanelSpinner: false,
         // message: action.payload.error.data.message
       };
     case actionTypes.CHANGE_USER_LIC_TYPE:
@@ -168,20 +176,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        userAsignedLicenseTypes: action.payload
+        userAsignedLicenseTypes: action.payload,
       };
 
     case actionTypes.SUCCESS_POST_USER_LIC_TYPES:
       return {
         ...state,
-        cpanelSpinner: false
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Your changes have been saved successfully!",
+        positiveMessage: true,
       };
     case actionTypes.START_POST_USER_LIC_TYPES:
       return { ...state, cpanelSpinner: true };
     case actionTypes.FAILD_POST_USER_LIC_TYPES:
       return {
         ...state,
-        cpanelSpinner: false
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Error!",
+        positiveMessage: false,
         // message: action.payload.error.data.message
       };
 
@@ -189,7 +203,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        unAsignedProfessions: action.payload
+        unAsignedProfessions: action.payload,
       };
     case actionTypes.START_GET_PROFESSIONS:
       return { ...state, cpanelSpinner: true };
@@ -197,14 +211,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
       };
 
     case actionTypes.SUCCESS_GET_USER_PROFESSIONS:
       return {
         ...state,
         cpanelSpinner: false,
-        asignedProfessions: action.payload
+        asignedProfessions: action.payload,
       };
     case actionTypes.START_GET_USER_PROFESSIONS:
       return { ...state, cpanelSpinner: true };
@@ -213,45 +227,56 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
       };
 
     case actionTypes.CHANGE_UNASIGNED_PROFESSIONS:
       console.log("CPANEL REDUCER: ", action.payload);
-      const tempUnasignedProf = state.unAsignedProfessions.filter(item =>
-        action.payload.every(someItem => item.title !== someItem.title)
+      const tempUnasignedProf = state.unAsignedProfessions.filter((item) =>
+        action.payload.every((someItem) => item.title !== someItem.title)
       );
 
       return {
         ...state,
         unAsignedProfessions: tempUnasignedProf,
-        asignedProfessions: [...state.asignedProfessions, ...action.payload]
+        asignedProfessions: [...state.asignedProfessions, ...action.payload],
       };
     case actionTypes.CHANGE_USER_ASIGNED_PROFESSIONS:
-      const tempAsignedProf = state.asignedProfessions.filter(item =>
-        action.payload.every(someItem => item.title !== someItem.title)
+      const tempAsignedProf = state.asignedProfessions.filter((item) =>
+        action.payload.every((someItem) => item.title !== someItem.title)
       );
       return {
         ...state,
         unAsignedProfessions: [
           ...state.unAsignedProfessions,
-          ...action.payload
+          ...action.payload,
         ],
-        asignedProfessions: tempAsignedProf
+        asignedProfessions: tempAsignedProf,
       };
+
     case actionTypes.SUCCESS_POST_REGISTER_USER:
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.data.message
+        showErrorMessage: true,
+        positiveMessage: true,
+        message: action.payload.data.message,
       };
+    case actionTypes.SUCCESS_POST_USER_PROFESSION:
+      return {
+        ...state,
+        showErrorMessage: true,
+        message: "Your changes have been saved successfully!",
+        positiveMessage: true,
+      };
+
     case actionTypes.START_POST_REGISTER_USER:
       return { ...state, cpanelSpinner: true };
     case actionTypes.FAILD_POST_REGISTER_USER:
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
       };
 
     case actionTypes.SUCCESS_GET_TIME_PERIOD:
@@ -260,7 +285,7 @@ const reducer = (state = initialState, action) => {
         cpanelSpinner: false,
         timePeriodCreatedDate: action.payload.CreatedDate,
         timePeriodExpirationDate: action.payload.ExpirationDate,
-        timePeriodDayes: action.payload.Dayes
+        timePeriodDayes: action.payload.Dayes,
       };
     case actionTypes.START_GET_TIME_PERIOD:
       return { ...state, cpanelSpinner: true, message: "" };
@@ -271,7 +296,7 @@ const reducer = (state = initialState, action) => {
         timePeriodCreatedDate: "",
         timePeriodExpirationDate: "",
         timePeriodDayes: "",
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
       };
     case actionTypes.CHANGE_TIME_PERIOD:
       return {
@@ -287,13 +312,15 @@ const reducer = (state = initialState, action) => {
             : state.timePeriodExpirationDate,
         timePeriodDayes: !isNaN(action.payload.timePeriodDayes)
           ? action.payload.timePeriodDayes
-          : ""
+          : "",
       };
     case actionTypes.SUCCESS_POST_TIME_PERIOD:
       return {
         ...state,
         cpanelSpinner: false,
-        message: action.payload.data.message
+        showErrorMessage: true,
+        positiveMessage: true,
+        message: action.payload.data.message,
       };
     case actionTypes.START_POST_TIME_PERIOD:
       return { ...state, cpanelSpinner: true, message: "" };
@@ -304,7 +331,13 @@ const reducer = (state = initialState, action) => {
         timePeriodCreatedDate: "",
         timePeriodExpirationDate: "",
         timePeriodDayes: "",
-        message: action.payload.error.data.message
+        message: action.payload.error.data.message,
+      };
+    case actionTypes.ON_ALERT_CLOSE:
+      return {
+        ...state,
+        showErrorMessage: false,
+        message: "",
       };
     default:
       return state;
