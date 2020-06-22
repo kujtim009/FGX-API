@@ -17,7 +17,7 @@ class CostumProfDropBox extends Component {
         </option>
       );
       console.log("COSTUM DROP DOWN:", this.props.availableProfessions);
-      Object.keys(this.props.availableProfessions).forEach(key => {
+      Object.keys(this.props.availableProfessions).forEach((key) => {
         dropElements.push(
           <option key={key} value={key}>
             {key + " (" + this.props.availableProfessions[key] + ")"}
@@ -35,7 +35,7 @@ class CostumProfDropBox extends Component {
             as="select"
             id={this.props.item.id}
             className="mb-3"
-            onChange={e => this.onChangeHandler(e)}>
+            onChange={(e) => this.onChangeHandler(e)}>
             {dropElements}
           </Form.Control>
         </Form.Group>
@@ -46,20 +46,20 @@ class CostumProfDropBox extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     availableProfessions: state.filterReducer.availableProfessions,
-    selectedProfession: state.filterReducer.selectedProfession
+    selectedProfession: state.filterReducer.selectedProfession,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    profChangeAction: prof =>
+    profChangeAction: (prof) =>
       dispatch({
         type: actionTypes.CHANGE_PROFESSION,
-        payload: prof
-      })
+        payload: prof,
+      }),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CostumProfDropBox);

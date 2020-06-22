@@ -21,7 +21,7 @@ class NavCollapse extends Component {
     const currentIndex = document.location.pathname
       .toString()
       .split("/")
-      .findIndex(id => id === this.props.collapse.id);
+      .findIndex((id) => id === this.props.collapse.id);
     if (currentIndex > -1) {
       this.props.onCollapseToggle(this.props.collapse.id, this.props.type);
     }
@@ -33,7 +33,7 @@ class NavCollapse extends Component {
     let navItems = "";
     if (this.props.collapse.children) {
       const collapses = this.props.collapse.children;
-      navItems = Object.keys(collapses).map(item => {
+      navItems = Object.keys(collapses).map((item) => {
         item = collapses[item];
         switch (item.type) {
           case "collapse":
@@ -106,7 +106,7 @@ class NavCollapse extends Component {
     let navLinkClass = ["nav-link"];
 
     let navItemClass = ["nav-item", "pcoded-hasmenu"];
-    const openIndex = isOpen.findIndex(id => id === this.props.collapse.id);
+    const openIndex = isOpen.findIndex((id) => id === this.props.collapse.id);
     if (openIndex > -1) {
       navItemClass = [...navItemClass, "active"];
       if (this.props.layout !== "horizontal") {
@@ -115,7 +115,7 @@ class NavCollapse extends Component {
     }
 
     const triggerIndex = isTrigger.findIndex(
-      id => id === this.props.collapse.id
+      (id) => id === this.props.collapse.id
     );
     if (triggerIndex > -1) {
       navItemClass = [...navItemClass, "pcoded-trigger"];
@@ -124,7 +124,7 @@ class NavCollapse extends Component {
     const currentIndex = document.location.pathname
       .toString()
       .split("/")
-      .findIndex(id => id === this.props.collapse.id);
+      .findIndex((id) => id === this.props.collapse.id);
     if (currentIndex > -1) {
       navItemClass = [...navItemClass, "active"];
       if (this.props.layout !== "horizontal") {
@@ -172,26 +172,26 @@ class NavCollapse extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     layout: state.mainReducer.layout,
     isOpen: state.mainReducer.isOpen,
-    isTrigger: state.mainReducer.isTrigger
+    isTrigger: state.mainReducer.isTrigger,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onCollapseToggle: (id, type) =>
       dispatch({
         type: actionTypes.COLLAPSE_TOGGLE,
-        menu: { id: id, type: type }
+        menu: { id: id, type: type },
       }),
     onNavCollapseLeave: (id, type) =>
       dispatch({
         type: actionTypes.NAV_COLLAPSE_LEAVE,
-        menu: { id: id, type: type }
-      })
+        menu: { id: id, type: type },
+      }),
   };
 };
 
