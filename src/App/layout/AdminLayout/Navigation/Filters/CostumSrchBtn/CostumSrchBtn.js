@@ -9,16 +9,18 @@ import runQueryActionCreator from "../../../../../../store/ActionCreators/queryA
 
 class CostumSrchBtn extends Component {
   state = {
-    search: false
+    search: false,
   };
 
   onSearchHandler(event) {
     this.setState({
-      search: true
+      search: true,
     });
     this.props.onClickAction(
       this.props.selectedLicenseTypes,
       this.props.selectedProfession,
+      this.props.selectedProfessionBucket,
+      this.props.selectedProfessionSubBucket,
       this.props.selectedState,
       this.props.otherFilters
     );
@@ -45,20 +47,25 @@ class CostumSrchBtn extends Component {
     return <React.Fragment>{compBody}</React.Fragment>;
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     selectedLicenseTypes: state.filterReducer.selectedLicenseTypes,
     selectedProfession: state.filterReducer.selectedProfession,
+    selectedProfessionBucket: state.filterReducer.selectedProfessionBucket,
+    selectedProfessionSubBucket:
+      state.filterReducer.selectedProfessionSubBucket,
     selectedState: state.filterReducer.selectedState,
-    otherFilters: state.filterReducer.otherFilters
+    otherFilters: state.filterReducer.otherFilters,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onClickAction: (
       selectedLicenseTypes,
       selectedProfession,
+      selectedProfessionBucket,
+      selectedProfessionSubBucket,
       selectedState,
       otherFilters
     ) =>
@@ -66,10 +73,12 @@ const mapDispatchToProps = dispatch => {
         runQueryActionCreator(
           selectedLicenseTypes,
           selectedProfession,
+          selectedProfessionBucket,
+          selectedProfessionSubBucket,
           selectedState,
           otherFilters
         )
-      )
+      ),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CostumSrchBtn);

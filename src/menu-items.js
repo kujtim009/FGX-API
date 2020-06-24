@@ -11,16 +11,16 @@ export default {
           title: "Dashboard",
           type: "item",
           url: "/dashboard",
-          icon: "feather icon-home"
+          icon: "feather icon-home",
         },
         {
           id: "cpanel",
           title: "CPanel",
           type: "item",
           url: "/cpanel",
-          icon: "feather icon-settings"
-        }
-      ]
+          icon: "feather icon-settings",
+        },
+      ],
     },
     {
       id: "apis",
@@ -44,26 +44,39 @@ export default {
                   title: "Select Type",
                   type: "costum",
                   icon: "feather icon-pie-chart",
-                  url: "/charts/nvd3"
+                  url: "/charts/nvd3",
                 },
                 {
                   id: "license",
                   title: "License Number",
                   type: "costumEditBox",
-                  url: "/basic/button"
+                  url: "/basic/button",
                 },
                 {
                   id: "state",
                   title: "State",
                   type: "costumStateDropBox",
-                  url: "/basic/button"
+                  url: "/basic/button",
+                },
+                {
+                  id: "profession_bucket",
+                  title: "Profession Buckets",
+                  type: "costumProfDropBox",
+                  url: "/basic/button",
+                },
+                {
+                  id: "profession_subbucket",
+                  title: "Profession Sub Buckets",
+                  type: "costumProfDropBox",
+                  url: "/basic/button",
                 },
                 {
                   id: "profession",
                   title: "Profession",
                   type: "costumProfDropBox",
-                  url: "/basic/button"
+                  url: "/basic/button",
                 },
+
                 {
                   id: "otherColapse",
                   title: "Other Filters",
@@ -74,52 +87,52 @@ export default {
                       id: "zipcode",
                       title: "Zip Code",
                       type: "costumEditBox",
-                      url: "/basic/button"
+                      url: "/basic/button",
                     },
                     {
                       id: "city",
                       title: "City",
                       type: "costumEditBox",
-                      url: "/basic/button"
+                      url: "/basic/button",
                     },
                     {
                       id: "county",
                       title: "County",
                       type: "costumEditBox",
-                      url: "/basic/button"
+                      url: "/basic/button",
                     },
                     {
                       id: "phone",
                       title: "Phone Number",
                       type: "costumEditBox",
-                      url: "/basic/button"
+                      url: "/basic/button",
                     },
                     {
                       id: "licowner",
                       title: "License Owner Name",
                       type: "costumComboBox",
-                      url: "/basic/button"
+                      url: "/basic/button",
                     },
                     {
                       id: "companyname",
                       title: "Company Name",
                       type: "costumComboBox",
-                      url: "/basic/button"
-                    }
-                  ]
+                      url: "/basic/button",
+                    },
+                  ],
                 },
                 {
                   id: "search",
                   title: "Search",
                   type: "costumSrchBtn",
                   url: "/forms/form-basic",
-                  icon: "feather icon-search"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  icon: "feather icon-search",
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       id: "docu",
@@ -170,8 +183,8 @@ export default {
           type: "item",
           url: "/docs",
           classes: "nav-item",
-          icon: "feather icon-help-circle"
-        }
+          icon: "feather icon-help-circle",
+        },
         // {
         //   id: "disabled-menu",
         //   title: "Disabled Menu",
@@ -194,7 +207,7 @@ export default {
                         type: 'label-primary'
                     }
                 }*/
-      ]
-    }
-  ]
+      ],
+    },
+  ],
 };

@@ -15,6 +15,11 @@ const paramCreator = (data) => {
   if (data.state !== "") prm.push("&state=" + data.state);
   if (data.profession !== "") prm.push("&profession=" + data.profession);
 
+  if (data.professionBucket !== "")
+    prm.push("&profession_bucket=" + data.professionBucket);
+  if (data.professionSubBucket !== "")
+    prm.push("&profession_sub_bucket=" + data.professionSubBucket);
+
   Object.keys(data.other).forEach((key) => {
     if (isObject(data.other[key])) {
       const srchType =
@@ -38,6 +43,8 @@ const paramCreator = (data) => {
 const runQueryActionCreator = (
   selectedLicenseTypes,
   selectedProfession,
+  selectedProfessionBucket,
+  selectedProfessionSubBucket,
   selectedState,
   otherFilters
 ) => {
@@ -46,6 +53,8 @@ const runQueryActionCreator = (
     const rawQueryData = {
       licenseType: selectedLicenseTypes,
       profession: selectedProfession,
+      professionBucket: selectedProfessionBucket,
+      professionSubBucket: selectedProfessionSubBucket,
       state: selectedState,
       other: otherFilters,
     };

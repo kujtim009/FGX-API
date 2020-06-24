@@ -4,8 +4,12 @@ const initialState = {
   checkAuth: false,
   availableLicTypes: null,
   selectedLicenseTypes: "",
-  availableProfessions: null,
+  availableProfessions: {},
+  availableProfessionsBucket: {},
+  availableProfessionsSubBucket: {},
   selectedProfession: "",
+  selectedProfessionBucket: "",
+  selectedProfessionSubBucket: "",
   selectedState: "all",
   showSpinner: false,
   message: null,
@@ -87,10 +91,66 @@ const reducer = (state = initialState, action) => {
         loginMessage: faildRequestMessage(action.payload),
       };
 
+    case actionTypes.SUCCESS_GETPROFESSIONS_BUCKETS:
+      return {
+        ...state,
+        checkAuth: false,
+        availableProfessionsBucket: action.payload,
+        loadProfessionBucketDataTable: true,
+        showSpinner: false,
+      };
+    case actionTypes.START_GETPROFESSIONS_BUCKETS:
+      return {
+        ...state,
+        showSpinner: true,
+        loadProfessionBucketDataTable: false,
+      };
+    case actionTypes.FAILD_GETPROFESSIONS_BUCKETS:
+      return {
+        ...state,
+        showSpinner: false,
+        checkAuth: true,
+        loadProfessionBucketDataTable: false,
+        loginMessage: faildRequestMessage(action.payload),
+      };
     case actionTypes.CHANGE_PROFESSION:
       return {
         ...state,
         selectedProfession: action.payload,
+      };
+
+    case actionTypes.SUCCESS_GETPROFESSIONS_SUB_BUCKETS:
+      return {
+        ...state,
+        checkAuth: false,
+        availableProfessionsSubBucket: action.payload,
+        loadProfessionSubBucketDataTable: true,
+        showSpinner: false,
+      };
+    case actionTypes.START_GETPROFESSIONS_SUB_BUCKETS:
+      return {
+        ...state,
+        showSpinner: true,
+        loadProfessionSubBucketDataTable: false,
+      };
+    case actionTypes.FAILD_GETPROFESSIONS_SUB_BUCKETS:
+      return {
+        ...state,
+        showSpinner: false,
+        checkAuth: true,
+        loadProfessionSubBucketDataTable: false,
+        loginMessage: faildRequestMessage(action.payload),
+      };
+    case actionTypes.CHANGE_PROFESSION_SUB_BUCKETS:
+      return {
+        ...state,
+        selectedProfessionSubBucket: action.payload,
+      };
+
+    case actionTypes.CHANGE_PROFESSION_BUCKETS:
+      return {
+        ...state,
+        selectedProfessionBucket: action.payload,
       };
 
     case actionTypes.CHANGE_OTHERFILTERS:

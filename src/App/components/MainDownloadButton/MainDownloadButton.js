@@ -5,6 +5,7 @@ import queryDownloadActionCreator from "../../../store/ActionCreators/queryDownl
 
 class MainDownloadButton extends Component {
   render() {
+    console.log("DWNLOADING PRM: ", this.props.prms);
     return (
       <React.Fragment>
         <Card>
@@ -12,7 +13,7 @@ class MainDownloadButton extends Component {
             style={{
               maxHeight: "30px",
               paddingTop: "5px",
-              border: "0.5px solid lightgray"
+              border: "0.5px solid lightgray",
             }}>
             <h5 className="mb-4">Download records here:</h5>
           </Card.Header>
@@ -20,7 +21,7 @@ class MainDownloadButton extends Component {
             style={{
               maxHeight: "70px",
               paddingTop: "10px",
-              paddingBottom: "10px"
+              paddingBottom: "10px",
             }}>
             <Button onClick={() => this.props.downloadQuery(this.props.prms)}>
               Download
@@ -32,9 +33,9 @@ class MainDownloadButton extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    downloadQuery: prm => dispatch(queryDownloadActionCreator(prm))
+    downloadQuery: (prm) => dispatch(queryDownloadActionCreator(prm)),
   };
 };
 
