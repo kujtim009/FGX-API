@@ -20,6 +20,8 @@ const initialState = {
   columns: null,
   queryPrm: null,
   loadProfessionDataTable: false,
+  loadProfessionBucketDataTable: false,
+  loadProfessionSubBucketDataTable: false,
   professionData: null,
   professionColumns: null,
   showCounter: false,
@@ -64,15 +66,17 @@ const reducer = (state = initialState, action) => {
         ...state,
         availableLicTypes: action.payload.licenseTypes,
         selectedLicenseTypes: action.payload.selectedLicenseTypes,
+        showCounter: false,
+        loadDataTable: false,
       };
     case actionTypes.CHANGE_STATE:
       return {
         ...state,
         selectedState: action.payload,
+        showCounter: false,
       };
 
     case actionTypes.SUCCESS_GETPROFESSIONS:
-      console.log("FIlterReducer:", action.payload);
       return {
         ...state,
         checkAuth: false,
@@ -117,6 +121,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedProfession: action.payload,
+        showCounter: false,
       };
 
     case actionTypes.SUCCESS_GETPROFESSIONS_SUB_BUCKETS:
@@ -145,12 +150,14 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedProfessionSubBucket: action.payload,
+        showCounter: false,
       };
 
     case actionTypes.CHANGE_PROFESSION_BUCKETS:
       return {
         ...state,
         selectedProfessionBucket: action.payload,
+        showCounter: false,
       };
 
     case actionTypes.CHANGE_OTHERFILTERS:
