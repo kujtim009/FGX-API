@@ -4,6 +4,7 @@ import mainReducer from "./Reducers/mainReducer";
 import authReducer from "./Reducers/authReducer";
 import filterReducer from "./Reducers/filterReducer";
 import cpanelReducer from "./Reducers/cpanelReducer";
+import cbdReducer from "./Reducers/cbdReducer";
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
   mainReducer: mainReducer,
   authReducer: authReducer,
   filterReducer: filterReducer,
-  cpanelReducer: cpanelReducer
+  cpanelReducer: cpanelReducer,
+  cbdReducer: cbdReducer,
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));

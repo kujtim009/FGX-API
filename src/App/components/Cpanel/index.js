@@ -30,9 +30,11 @@ class Cpanel extends React.Component {
     userAsighnColumns: 1,
     licenseTypeAsign: 1,
     professionAsign: 1,
+    bucketAsign: 1,
     registerNewUser: 1,
     userTimePeriodAsign: 1,
     enableProfessionSaveButton: true,
+    enableBucketSaveButton: true,
   };
 
   componentDidMount() {
@@ -57,6 +59,15 @@ class Cpanel extends React.Component {
     });
 
     if (professionAsign <= 1) this.props.getRegistredUsersAction();
+  };
+
+  onBucketAsignHandler = () => {
+    const bucketAsign = this.state.bucketAsign;
+    this.setState({
+      bucketAsign: bucketAsign !== 2 ? 2 : 0,
+    });
+
+    if (bucketAsign <= 1) this.props.getRegistredUsersAction();
   };
 
   onLicenseTypeChangeHandler = () => {
@@ -95,6 +106,12 @@ class Cpanel extends React.Component {
     if (this.state.userTimePeriodAsign === 2)
       this.props.getUserAsignedTimePeriodAction(event.target.value);
 
+    if (this.state.bucketAsign === 2) {
+      this.props.getAllBuckets(event.target.value);
+      this.setState({
+        enableBucketSaveButton: false,
+      });
+    }
     if (this.state.professionAsign === 2) {
       this.props.getAllProfessions(event.target.value);
       this.setState({
@@ -134,6 +151,7 @@ class Cpanel extends React.Component {
       userAsighnColumns,
       licenseTypeAsign,
       professionAsign,
+      bucketAsign,
       registerNewUser,
       userTimePeriodAsign,
     } = this.state;
@@ -231,6 +249,50 @@ class Cpanel extends React.Component {
                 aria-controls="accordion2"
                 aria-expanded={professionAsign === 2}>
                 Assign Professions to User!
+              </a>
+            </Card.Title>
+          </Card.Header>
+          <Collapse in={this.state.professionAsign === 2}>
+            <div id="accordion2">
+              <Card.Body>
+                {dropDownUsers}
+                <SortableProfessionAssign
+                  unAsignedProfessions={this.props.unAsignedProfessions}
+                  asignedProfessions={this.props.asignedProfessions}
+                  asignedProfessionChangehandler={
+                    this.props.asignedUserProfessionChangeAction
+                  }
+                  unAsignedProfessionHandler={
+                    this.props.unAsignedUserProfessionChangeAction
+                  }
+                />
+
+                <Card.Footer>
+                  <Button
+                    disabled={this.state.enableProfessionSaveButton}
+                    onClick={() =>
+                      this.props.postUserProfessions(
+                        this.props.asignedProfessions,
+                        this.props.selectedUserId
+                      )
+                    }>
+                    SAVE CHANGES
+                  </Button>
+                </Card.Footer>
+              </Card.Body>
+            </div>
+          </Collapse>
+        </Card>
+        {/* ASSIIGN BUCKETS TO USERS */}
+        <Card className="mt-2">
+          <Card.Header>
+            <Card.Title as="h5">
+              <a
+                href={DEMO.BLANK_LINK}
+                onClick={this.onBucketAsignHandler}
+                aria-controls="accordion2"
+                aria-expanded={professionAsign === 2}>
+                Assign Profession Buckets to User!
               </a>
             </Card.Title>
           </Card.Header>

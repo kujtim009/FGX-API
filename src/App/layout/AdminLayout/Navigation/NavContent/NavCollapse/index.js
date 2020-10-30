@@ -15,6 +15,11 @@ import CostumStateDropBox from "../../Filters/CostumStateDropBox/CostumStateDrop
 import CostumProfDropBox from "../../Filters/CostumProfDropBox/CostumProfDropBox";
 import CostumComboBox from "./../../Filters/CostumComboBox/CostumComboBox";
 import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
+import CbdStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumStateDropBox";
+import CbdCityDropBox from "../../Filters/CbdFilters/CostumCityDropBox/CostumCityDropBox";
+import CbdPotByerCheckBox from "../../Filters/CbdFilters/CostumPotByerDropBox/PotByerCheckBox";
+import CbdCostumEditBox from "./../../Filters/CbdFilters/CostumEditBox/CostumEditBox";
+import costumDoB from "./../../Filters/CbdFilters/DateOfBirth/DateOfBirth";
 
 class NavCollapse extends Component {
   componentDidMount() {
@@ -66,6 +71,7 @@ class NavCollapse extends Component {
                 item={item}
               />
             );
+
           case "costumProfDropBox":
             return (
               <CostumProfDropBox
@@ -90,6 +96,43 @@ class NavCollapse extends Component {
                 item={item}
               />
             );
+          case "cbdStateDropBox":
+            return (
+              <CbdStateDropBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "CbdCityDropBox":
+            return (
+              <CbdCityDropBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "CbdPotByerType":
+            return (
+              <CbdPotByerCheckBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "CbdcostumEditBox":
+            return (
+              <CbdCostumEditBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          case "costumDoB":
+            return (
+              <costumDoB layout={this.props.layout} key={item.id} item={item} />
+            );
+
           default:
             return false;
         }
