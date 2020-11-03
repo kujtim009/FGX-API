@@ -19,7 +19,8 @@ import CbdStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumS
 import CbdCityDropBox from "../../Filters/CbdFilters/CostumCityDropBox/CostumCityDropBox";
 import CbdPotByerCheckBox from "../../Filters/CbdFilters/CostumPotByerDropBox/PotByerCheckBox";
 import CbdCostumEditBox from "./../../Filters/CbdFilters/CostumEditBox/CostumEditBox";
-import costumDoB from "./../../Filters/CbdFilters/DateOfBirth/DateOfBirth";
+import CostumDoB from "./../../Filters/CbdFilters/DateOfBirth/DateOfBirth";
+import CbdCostumSrchBtn from "./../../Filters/CbdFilters/CostumSrchBtn/CostumSrchBtn";
 
 class NavCollapse extends Component {
   componentDidMount() {
@@ -128,11 +129,18 @@ class NavCollapse extends Component {
                 item={item}
               />
             );
-          case "costumDoB":
+          case "CbdDoB":
             return (
-              <costumDoB layout={this.props.layout} key={item.id} item={item} />
+              <CostumDoB layout={this.props.layout} key={item.id} item={item} />
             );
-
+          case "CbdCostumSrchBtn":
+            return (
+              <CbdCostumSrchBtn
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
           default:
             return false;
         }

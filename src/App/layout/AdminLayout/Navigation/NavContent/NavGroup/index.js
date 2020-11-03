@@ -12,7 +12,8 @@ import CbdStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumS
 import CbdCityDropBox from "../../Filters/CbdFilters/CostumCityDropBox/CostumCityDropBox";
 import CbdPotByerCheckBox from "../../Filters/CbdFilters/CostumPotByerDropBox/PotByerCheckBox";
 import CbdCostumEditBox from "./../../Filters/CbdFilters/CostumEditBox/CostumEditBox";
-import costumDoB from "./../../Filters/CbdFilters/DateOfBirth/DateOfBirth";
+import CostumDoB from "./../../Filters/CbdFilters/DateOfBirth/DateOfBirth";
+import CbdCostumSrchBtn from "./../../Filters/CbdFilters/CostumSrchBtn/CostumSrchBtn";
 
 const navGroup = (props) => {
   let navItems = "";
@@ -90,8 +91,13 @@ const navGroup = (props) => {
             <CbdCostumEditBox layout={props.layout} key={item.id} item={item} />
           );
 
-        case "costumDoB":
-          return <costumDoB layout={props.layout} key={item.id} item={item} />;
+        case "CbdDoB":
+          return <CostumDoB layout={props.layout} key={item.id} item={item} />;
+
+        case "CbdCostumSrchBtn":
+          return (
+            <CbdCostumSrchBtn layout={props.layout} key={item.id} item={item} />
+          );
 
         default:
           return false;

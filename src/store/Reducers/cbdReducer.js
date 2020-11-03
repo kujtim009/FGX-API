@@ -7,8 +7,6 @@ const initialState = {
     "Potencial Byer": false,
     "Potencial Multi Byer": false,
   },
-  potencialByer: null,
-  potencialMultiByer: null,
   citiesByState: [],
   selectedCity: null,
   zip: null,
@@ -75,9 +73,19 @@ const reducer = (state = initialState, action) => {
           [action.payload.inputName]: action.payload.inputValue,
         },
       };
+    case actionTypes.CBD_CHANGE_DOB_FROM:
+      return {
+        ...state,
+        dobFrom: action.payload,
+      };
+
+    case actionTypes.CBD_CHANGE_DOB_TO:
+      return {
+        ...state,
+        dobTo: action.payload,
+      };
 
     case actionTypes.CHANGE_COMBO_FILTERS:
-      console.log({ [action.payload.inputName]: action.payload });
       return {
         ...state,
         otherFilters: {
@@ -86,33 +94,32 @@ const reducer = (state = initialState, action) => {
         },
       };
 
-    case actionTypes.START_QUERY:
-      return {
-        ...state,
-        parameters: null,
-        checkAuth: false,
-        showSpinner: true,
-      };
-    case actionTypes.SUCCESS_QUERY:
-      console.log("FILTER REDUCER:", action.payload);
-      return {
-        ...state,
-        checkAuth: false,
-        showSpinner: false,
-        data: action.payload.data,
-        queryPrm: action.payload.queryPrm,
-        loadProfessionDataTable: false,
-        loadDataTable: true,
-      };
-    case actionTypes.FAILD_QUERY:
-      return {
-        ...state,
-        showSpinner: false,
-        checkAuth: true,
-        loadDataTable: false,
-        message: faildRequestMessage(action.payload),
-        showErrorMessage: true,
-      };
+    // case actionTypes.START_QUERY:
+    //   return {
+    //     ...state,
+    //     parameters: null,
+    //     checkAuth: false,
+    //     showSpinner: true,
+    //   };
+    // case actionTypes.SUCCESS_QUERY:
+    //   return {
+    //     ...state,
+    //     checkAuth: false,
+    //     showSpinner: false,
+    //     data: action.payload.data,
+    //     queryPrm: action.payload.queryPrm,
+    //     loadProfessionDataTable: false,
+    //     loadDataTable: true,
+    //   };
+    // case actionTypes.FAILD_QUERY:
+    //   return {
+    //     ...state,
+    //     showSpinner: false,
+    //     checkAuth: true,
+    //     loadDataTable: false,
+    //     message: faildRequestMessage(action.payload),
+    //     showErrorMessage: true,
+    //   };
 
     case actionTypes.START_COUNT_QUERY:
       return {

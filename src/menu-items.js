@@ -168,8 +168,15 @@ export default {
                 {
                   id: "dob",
                   title: "Birth Date",
-                  type: "costumDoB",
+                  type: "CbdDoB",
                   url: "/basic/button",
+                },
+                {
+                  id: "search",
+                  title: "Search",
+                  type: "CbdCostumSrchBtn",
+                  url: "/forms/form-basic",
+                  icon: "feather icon-search",
                 },
               ],
             },
