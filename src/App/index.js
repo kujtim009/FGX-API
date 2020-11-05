@@ -22,7 +22,7 @@ class App extends Component {
           path={route.path}
           exact={route.exact}
           name={route.name}
-          render={props => <route.component {...props} />}
+          render={(props) => <route.component {...props} />}
         />
       ) : null;
     });
@@ -35,18 +35,10 @@ class App extends Component {
         routeGuard = <Route path="/" component={AdminLayout} />;
         // mainRedirect = <Redirect to="/" />;
       } else {
-        console.log(
-          "IS AUTHENTICATED:",
-          this.props.isAuthenticated,
-          "LOCAL STORAGE TOKEN: ",
-          this.checkLocalToken(),
-          "TOKEN EXPIRED2: ",
-          this.props.tokenExpired
-        );
         routeGuard = [...menu];
         mainRedirect = (
           <Redirect
-            to={authRoutes.filter(item => item.name === "Signin")[0].path}
+            to={authRoutes.filter((item) => item.name === "Signin")[0].path}
           />
         );
       }
@@ -54,7 +46,7 @@ class App extends Component {
       routeGuard = [...menu];
       mainRedirect = (
         <Redirect
-          to={authRoutes.filter(item => item.name === "Signin")[0].path}
+          to={authRoutes.filter((item) => item.name === "Signin")[0].path}
         />
       );
     }
@@ -70,10 +62,10 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.authReducer.isAuthenticated,
-    tokenExpired: state.authReducer.tokenExpired
+    tokenExpired: state.authReducer.tokenExpired,
   };
 };
 

@@ -12,8 +12,11 @@ import postColumnsActionCreator from "../../../store/ActionCreators/cpanelAction
 import * as actionTypes from "../../../store/actions";
 import SortableAsignUserColumns from "../SortableList/sortableAsignUserColumns";
 import UserAsignedLicenseType from "../../components/UserAsignedLicenseType/UserAsignedLicenseType";
+import UserAsignedProjects from "../../components/UserAsignedProjects/UserAsignedProjects";
 import getAsignedUserLicTypeActionCreator from "../../../store/ActionCreators/cpanelAction/getUserLicenseTypeAction";
+import getAsignedUserProjectsActionCreator from "../../../store/ActionCreators/cpanelAction/getUserProjectsAction";
 import postAsignLicType from "../../../store/ActionCreators/cpanelAction/postAssignLicType";
+import postAsignProjects from "../../../store/ActionCreators/cpanelAction/postAssignProjects";
 import SortableProfessionAssign from "../../components/SortableProfessionAssign/SortableProfessionAssign";
 import getProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/getProfessionsAction";
 import postProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/postProfessionAction";
@@ -29,6 +32,7 @@ class Cpanel extends React.Component {
   state = {
     userAsighnColumns: 1,
     licenseTypeAsign: 1,
+    projectAsign: 1,
     professionAsign: 1,
     bucketAsign: 1,
     registerNewUser: 1,
@@ -79,6 +83,15 @@ class Cpanel extends React.Component {
     if (licenseTypeAsign <= 1) this.props.getRegistredUsersAction();
   };
 
+  onProjectChangeHandler = () => {
+    const projectAsign = this.state.projectAsign;
+    this.setState({
+      projectAsign: projectAsign !== 2 ? 2 : 0,
+    });
+
+    if (projectAsign <= 1) this.props.getRegistredUsersAction();
+  };
+
   onRegisterNewUserHandler = () => {
     const registerNewUser = this.state.registerNewUser;
     this.setState({
@@ -102,6 +115,9 @@ class Cpanel extends React.Component {
 
     if (this.state.licenseTypeAsign === 2)
       this.props.getUserAsignedLicenseTypeAction(event.target.value);
+
+    if (this.state.projectAsign === 2)
+      this.props.getUserAsignedProjectsAction(event.target.value);
 
     if (this.state.userTimePeriodAsign === 2)
       this.props.getUserAsignedTimePeriodAction(event.target.value);
@@ -150,6 +166,7 @@ class Cpanel extends React.Component {
     const {
       userAsighnColumns,
       licenseTypeAsign,
+      projectAsign,
       professionAsign,
       bucketAsign,
       registerNewUser,
@@ -160,6 +177,42 @@ class Cpanel extends React.Component {
       <React.Fragment>
         <h5>Control Panel</h5>
         {loader}
+        {/* ASSIIGN PROJECTS TO USER */}
+        <Card className="mt-2">
+          <Card.Header>
+            <Card.Title as="h5">
+              <a
+                href={DEMO.BLANK_LINK}
+                onClick={this.onProjectChangeHandler}
+                aria-controls="accordion2"
+                aria-expanded={projectAsign === 2}>
+                Assign Projects to users!
+              </a>
+            </Card.Title>
+          </Card.Header>
+          <Collapse in={this.state.projectAsign === 2}>
+            <div id="accordion2">
+              <Card.Body>
+                {dropDownUsers}
+                <UserAsignedProjects
+                  usersProjects={this.props.userAsignedProjects}
+                />
+
+                <Card.Footer>
+                  <Button
+                    onClick={() =>
+                      this.props.postUserProjectsAction(
+                        this.props.userAsignedProjects,
+                        this.props.selectedUserId
+                      )
+                    }>
+                    SAVE CHANGES
+                  </Button>
+                </Card.Footer>
+              </Card.Body>
+            </div>
+          </Collapse>
+        </Card>
         {/* ASSIIGN LICENSE TYPES */}
         <Card className="mt-2">
           <Card.Header>
@@ -418,6 +471,7 @@ const mapStateToProps = (state) => {
     unAsignedColumns: state.cpanelReducer.unAsignedColumns,
     asignedColumns: state.cpanelReducer.asignedColumns,
     userAsignedLicenseTypes: state.cpanelReducer.userAsignedLicenseTypes,
+    userAsignedProjects: state.cpanelReducer.userAsignedProjects,
     unAsignedProfessions: state.cpanelReducer.unAsignedProfessions,
     asignedProfessions: state.cpanelReducer.asignedProfessions,
     message: state.cpanelReducer.message,
@@ -454,8 +508,14 @@ const mapDispatchToProps = (dispatch) => {
       }),
     getUserAsignedLicenseTypeAction: (userId) =>
       dispatch(getAsignedUserLicTypeActionCreator(userId)),
+
+    getUserAsignedProjectsAction: (userId) =>
+      dispatch(getAsignedUserProjectsActionCreator(userId)),
+
     postUserLicTypeAction: (lic, userId) =>
       dispatch(postAsignLicType(lic, userId)),
+    postUserProjectsAction: (projects, userId) =>
+      dispatch(postAsignProjects(projects, userId)),
     getAllProfessions: (userId) => dispatch(getProfessionActionCreator(userId)),
     asignedUserProfessionChangeAction: (professions) =>
       dispatch({

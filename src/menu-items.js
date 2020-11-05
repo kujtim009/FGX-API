@@ -38,6 +38,7 @@ export default {
               id: "mlf",
               title: "MASTER LICENSE FILE",
               type: "collapse",
+              project: true,
               children: [
                 {
                   id: "LicenseType",
@@ -134,6 +135,7 @@ export default {
               id: "cbd",
               title: "CBD",
               type: "collapse",
+              project: true,
               children: [
                 {
                   id: "state",

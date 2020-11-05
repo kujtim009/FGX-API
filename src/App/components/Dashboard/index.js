@@ -31,7 +31,7 @@ class Dashboard extends React.Component {
         counterSpinner={this.props.counterSpinner}
       />
     ) : null;
-    console.log("DASHBOARD:", this.props.data);
+
     const dataTable =
       this.props.loadDataTable || this.props.loadProfessionDataTable ? (
         <React.Fragment>
@@ -86,6 +86,7 @@ const mapStateToProps = (state) => {
     queryPrm: state.filterReducer.queryPrm,
     downloadStatus: state.filterReducer.downloadStatus,
     showErrorMessage: state.filterReducer.showErrorMessage,
+    activeProject: state.mainReducer.activeProject,
   };
 };
 

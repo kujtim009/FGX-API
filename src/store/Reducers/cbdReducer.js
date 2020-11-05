@@ -20,7 +20,6 @@ const initialState = {
   loadDataTable: false,
   data: null,
   columns: null,
-  queryPrm: null,
   showCounter: false,
   showCounterSpinner: false,
   recordCount: null,
@@ -196,7 +195,6 @@ const reducer = (state = initialState, action) => {
         showSpinner: true,
       };
     case actionTypes.SUCCESS_GET_CITY_BY_STATE:
-      console.log(("CITY BY STATE", action.payload));
       return {
         ...state,
         citiesByState: action.payload,

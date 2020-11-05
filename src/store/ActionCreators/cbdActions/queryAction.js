@@ -12,7 +12,12 @@ function isObject(val) {
 const paramCreator = (data) => {
   let prm = [];
   if (data.selectedState !== "") prm.push("&state=" + data.selectedState);
-  if (data.selectedCity !== "") prm.push("&city=" + data.selectedCity);
+  if (
+    data.selectedCity !== "" &&
+    data.selectedCity !== null &&
+    data.selectedCity !== "all"
+  )
+    prm.push("&city=" + data.selectedCity);
   if (data.dobFrom !== null) prm.push("&dob_from=" + data.dobFrom);
   if (data.dobTo !== null) prm.push("&dob_to=" + data.dobTo);
 

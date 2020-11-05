@@ -33,17 +33,38 @@ class NavCollapse extends Component {
     }
   }
 
+  checkIfProjectIsAvailable(id) {
+    if (this.props.availableProjects) {
+      return this.props.availableProjects.some((item) => id === item.id);
+    } else {
+      return false;
+    }
+  }
   render() {
     const { isOpen, isTrigger } = this.props;
-    // alert(this.props.is);
+
     let navItems = "";
+
     if (this.props.collapse.children) {
       const collapses = this.props.collapse.children;
       navItems = Object.keys(collapses).map((item) => {
         item = collapses[item];
+
         switch (item.type) {
           case "collapse":
-            return <LoopNavCollapse key={item.id} collapse={item} type="sub" />;
+            if (item.project) {
+              if (this.checkIfProjectIsAvailable(item.id)) {
+                return (
+                  <LoopNavCollapse key={item.id} collapse={item} type="sub" />
+                );
+              }
+              return null;
+            } else {
+              return (
+                <LoopNavCollapse key={item.id} collapse={item} type="sub" />
+              );
+            }
+
           case "item":
             return (
               <NavItem layout={this.props.layout} key={item.id} item={item} />
@@ -228,6 +249,7 @@ const mapStateToProps = (state) => {
     layout: state.mainReducer.layout,
     isOpen: state.mainReducer.isOpen,
     isTrigger: state.mainReducer.isTrigger,
+    availableProjects: state.filterReducer.availableProjects,
   };
 };
 

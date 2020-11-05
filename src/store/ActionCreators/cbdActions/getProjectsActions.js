@@ -1,6 +1,6 @@
 import axios from "axios";
-import * as actionTypes from "../actions";
-const getUserLicenseTypes = () => {
+import * as actionTypes from "../../actions";
+const getUserProjects = () => {
   return (dispatch) => {
     dispatch(startUserLicTypes());
     const header = {
@@ -10,7 +10,7 @@ const getUserLicenseTypes = () => {
     };
 
     axios
-      .get("/getuserprm?prmname=Lic_types", header)
+      .get("/getuserprm?prmname=Projects", header)
       .then((res) => {
         const tempLicTypes = [];
         const licObject = res.data.prm_value;
@@ -30,19 +30,19 @@ const getUserLicenseTypes = () => {
 };
 
 const successUserLicTypes = (data) => ({
-  type: actionTypes.SUCCESS_GETLICTYPES,
+  type: actionTypes.SUCCESS_GETPROJECTS,
   payload: data,
 });
 
 const startUserLicTypes = () => ({
-  type: actionTypes.START_GETLICTYPES,
+  type: actionTypes.START_GETPROJECTS,
 });
 
 const failedUserLicTypes = (error) => ({
-  type: actionTypes.FAILD_GETLICTYPES,
+  type: actionTypes.FAILD_GETPROJECTS,
   payload: {
     error,
   },
 });
 
-export default getUserLicenseTypes;
+export default getUserProjects;

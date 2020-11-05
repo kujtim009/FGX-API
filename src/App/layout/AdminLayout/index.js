@@ -13,6 +13,7 @@ import Aux from "../../../hoc/_Aux";
 import * as actionTypes from "../../../store/actions";
 import authRoutes from "../../../route";
 import getUserLicenseTypes from "../../../store/ActionCreators/getLicenseTypesActions";
+import getUserProjects from "../../../store/ActionCreators/cbdActions/getProjectsActions";
 import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthAction";
 import getUserColumnsActionCreator from "../../../store/ActionCreators/columnAction";
 import "./app.scss";
@@ -62,14 +63,11 @@ class AdminLayout extends Component {
     }
   }
   componentDidMount() {
-    console.log("ADDMIN LAYOUT MOUNTED");
-    // console.log("ADMIN LAYOUT: ", this.props.isAuthenticated);
-    // this.props.isAuthenticated
-    //   ? this.props.getUserLicTypeAction()
-    //   : this.props.checkAauthAction();
+    console.log("ADDMIN LAYOUT MOUNTED", this.props.activeProject);
     if (this.props.isAuthenticated) {
+      this.props.getUserProjectsAction();
       this.props.getUserLicTypeAction();
-      this.props.getUserColumnsAction();
+      this.props.getUserColumnsAction(this.props.activeProject);
     } else this.props.checkAauthAction();
   }
   mobileOutClickHandler() {
@@ -79,6 +77,11 @@ class AdminLayout extends Component {
   }
 
   render() {
+    console.log("ADMIN LAYOUT RENDERING", this.props.activeProject);
+    if (this.props.isAuthenticated) {
+      this.props.getUserColumnsAction(this.props.activeProject);
+    }
+
     if (this.props.checkAuth) this.props.checkAauthAction();
 
     document.addEventListener("fullscreenchange", this.fullScreenExitHandler);
@@ -99,7 +102,7 @@ class AdminLayout extends Component {
           path={route.path}
           exact={route.exact}
           name={route.name}
-          render={props => <route.component {...props} />}
+          render={(props) => <route.component {...props} />}
         />
       ) : null;
     });
@@ -139,7 +142,7 @@ class AdminLayout extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     defaultPath: state.mainReducer.defaultPath,
     isFullScreen: state.mainReducer.isFullScreen,
@@ -149,17 +152,20 @@ const mapStateToProps = state => {
     isAuthenticated: state.authReducer.isAuthenticated,
     checkAuth: state.filterReducer.checkAuth,
     availableLicTypes: state.filterReducer.availableLicTypes,
-    showSpinner: state.filterReducer.showSpinner
+    showSpinner: state.filterReducer.showSpinner,
+    activeProject: state.mainReducer.activeProject,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onFullScreenExit: () => dispatch({ type: actionTypes.FULL_SCREEN_EXIT }),
     onComponentWillMount: () => dispatch({ type: actionTypes.COLLAPSE_MENU }),
     getUserLicTypeAction: () => dispatch(getUserLicenseTypes()),
-    getUserColumnsAction: () => dispatch(getUserColumnsActionCreator()),
-    checkAauthAction: () => dispatch(checkAauthActionCreator())
+    getUserProjectsAction: () => dispatch(getUserProjects()),
+    getUserColumnsAction: (activeProjects) =>
+      dispatch(getUserColumnsActionCreator(activeProjects)),
+    checkAauthAction: () => dispatch(checkAauthActionCreator()),
   };
 };
 

@@ -19,12 +19,21 @@ class CostumDropBox extends Component {
         {item}
       </option>
     ));
+    dropElements.unshift(
+      <option key={0} value={null}>
+        all
+      </option>
+    );
+    const cityValue =
+      this.props.selectedCity !== undefined && this.props.selectedCity !== null
+        ? this.props.selectedCity
+        : "";
     const compBody = (
       <div className="nav-link">
         <Form.Group>
           <Form.Control
             size="xs"
-            value={this.props.selectedCity}
+            value={cityValue}
             as="select"
             id={this.props.item.id}
             className="mb-3"

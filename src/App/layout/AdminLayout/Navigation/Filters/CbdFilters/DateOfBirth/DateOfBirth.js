@@ -29,7 +29,9 @@ class costumDoB extends Component {
     const timerPeriodContent = (
       <div>
         <div className={classes.dataPicker}>
-          <span>Date of birth from:&nbsp;</span>
+          <span style={{ color: "rgb(180, 198, 201)" }}>
+            Date of birth from:&nbsp;
+          </span>
           <DatePicker
             value={dobFrom}
             onChange={this.onData1Change}
@@ -38,7 +40,9 @@ class costumDoB extends Component {
         </div>
         <br />
         <div className={classes.dataPicker}>
-          <span>Date of birth to:&nbsp;</span>
+          <span style={{ color: "rgb(180, 198, 201)" }}>
+            Date of birth to:&nbsp;
+          </span>
           <br />
 
           <DatePicker

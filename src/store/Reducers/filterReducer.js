@@ -2,6 +2,7 @@ import * as actionTypes from "../actions";
 
 const initialState = {
   checkAuth: false,
+  availableProjects: null,
   availableLicTypes: null,
   selectedLicenseTypes: "",
   availableProfessions: {},
@@ -43,6 +44,24 @@ const faildRequestMessage = (response) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SUCCESS_GETPROJECTS:
+      return {
+        ...state,
+        checkAuth: false,
+        availableProjects: action.payload,
+        showSpinner: false,
+      };
+    case actionTypes.START_GETPROJECTS:
+      return { ...state, showSpinner: true };
+    case actionTypes.FAILD_GETPROJECTS:
+      return {
+        ...state,
+        showSpinner: false,
+        checkAuth: true,
+        message: faildRequestMessage(action.payload),
+        showErrorMessage: true,
+      };
+
     case actionTypes.SUCCESS_GETLICTYPES:
       return {
         ...state,
@@ -186,7 +205,6 @@ const reducer = (state = initialState, action) => {
         showSpinner: true,
       };
     case actionTypes.SUCCESS_QUERY:
-      console.log("FILTER REDUCER:", action.payload);
       return {
         ...state,
         checkAuth: false,

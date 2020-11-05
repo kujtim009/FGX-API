@@ -8,6 +8,7 @@ const initialState = {
   asignedColumns: [],
   selectedUserId: "",
   userAsignedLicenseTypes: [],
+  userAsignedProjects: [],
   unAsignedProfessions: [],
   asignedProfessions: [],
 
@@ -190,6 +191,48 @@ const reducer = (state = initialState, action) => {
     case actionTypes.START_POST_USER_LIC_TYPES:
       return { ...state, cpanelSpinner: true };
     case actionTypes.FAILD_POST_USER_LIC_TYPES:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Error!",
+        positiveMessage: false,
+        // message: action.payload.error.data.message
+      };
+
+    case actionTypes.SUCCESS_GET_USER_PROJECTS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        userAsignedProjects: action.payload,
+      };
+    case actionTypes.START_GET_USER_PROJECTS:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_GET_USER_PROJECTS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        // message: action.payload.error.data.message
+      };
+    case actionTypes.CHANGE_USER_PROJECTS:
+      console.log("CHANGED LIC TYPES:", action.payload);
+      return {
+        ...state,
+        cpanelSpinner: false,
+        userAsignedProjects: action.payload,
+      };
+
+    case actionTypes.SUCCESS_POST_USER_PROJECTS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Your changes have been saved successfully!",
+        positiveMessage: true,
+      };
+    case actionTypes.START_POST_USER_PROJECTS:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_POST_USER_PROJECTS:
       return {
         ...state,
         cpanelSpinner: false,

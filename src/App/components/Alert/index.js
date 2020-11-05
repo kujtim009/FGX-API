@@ -12,16 +12,13 @@ function ApiAlert(props) {
 
   const alert = useAlert();
   const positive = props.positive ? "success" : "error";
-  console.log("PROPS.SHOW", positive);
+
   if (props.show)
     alert.show(message, {
       timeout: 4000, // custom timeout just for this one alert
       type: positive,
-      onOpen: () => {
-        console.log(message);
-      }, // callback that will be executed after this alert open
+      onOpen: () => {}, // callback that will be executed after this alert open
       onClose: () => {
-        console.log(message);
         dispatch({
           type: actionTypes.ON_ALERT_CLOSE,
         });
