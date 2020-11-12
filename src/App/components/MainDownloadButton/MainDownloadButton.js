@@ -43,8 +43,8 @@ class MainDownloadButton extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    downloadQuery: (prm, activeState) =>
-      dispatch(queryDownloadActionCreator(prm, activeState)),
+    downloadQuery: (prm, activeProject) =>
+      dispatch(queryDownloadActionCreator(prm, activeProject)),
   };
 };
 

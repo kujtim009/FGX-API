@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "../actions";
 
-const queryDownloadActionCreator = (parameters, activeState) => {
+const queryDownloadActionCreator = (parameters, activeProject) => {
   return (dispatch) => {
     dispatch(startQuery());
     const header = {
@@ -12,15 +12,13 @@ const queryDownloadActionCreator = (parameters, activeState) => {
       },
       responseType: "blob",
     };
-
+    // console.log("QUERY DOWNLOAD ACTION: ACTIVE STATE", activeProject);
     const url =
-      activeState === "MLF"
+      activeProject === "mlf"
         ? "/mlf_dnld?" + parameters
         : "/cbd_dnld?" + parameters;
     const fileName =
-      activeState === "MLF"
-        ? "FGX_MLF_DATA.csv" + parameters
-        : "FGX_CBD_DATA.csv";
+      activeProject === "mlf" ? "FGX_MLF_DATA.csv" : "FGX_CBD_DATA.csv";
     axios
       .get(url, header)
       .then(({ data }) => {

@@ -51,6 +51,7 @@ class Dashboard extends React.Component {
     const dwnldButton = this.props.loadDataTable ? (
       <MainDownloadButton
         prms={this.props.queryPrm}
+        activeProject={this.props.activeProject}
         status={this.props.downloadStatus}
         dnldData={this.props.data}
         dnldColumns={this.props.columns}

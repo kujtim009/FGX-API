@@ -109,7 +109,7 @@ const DataGrid = (props) => {
         maxWidth: "100%",
       }}>
       <React.Fragment>
-        <h3>Professions</h3>
+        <h3>Data:</h3>
         <AgGridReact columnDefs={columns} rowData={data}></AgGridReact>
       </React.Fragment>
       {showProfessinBuckets}
