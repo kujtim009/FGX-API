@@ -20,11 +20,23 @@ class costumDoB extends Component {
     else this.props.changeDobTo(null);
   };
 
+  onData3Change = (data) => {
+    if (data !== null)
+      this.props.changeRecordAdded(
+        moment(data).format("YYYY-MM-DD").toString()
+      );
+    else this.props.changeRecordAdded(null);
+  };
+
   render() {
     const dobFrom =
       this.props.dobFrom !== null ? new Date(this.props.dobFrom) : new Date();
     const dobTo =
       this.props.dobTo !== null ? new Date(this.props.dobTo) : new Date();
+    const recordAdded =
+      this.props.recordAdded !== null
+        ? new Date(this.props.recordAdded)
+        : new Date();
 
     const timerPeriodContent = (
       <div>
@@ -52,6 +64,18 @@ class costumDoB extends Component {
           />
         </div>
         <br />
+        <div className={classes.dataPickerRecordAdded}>
+          <span style={{ color: "rgb(180, 198, 201)" }}>
+            Records Added:&nbsp;
+          </span>
+          <br />
+          <DatePicker
+            onChange={this.onData3Change}
+            value={recordAdded}
+            format="y-MM-dd"
+          />
+        </div>
+        <br />
       </div>
     );
 
@@ -67,6 +91,7 @@ const mapStateToProps = (state) => {
   return {
     dobFrom: state.cbdReducer.dobFrom,
     dobTo: state.cbdReducer.dobTo,
+    recordAdded: state.cbdReducer.recordAdded,
   };
 };
 
@@ -80,6 +105,11 @@ const mapDispatchToProps = (dispatch) => {
     changeDobTo: (date) =>
       dispatch({
         type: actionTypes.CBD_CHANGE_DOB_TO,
+        payload: date,
+      }),
+    changeRecordAdded: (date) =>
+      dispatch({
+        type: actionTypes.CBD_CHANGE_RECORD_ADDED,
         payload: date,
       }),
   };

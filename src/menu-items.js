@@ -33,6 +33,7 @@ export default {
           title: "FGX API",
           type: "collapse",
           icon: "feather icon-menu",
+          url: "/dashboard",
           children: [
             {
               id: "mlf",

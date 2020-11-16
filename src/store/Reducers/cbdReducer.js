@@ -6,6 +6,9 @@ const initialState = {
   availableByerTypes: {
     "Potencial Byer": false,
     "Potencial Multi Byer": false,
+    "Raw Phone": false,
+    "Clean Phone": false,
+    "Has Email": false,
   },
   citiesByState: [],
   selectedCity: null,
@@ -13,6 +16,7 @@ const initialState = {
   phone: null,
   dobFrom: null,
   dobTo: null,
+  recordAdded: null,
   showSpinner: false,
   message: null,
   showErrorMessage: false,
@@ -82,6 +86,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         dobTo: action.payload,
+      };
+
+    case actionTypes.CBD_CHANGE_RECORD_ADDED:
+      return {
+        ...state,
+        recordAdded: action.payload,
       };
 
     case actionTypes.CHANGE_COMBO_FILTERS:

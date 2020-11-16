@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 // import NavIcon from "./../../../Navigation/NavContent/NavIcon";
 // import NavBadge from "./../../NavContent/NavBadge";
 // import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import * as actionTypes from "../../../../../../store/actions";
 import runQueryActionCreator from "../../../../../../store/ActionCreators/queryAction";
@@ -29,19 +30,21 @@ class CostumSrchBtn extends Component {
   render() {
     let compBody = (
       <div className="nav-link">
-        <Button
-          variant="secondary"
-          size="sm"
-          className="mb-0 red"
-          onClick={() => this.onClearHandler()}>
-          Clear
-        </Button>
-        <Button
-          size="sm"
-          className="mb-0"
-          onClick={() => this.onSearchHandler()}>
-          Search
-        </Button>
+        <Link to="/dashboard">
+          <Button
+            variant="secondary"
+            size="sm"
+            className="mb-0 red"
+            onClick={() => this.onClearHandler()}>
+            Clear
+          </Button>
+          <Button
+            size="sm"
+            className="mb-0"
+            onClick={() => this.onSearchHandler()}>
+            Search
+          </Button>
+        </Link>
       </div>
     );
     return <React.Fragment>{compBody}</React.Fragment>;

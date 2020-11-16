@@ -6,3 +6,11 @@
     border: 0px;
 }
 
+.dataPickerRecordAdded {
+    border-top: 1px soli gray;
+    margin-left: 20px;
+    text-align: left;
+    width: 100%;
+    color: rgb(0, 0, 0);
+    border: 0px;
+}

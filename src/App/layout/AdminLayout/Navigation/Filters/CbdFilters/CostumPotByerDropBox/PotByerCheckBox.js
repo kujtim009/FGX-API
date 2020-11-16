@@ -19,13 +19,8 @@ class LicenseType extends Component {
   }
   render() {
     let licType = null;
-    // console.log(
-    //   "BYER TYPES",
-    //   this.props.availableByerTypes,
-    //   Object.entries(this.props.availableByerTypes)
-    // );
+
     if (this.props.availableByerTypes) {
-      // licType = Object.entries(this.props.availableByerType).map
       licType = Object.entries(
         this.props.availableByerTypes
       ).map((item, index) => (
@@ -70,4 +65,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LicenseType);
-// export default LicenseType;

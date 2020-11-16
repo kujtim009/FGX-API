@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import cbdRunQueryActionCreator from "../../../../../../../store/ActionCreators/cbdActions/queryAction";
 
@@ -18,26 +19,29 @@ class CostumSrchBtn extends Component {
       this.props.selectedCity,
       this.props.otherFilters,
       this.props.dobFrom,
-      this.props.dobTo
+      this.props.dobTo,
+      this.props.recordAdded
     );
   }
   onClearHandler(event) {}
   render() {
     let compBody = (
       <div className="nav-link">
-        <Button
-          variant="secondary"
-          size="sm"
-          className="mb-0 red"
-          onClick={() => this.onClearHandler()}>
-          Clear
-        </Button>
-        <Button
-          size="sm"
-          className="mb-0"
-          onClick={() => this.onSearchHandler()}>
-          Search
-        </Button>
+        <Link to="/dashboard">
+          <Button
+            variant="secondary"
+            size="sm"
+            className="mb-0 red"
+            onClick={() => this.onClearHandler()}>
+            Clear
+          </Button>
+          <Button
+            size="sm"
+            className="mb-0"
+            onClick={() => this.onSearchHandler()}>
+            Search
+          </Button>
+        </Link>
       </div>
     );
     return <React.Fragment>{compBody}</React.Fragment>;
@@ -51,6 +55,7 @@ const mapStateToProps = (state) => {
     otherFilters: state.cbdReducer.otherFilters,
     dobFrom: state.cbdReducer.dobFrom,
     dobTo: state.cbdReducer.dobTo,
+    recordAdded: state.cbdReducer.recordAdded,
   };
 };
 
@@ -62,7 +67,8 @@ const mapDispatchToProps = (dispatch) => {
       selectedCity,
       otherFilters,
       dobFrom,
-      dobTo
+      dobTo,
+      recordAdded
     ) =>
       dispatch(
         cbdRunQueryActionCreator(
@@ -71,7 +77,8 @@ const mapDispatchToProps = (dispatch) => {
           selectedCity,
           otherFilters,
           dobFrom,
-          dobTo
+          dobTo,
+          recordAdded
         )
       ),
   };

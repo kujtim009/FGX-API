@@ -20,11 +20,16 @@ const paramCreator = (data) => {
     prm.push("&city=" + data.selectedCity);
   if (data.dobFrom !== null) prm.push("&dob_from=" + data.dobFrom);
   if (data.dobTo !== null) prm.push("&dob_to=" + data.dobTo);
+  if (data.recordAdded !== null) prm.push("&record_added=" + data.recordAdded);
 
   if (data.availableByerTypes["Potencial Byer"] === true)
     prm.push("&p_buyer=Y");
   if (data.availableByerTypes["Potencial Multi Byer"] === true)
     prm.push("&p_multi_buyer=Y");
+  if (data.availableByerTypes["Raw Phone"] === true) prm.push("&raw_phone=Y");
+  if (data.availableByerTypes["Clean Phone"] === true)
+    prm.push("&clean_phone=Y");
+  if (data.availableByerTypes["Has Email"] === true) prm.push("&has_email=Y");
 
   Object.keys(data.otherFilters).forEach((key) => {
     if (isObject(data.otherFilters[key])) {
@@ -53,7 +58,8 @@ const runQueryActionCreator = (
   selectedCity,
   otherFilters,
   dobFrom,
-  dobTo
+  dobTo,
+  recordAdded
 ) => {
   return (dispatch) => {
     dispatch(startQuery());
@@ -64,6 +70,7 @@ const runQueryActionCreator = (
       otherFilters: otherFilters,
       dobFrom: dobFrom,
       dobTo: dobTo,
+      recordAdded: recordAdded,
     };
     const parameters = paramCreator(rawQueryData);
 

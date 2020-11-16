@@ -10,16 +10,16 @@ global.jQuery = $;
 const routes = [
   {
     path: "/dashboard",
-    exact: true,
+    exact: false,
     name: "Default",
-    component: DashboardDefault
+    component: DashboardDefault,
   },
   {
     path: "/cpanel",
     exact: true,
     name: "CPanel",
-    component: Cpanel
-  }
+    component: Cpanel,
+  },
 ];
 
 export default routes;
