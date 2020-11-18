@@ -14,7 +14,6 @@ class CbdRandom extends Component {
   };
 
   onChangeHandler(event) {
-    console.log("HELOOOOO: ", !isNaN(event.target.value));
     if (!isNaN(event.target.value) && this.state.randomCheck) {
       this.setState({
         inputValue: event.target.value,
@@ -22,6 +21,10 @@ class CbdRandom extends Component {
       });
     }
 
+    this.updateStateTimer();
+  }
+
+  updateStateTimer() {
     let timer = setTimeout(() => {
       this.props.changeOtherFilters(this.state);
       clearTimeout(timer);
@@ -37,10 +40,12 @@ class CbdRandom extends Component {
       });
     } else {
       this.setState({
+        inputName: this.props.item.id,
         inputValue: "100",
         randomCheck: event.target.checked,
       });
     }
+    this.updateStateTimer();
   }
   render() {
     let compBody = (
