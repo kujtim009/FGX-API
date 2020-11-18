@@ -175,6 +175,12 @@ export default {
                   url: "/basic/button",
                 },
                 {
+                  id: "random",
+                  title: "Pull Random Rec.",
+                  type: "CbdRandom",
+                  url: "/basic/button",
+                },
+                {
                   id: "search",
                   title: "Search",
                   type: "CbdCostumSrchBtn",
