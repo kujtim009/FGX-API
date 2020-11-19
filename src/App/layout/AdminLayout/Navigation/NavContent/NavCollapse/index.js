@@ -16,6 +16,7 @@ import CostumProfDropBox from "../../Filters/CostumProfDropBox/CostumProfDropBox
 import CostumComboBox from "./../../Filters/CostumComboBox/CostumComboBox";
 import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
 import CbdStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumStateDropBox";
+import CbdMultiStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumMultiStateDropBox";
 import CbdCityDropBox from "../../Filters/CbdFilters/CostumCityDropBox/CostumCityDropBox";
 import CbdPotByerCheckBox from "../../Filters/CbdFilters/CostumPotByerDropBox/PotByerCheckBox";
 import CbdCostumEditBox from "./../../Filters/CbdFilters/CostumEditBox/CostumEditBox";
@@ -121,7 +122,7 @@ class NavCollapse extends Component {
             );
           case "cbdStateDropBox":
             return (
-              <CbdStateDropBox
+              <CbdMultiStateDropBox
                 layout={this.props.layout}
                 key={item.id}
                 item={item}

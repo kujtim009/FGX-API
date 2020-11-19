@@ -9,6 +9,7 @@ import CostumProfDropBox from "../../Filters/CostumProfDropBox/CostumProfDropBox
 import CostumComboBox from "./../../Filters/CostumComboBox/CostumComboBox";
 import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
 import CbdStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumStateDropBox";
+import CbdMultiStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumMultiStateDropBox";
 import CbdCityDropBox from "../../Filters/CbdFilters/CostumCityDropBox/CostumCityDropBox";
 import CbdPotByerCheckBox from "../../Filters/CbdFilters/CostumPotByerDropBox/PotByerCheckBox";
 import CbdCostumEditBox from "./../../Filters/CbdFilters/CostumEditBox/CostumEditBox";
@@ -67,7 +68,11 @@ const navGroup = (props) => {
 
         case "cbdStateDropBox":
           return (
-            <CbdStateDropBox layout={props.layout} key={item.id} item={item} />
+            <CbdMultiStateDropBox
+              layout={props.layout}
+              key={item.id}
+              item={item}
+            />
           );
 
         case "CbdCityDropBox":

@@ -49,5 +49,5 @@ export const states = [
   { value: "WA", key: "Washington" },
   { value: "WV", key: "West Virginia" },
   { value: "WI", key: "Wisconsin" },
-  { value: "WY", key: "Wyoming" }
+  { value: "WY", key: "Wyoming" },
 ];

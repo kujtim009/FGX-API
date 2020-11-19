@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actionTypes from "../../../../../../../store/actions";
-// import NavIcon from "./../../../Navigation/NavContent/NavIcon";
-// import NavBadge from "./../../NavContent/NavBadge";
-// import { NavLink } from "react-router-dom";
 import { Form } from "react-bootstrap";
 
 class CbdRandom extends Component {
@@ -32,7 +29,6 @@ class CbdRandom extends Component {
   }
 
   onCheckBoxCheckHandler(event) {
-    console.log("HELOOOOO: ", !isNaN(event.target.value));
     if (!event.target.checked) {
       this.setState({
         inputValue: "",
