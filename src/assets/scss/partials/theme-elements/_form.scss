@@ -17,6 +17,7 @@
         // height: calc(1.8125rem + 2px);
         // font-size: .875rem;
         background-color: rgb(41, 65, 82);
+        background-color: rgb(20, 64, 97);
         color: rgb(206, 206, 206);
         font-size: .835rem;
     }
@@ -57,8 +58,8 @@
     background: $theme-background;
 
     .input-group-text {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 5px;
+        padding-right: 5px;
         background: transparent;
 
         i {

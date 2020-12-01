@@ -20,20 +20,11 @@ const options = {
   transition: transitions.SCALE,
 };
 
-axios.defaults.baseURL = "https://firmagraphix-api.com";
-// axios.defaults.baseURL = "http://127.0.0.1:5000";
+// axios.defaults.baseURL = "https://firmagraphix-api.com";
+axios.defaults.baseURL = "http://127.0.0.1:5000";
 const app = (
-  // <Provider store={store}>
-  //   <BrowserRouter basename={config.basename}>
-  //     {/* basename="/datta-able" */}
-  //     <AlertProvider template={AlertTemplate} {...options}>
-  //       <App />
-  //     </AlertProvider>
-  //   </BrowserRouter>
-  // </Provider>
   <Provider store={store}>
     <HashRouter basename={config.basename}>
-      {/* basename="/datta-able" */}
       <AlertProvider template={AlertTemplate} {...options}>
         <App />
       </AlertProvider>

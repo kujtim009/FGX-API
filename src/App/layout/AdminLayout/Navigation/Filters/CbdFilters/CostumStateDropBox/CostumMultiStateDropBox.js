@@ -8,15 +8,18 @@ import { Multiselect } from "multiselect-react-dropdown";
 class CostumMultiDropBox extends Component {
   state = {
     dropElements: states,
-    selectedStates: "all",
+    selectedStates: [{ id: "all", name: "All" }],
     style: {
       chips: {
         fontSize: "12px",
+
+        maxHeight: "20px",
         background: "rgb(37, 87, 122)",
       },
-      searchBox: {},
+      searchBox: { width: "230px", paddingLeft: "1px", paddingTop: "2px" },
       multiselectContainer: {
         color: "blue",
+
         background: "rgb(41, 65, 82)",
       },
       optionContainer: {
@@ -25,7 +28,8 @@ class CostumMultiDropBox extends Component {
         background: "rgb(41, 65, 82)",
       },
       option: {
-        // To change css for dropdown options
+        // To change css for dropdown options\
+        height: "30px",
         color: "grey",
       },
     },
@@ -50,7 +54,7 @@ class CostumMultiDropBox extends Component {
       <div className="nav-link">
         <Multiselect
           options={this.state.dropElements} // Options to display in the dropdown
-          selectedValues={[{ id: "all", name: "All states" }]} // Preselected value to persist in dropdown
+          selectedValues={this.state.selectedStates} // Preselected value to persist in dropdown
           onSelect={this.onChangeHandler} // Function will trigger on select event
           onRemove={this.onChangeHandler} // Function will trigger on remove event
           displayValue="name" // Property name to display in the dropdown options
@@ -58,7 +62,7 @@ class CostumMultiDropBox extends Component {
           showCheckbox={true}
           closeIcon="cancel"
           placeholder="Select states"
-          closeOnSelect={false}
+          closeOnSelect={true}
           avoidHighlightFirstOption={true}
           autocomplete="off"
         />

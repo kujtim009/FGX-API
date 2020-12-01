@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { BarLoader } from "react-spinners";
 import { Form, Button, Card, Collapse } from "react-bootstrap";
 import DEMO from "../../../store/constant";
-
+import { Link } from "react-router-dom";
 import checkAauthActionCreator from "../../../store/ActionCreators/checkAuthAction";
 import getAsignedUserColumnsActionCreator from "../../../store/ActionCreators/cpanelAction/columnAction";
 import getRegistredUsersActionCreator from "../../../store/ActionCreators/cpanelAction/registredUsersAction";
@@ -13,13 +13,20 @@ import * as actionTypes from "../../../store/actions";
 import SortableAsignUserColumns from "../SortableList/sortableAsignUserColumns";
 import UserAsignedLicenseType from "../../components/UserAsignedLicenseType/UserAsignedLicenseType";
 import UserAsignedProjects from "../../components/UserAsignedProjects/UserAsignedProjects";
+import UserMaxDnldAssign from "../../components/UserMaxDnldAssign/UserMaxDnldAssign";
 import getAsignedUserLicTypeActionCreator from "../../../store/ActionCreators/cpanelAction/getUserLicenseTypeAction";
 import getAsignedUserProjectsActionCreator from "../../../store/ActionCreators/cpanelAction/getUserProjectsAction";
+import getAsignedMaxActionActionCreator from "../../../store/ActionCreators/cpanelAction/getUserMaxDnldAction";
 import postAsignLicType from "../../../store/ActionCreators/cpanelAction/postAssignLicType";
 import postAsignProjects from "../../../store/ActionCreators/cpanelAction/postAssignProjects";
+import postMaxDnld from "../../../store/ActionCreators/cpanelAction/postAssignMaxDnld";
 import SortableProfessionAssign from "../../components/SortableProfessionAssign/SortableProfessionAssign";
+import SortableBucketAssign from "../../components/SortableBucketAssign/SortableBucketAssign";
+
 import getProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/getProfessionsAction";
 import postProfessionActionCreator from "../../../store/ActionCreators/cpanelAction/postProfessionAction";
+import postBucketsActionCreator from "../../../store/ActionCreators/cpanelAction/postBucketsAction";
+import getBucketsActionCreator from "../../../store/ActionCreators/cpanelAction/getBucketsAction";
 import RegisterUser from "../../components/RegisterUser/RegisterUser";
 import postRegisterUserActionCreator from "../../../store/ActionCreators/cpanelAction/postRegisterUserAction";
 
@@ -33,6 +40,7 @@ class Cpanel extends React.Component {
     userAsighnColumns: 1,
     licenseTypeAsign: 1,
     projectAsign: 1,
+    maxDnldAsign: 1,
     professionAsign: 1,
     bucketAsign: 1,
     registerNewUser: 1,
@@ -63,6 +71,15 @@ class Cpanel extends React.Component {
     });
 
     if (professionAsign <= 1) this.props.getRegistredUsersAction();
+  };
+
+  onMaxDnldAssingHandler = () => {
+    const maxDnldAsign = this.state.maxDnldAsign;
+    this.setState({
+      maxDnldAsign: maxDnldAsign !== 2 ? 2 : 0,
+    });
+
+    if (maxDnldAsign <= 1) this.props.getRegistredUsersAction();
   };
 
   onBucketAsignHandler = () => {
@@ -119,6 +136,9 @@ class Cpanel extends React.Component {
     if (this.state.projectAsign === 2)
       this.props.getUserAsignedProjectsAction(event.target.value);
 
+    if (this.state.maxDnldAsign === 2)
+      this.props.getUserMaxDownloadAction(event.target.value);
+
     if (this.state.userTimePeriodAsign === 2)
       this.props.getUserAsignedTimePeriodAction(event.target.value);
 
@@ -167,6 +187,7 @@ class Cpanel extends React.Component {
       userAsighnColumns,
       licenseTypeAsign,
       projectAsign,
+      maxDnldAsign,
       professionAsign,
       bucketAsign,
       registerNewUser,
@@ -181,13 +202,12 @@ class Cpanel extends React.Component {
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
-              <a
-                href={DEMO.BLANK_LINK}
+              <Link
                 onClick={this.onProjectChangeHandler}
                 aria-controls="accordion2"
                 aria-expanded={projectAsign === 2}>
                 Assign Projects to users!
-              </a>
+              </Link>
             </Card.Title>
           </Card.Header>
           <Collapse in={this.state.projectAsign === 2}>
@@ -213,17 +233,49 @@ class Cpanel extends React.Component {
             </div>
           </Collapse>
         </Card>
+        {/* ASSIIGN MAX DNLD TO USER */}
+        <Card className="mt-2">
+          <Card.Header>
+            <Card.Title as="h5">
+              <Link
+                onClick={this.onMaxDnldAssingHandler}
+                aria-controls="accordion2"
+                aria-expanded={maxDnldAsign === 2}>
+                Assign max records download!
+              </Link>
+            </Card.Title>
+          </Card.Header>
+          <Collapse in={this.state.maxDnldAsign === 2}>
+            <div id="accordion2">
+              <Card.Body>
+                {dropDownUsers}
+                <UserMaxDnldAssign userMaxDnld={this.props.userMaxDnld} />
+
+                <Card.Footer>
+                  <Button
+                    onClick={() =>
+                      this.props.postMaxDnldAction(
+                        this.props.userMaxDnld,
+                        this.props.selectedUserId
+                      )
+                    }>
+                    SAVE CHANGES
+                  </Button>
+                </Card.Footer>
+              </Card.Body>
+            </div>
+          </Collapse>
+        </Card>
         {/* ASSIIGN LICENSE TYPES */}
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
-              <a
-                href={DEMO.BLANK_LINK}
+              <Link
                 onClick={this.onLicenseTypeChangeHandler}
                 aria-controls="accordion2"
                 aria-expanded={licenseTypeAsign === 2}>
                 Assign License Types!
-              </a>
+              </Link>
             </Card.Title>
           </Card.Header>
           <Collapse in={this.state.licenseTypeAsign === 2}>
@@ -253,13 +305,12 @@ class Cpanel extends React.Component {
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
-              <a
-                href={DEMO.BLANK_LINK}
+              <Link
                 onClick={this.onAsignUserColumnsHandler}
                 aria-controls="accordion2"
                 aria-expanded={userAsighnColumns === 2}>
                 Assign User Columns!
-              </a>
+              </Link>
             </Card.Title>
           </Card.Header>
           <Collapse in={this.state.userAsighnColumns === 2}>
@@ -296,13 +347,12 @@ class Cpanel extends React.Component {
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
-              <a
-                href={DEMO.BLANK_LINK}
+              <Link
                 onClick={this.onProfessionAsignHandler}
                 aria-controls="accordion2"
                 aria-expanded={professionAsign === 2}>
                 Assign Professions to User!
-              </a>
+              </Link>
             </Card.Title>
           </Card.Header>
           <Collapse in={this.state.professionAsign === 2}>
@@ -340,36 +390,35 @@ class Cpanel extends React.Component {
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
-              <a
-                href={DEMO.BLANK_LINK}
+              <Link
                 onClick={this.onBucketAsignHandler}
                 aria-controls="accordion2"
-                aria-expanded={professionAsign === 2}>
+                aria-expanded={bucketAsign === 2}>
                 Assign Profession Buckets to User!
-              </a>
+              </Link>
             </Card.Title>
           </Card.Header>
-          <Collapse in={this.state.professionAsign === 2}>
+          <Collapse in={this.state.bucketAsign === 2}>
             <div id="accordion2">
               <Card.Body>
                 {dropDownUsers}
-                <SortableProfessionAssign
-                  unAsignedProfessions={this.props.unAsignedProfessions}
-                  asignedProfessions={this.props.asignedProfessions}
-                  asignedProfessionChangehandler={
-                    this.props.asignedUserProfessionChangeAction
+                <SortableBucketAssign
+                  unAsignedBuckets={this.props.unAsignedBuckets}
+                  asignedBuckets={this.props.asignedBuckets}
+                  asignedBucketsChangeHandler={
+                    this.props.asignedUserBucketsChangeAction
                   }
-                  unAsignedProfessionHandler={
-                    this.props.unAsignedUserProfessionChangeAction
+                  unAsignedBucketsHandler={
+                    this.props.unAsignedUserBucketsChangeAction
                   }
                 />
 
                 <Card.Footer>
                   <Button
-                    disabled={this.state.enableProfessionSaveButton}
+                    disabled={this.state.enableBucketsSaveButton}
                     onClick={() =>
-                      this.props.postUserProfessions(
-                        this.props.asignedProfessions,
+                      this.props.postUserBuckets(
+                        this.props.asignedBuckets,
                         this.props.selectedUserId
                       )
                     }>
@@ -384,13 +433,12 @@ class Cpanel extends React.Component {
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
-              <a
-                href={DEMO.BLANK_LINK}
+              <Link
                 onClick={this.onRegisterNewUserHandler}
                 aria-controls="accordion2"
                 aria-expanded={registerNewUser === 2}>
                 Register New User
-              </a>
+              </Link>
             </Card.Title>
           </Card.Header>
           <Collapse in={this.state.registerNewUser === 2}>
@@ -408,13 +456,12 @@ class Cpanel extends React.Component {
         <Card className="mt-2">
           <Card.Header>
             <Card.Title as="h5">
-              <a
-                href={DEMO.BLANK_LINK}
+              <Link
                 onClick={this.onUserTimePeriodHandler}
                 aria-controls="accordion2"
                 aria-expanded={userTimePeriodAsign === 2}>
                 Asign Time Period
-              </a>
+              </Link>
             </Card.Title>
           </Card.Header>
           <Collapse in={this.state.userTimePeriodAsign === 2}>
@@ -474,12 +521,15 @@ const mapStateToProps = (state) => {
     userAsignedProjects: state.cpanelReducer.userAsignedProjects,
     unAsignedProfessions: state.cpanelReducer.unAsignedProfessions,
     asignedProfessions: state.cpanelReducer.asignedProfessions,
+    unAsignedBuckets: state.cpanelReducer.unAsignedBuckets,
+    asignedBuckets: state.cpanelReducer.asignedBuckets,
     message: state.cpanelReducer.message,
     timePeriodCreatedDate: state.cpanelReducer.timePeriodCreatedDate,
     timePeriodExpirationDate: state.cpanelReducer.timePeriodExpirationDate,
     timePeriodDayes: state.cpanelReducer.timePeriodDayes,
     showErrorMessage: state.cpanelReducer.showErrorMessage,
     positiveMessage: state.cpanelReducer.positiveMessage,
+    userMaxDnld: state.cpanelReducer.userMaxDnld,
   };
 };
 
@@ -512,10 +562,15 @@ const mapDispatchToProps = (dispatch) => {
     getUserAsignedProjectsAction: (userId) =>
       dispatch(getAsignedUserProjectsActionCreator(userId)),
 
+    getUserMaxDownloadAction: (userId) =>
+      dispatch(getAsignedMaxActionActionCreator(userId)),
+
     postUserLicTypeAction: (lic, userId) =>
       dispatch(postAsignLicType(lic, userId)),
     postUserProjectsAction: (projects, userId) =>
       dispatch(postAsignProjects(projects, userId)),
+    postMaxDnldAction: (maxDnld, userId) =>
+      dispatch(postMaxDnld(maxDnld, userId)),
     getAllProfessions: (userId) => dispatch(getProfessionActionCreator(userId)),
     asignedUserProfessionChangeAction: (professions) =>
       dispatch({
@@ -527,8 +582,25 @@ const mapDispatchToProps = (dispatch) => {
         type: actionTypes.CHANGE_UNASIGNED_PROFESSIONS,
         payload: professions,
       }),
+
+    asignedUserBucketsChangeAction: (professions) =>
+      dispatch({
+        type: actionTypes.CHANGE_USER_ASIGNED_BUCKETS,
+        payload: professions,
+      }),
+    unAsignedUserBucketsChangeAction: (professions) =>
+      dispatch({
+        type: actionTypes.CHANGE_UNASIGNED_BUCKETS,
+        payload: professions,
+      }),
     postUserProfessions: (professions, userId) =>
       dispatch(postProfessionActionCreator(professions, userId)),
+
+    postUserBuckets: (professions, userId) =>
+      dispatch(postBucketsActionCreator(professions, userId)),
+
+    getAllBuckets: (userId) => dispatch(getBucketsActionCreator(userId)),
+
     postRegisterUser: (userData) =>
       dispatch(postRegisterUserActionCreator(userData)),
     postTimePeriod: (userid, createdDate, expirationDate) =>

@@ -9,8 +9,12 @@ const initialState = {
   selectedUserId: "",
   userAsignedLicenseTypes: [],
   userAsignedProjects: [],
+  userMaxDnld: null,
   unAsignedProfessions: [],
   asignedProfessions: [],
+
+  unAsignedBuckets: [],
+  asignedBuckets: [],
 
   timePeriodCreatedDate: "",
   timePeriodExpirationDate: "",
@@ -43,6 +47,46 @@ const reducer = (state = initialState, action) => {
         ...state,
         cpanelSpinner: false,
         message: action.payload.error.data.message,
+      };
+
+    case actionTypes.SUCCESS_GET_USER_MAXDNLD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        userMaxDnld: action.payload,
+      };
+    case actionTypes.START_GET_USER_MAXDNLD:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_GET_USER_MAXDNLD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.error.data.message,
+      };
+    case actionTypes.CHANGE_USER_MAXDNLD:
+      return {
+        ...state,
+        userMaxDnld: action.payload,
+      };
+    case actionTypes.SUCCESS_POST_USER_MAX_DNLD:
+      return {
+        ...state,
+        checkAuth: true,
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Your changes have been saved successfully!",
+        positiveMessage: true,
+      };
+    case actionTypes.START_POST_USER_MAX_DNLD:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_POST_USER_MAX_DNLD:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        showErrorMessage: true,
+        message: "Error!",
+        positiveMessage: false,
+        // message: action.payload.error.data.message
       };
     case actionTypes.CHANGE_REG_USER:
       return {
@@ -296,7 +340,59 @@ const reducer = (state = initialState, action) => {
         ],
         asignedProfessions: tempAsignedProf,
       };
+    /////////////////////BUCKETS/////////////////////////////////////////////////////
+    case actionTypes.SUCCESS_GET_BUCKETS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        unAsignedBuckets: action.payload,
+      };
+    case actionTypes.START_GET_BUCKETS:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_GET_BUCKETS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.error.data.message,
+      };
 
+    case actionTypes.SUCCESS_GET_USER_BUCKETS:
+      return {
+        ...state,
+        cpanelSpinner: false,
+        asignedBuckets: action.payload,
+      };
+    case actionTypes.START_GET_USER_BUCKETS:
+      return { ...state, cpanelSpinner: true };
+    case actionTypes.FAILD_GET_USER_BUCKETS:
+      console.log(action.payload);
+      return {
+        ...state,
+        cpanelSpinner: false,
+        message: action.payload.error.data.message,
+      };
+
+    case actionTypes.CHANGE_UNASIGNED_BUCKETS:
+      console.log("CPANEL REDUCER: ", action.payload);
+      const tempUnasignedBuck = state.unAsignedBuckets.filter((item) =>
+        action.payload.every((someItem) => item.title !== someItem.title)
+      );
+
+      return {
+        ...state,
+        unAsignedBuckets: tempUnasignedBuck,
+        asignedBuckets: [...state.asignedBuckets, ...action.payload],
+      };
+    case actionTypes.CHANGE_USER_ASIGNED_BUCKETS:
+      const tempAsignedBuck = state.asignedBuckets.filter((item) =>
+        action.payload.every((someItem) => item.title !== someItem.title)
+      );
+      return {
+        ...state,
+        unAsignedBuckets: [...state.unAsignedBuckets, ...action.payload],
+        asignedBuckets: tempAsignedBuck,
+      };
+    ///////////////////////////////////////////////////////////////////////////////
     case actionTypes.SUCCESS_POST_REGISTER_USER:
       return {
         ...state,
