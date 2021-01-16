@@ -15,9 +15,13 @@ import CostumStateDropBox from "../../Filters/CostumStateDropBox/CostumStateDrop
 import CostumProfDropBox from "../../Filters/CostumProfDropBox/CostumProfDropBox";
 import CostumComboBox from "./../../Filters/CostumComboBox/CostumComboBox";
 import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
-import CbdStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumStateDropBox";
+// import CbdStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumStateDropBox";
 import CbdMultiStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumMultiStateDropBox";
+import PrmMultiStateDropBox from "../../Filters/PrmFilters/CostumStateDropBox/CostumMultiStateDropBox";
 import CbdCityDropBox from "../../Filters/CbdFilters/CostumCityDropBox/CostumCityDropBox";
+import PrmZipDropBox from "../../Filters/PrmFilters/CostumZipDropBox/CostumZipDropBox";
+import PrmMultiZipDropBox from "../../Filters/PrmFilters/CostumZipDropBox/CostumMultiZipDropBox";
+
 import CbdPotByerCheckBox from "../../Filters/CbdFilters/CostumPotByerDropBox/PotByerCheckBox";
 import CbdCostumEditBox from "./../../Filters/CbdFilters/CostumEditBox/CostumEditBox";
 import CbdPullRandom from "./../../Filters/CbdFilters/CbdPullRandom/CbdPullRandom";
@@ -172,6 +176,31 @@ class NavCollapse extends Component {
                 item={item}
               />
             );
+          case "prmStateDropBox":
+            return (
+              <PrmMultiStateDropBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+          // case "prmZipDropBox":
+          //   return (
+          //     <PrmZipDropBox
+          //       layout={this.props.layout}
+          //       key={item.id}
+          //       item={item}
+          //     />
+          //   );
+          case "prmZipDropBox":
+            return (
+              <PrmMultiZipDropBox
+                layout={this.props.layout}
+                key={item.id}
+                item={item}
+              />
+            );
+
           default:
             return false;
         }

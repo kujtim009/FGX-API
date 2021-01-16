@@ -1,21 +1,14 @@
 import * as actionTypes from "../actions";
+import statuses from "./prmStatuses";
 
 const initialState = {
   checkAuth: false,
   selectedState: "all",
-  availableByerTypes: {
-    "Potencial Byer": false,
-    "Potencial Multi Byer": false,
-    "Raw Phone": false,
-    "Clean Phone": false,
-    "Has Email": false,
-  },
-  citiesByState: [],
-  selectedCity: null,
-  zip: null,
-  phone: null,
-  dobFrom: null,
-  dobTo: null,
+  availableStatuses: statuses,
+  zipByState: [],
+  selectedZip: null,
+  priceFrom: null,
+  priceTo: null,
   recordAdded: null,
   showSpinner: false,
   message: null,
@@ -43,17 +36,17 @@ const faildRequestMessage = (response) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.CBD_CHANGE_STATE:
+    case actionTypes.PRM_CHANGE_STATE:
       return {
         ...state,
         selectedState: action.payload,
         showCounter: false,
       };
 
-    case actionTypes.CBD_CHANGE_CITY:
+    case actionTypes.PRM_CHANGE_ZIP:
       return {
         ...state,
-        selectedCity: action.payload,
+        selectedZip: action.payload,
         showCounter: false,
       };
 
@@ -172,18 +165,18 @@ const reducer = (state = initialState, action) => {
         showErrorMessage: false,
       };
 
-    case actionTypes.START_GET_CITY_BY_STATE:
+    case actionTypes.START_GET_ZIP_BY_STATE:
       return {
         ...state,
         showSpinner: true,
       };
-    case actionTypes.SUCCESS_GET_CITY_BY_STATE:
+    case actionTypes.SUCCESS_GET_ZIP_BY_STATE:
       return {
         ...state,
-        citiesByState: action.payload,
+        zipByState: action.payload,
         showSpinner: true,
       };
-    case actionTypes.FAILD_GET_CITY_BY_STATE:
+    case actionTypes.FAILD_GET_ZIP_BY_STATE:
       return {
         ...state,
         downloshowSpinner: false,

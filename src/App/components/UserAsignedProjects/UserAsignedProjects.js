@@ -16,6 +16,11 @@ class UserAsignedLicenseType extends Component {
         id: "cbd",
         Status: false,
       },
+      {
+        title: "PREMOVER",
+        id: "prm",
+        Status: false,
+      },
     ],
   };
 
