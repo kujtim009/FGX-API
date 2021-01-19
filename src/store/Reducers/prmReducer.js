@@ -7,6 +7,7 @@ const initialState = {
   availableStatuses: statuses,
   zipByState: [],
   selectedZip: null,
+  selectedStatus: null,
   priceFrom: null,
   priceTo: null,
   recordAdded: null,
@@ -50,6 +51,13 @@ const reducer = (state = initialState, action) => {
         showCounter: false,
       };
 
+    case actionTypes.PRM_CHANGE_STATUS:
+      return {
+        ...state,
+        selectedStatus: action.payload,
+        showCounter: false,
+      };
+
     case actionTypes.CHANGE_BYERTYPE:
       let tmpAvalByerType = {};
       action.payload.byerType.forEach((element) => {
@@ -61,7 +69,7 @@ const reducer = (state = initialState, action) => {
         availableByerTypes: tmpAvalByerType,
       };
 
-    case actionTypes.CBD_CHANGE_OTHERFILTERS:
+    case actionTypes.PRM_CHANGE_OTHERFILTERS:
       return {
         ...state,
         otherFilters: {

@@ -4,10 +4,12 @@ import { connect } from "react-redux";
 import * as actionTypes from "../../../../../../../store/actions";
 import getZipsByStateAction from "../../../../../../../store/ActionCreators/prmActions/getZipsByStateAction";
 import { Multiselect } from "multiselect-react-dropdown";
+import statuses from "../../../../../../../assets/statuses";
 
 class CostumMultiDropBox extends Component {
   state = {
-    selectedStates: [{ id: "all", name: "All" }],
+    statuses: statuses,
+    selectedStatus: [{ id: "all", name: "All" }],
     style: {
       chips: {
         fontSize: "12px",
@@ -33,35 +35,40 @@ class CostumMultiDropBox extends Component {
       },
     },
   };
-
+  // componentDidMount() {
+  //   console.log(statuses);
+  //   this.setState({
+  //     statuses: statuses,
+  //   });
+  // }
   onChangeHandler = (selectedList, selectedItems) => {
-    let ZIPS = selectedList.map((item) => item.id);
-    if (ZIPS.length >= 2) {
-      ZIPS = ZIPS.filter((item) => {
+    let statuses = selectedList.map((item) => item.id);
+    if (statuses.length >= 2) {
+      statuses = statuses.filter((item) => {
         console.log("Filter Return:", item !== "all");
         return item !== "all";
       });
     }
 
-    this.props.zipChangeAction(ZIPS.join());
-    // if (ZIPS.length !== 0 && !ZIPS.includes("all"))
-    //   this.props.loadZipByState(ZIPS.join());
-    // console.log("SELECTED ZIPS:", ZIPS);
+    this.props.statusChangeAction(statuses.join());
+    // if (statuses.length !== 0 && !statuses.includes("all"))
+    //   this.props.loadZipByState(statuses.join());
+    // console.log("SELECTED statuses:", statuses);
   };
 
   render() {
     const compBody = (
       <div className="nav-link">
         <Multiselect
-          options={this.props.zipByState} // Options to display in the dropdown
-          selectedValues={this.state.selectedStates} // Preselected value to persist in dropdown
+          options={this.state.statuses} // Options to display in the dropdown
+          selectedValues={this.state.selectedStatus} // Preselected value to persist in dropdown
           onSelect={this.onChangeHandler} // Function will trigger on select event
           onRemove={this.onChangeHandler} // Function will trigger on remove event
           displayValue="name" // Property name to display in the dropdown options
           style={this.state.style}
           showCheckbox={true}
           closeIcon="cancel"
-          placeholder="Select Zip"
+          placeholder="Select status"
           closeOnSelect={true}
           avoidHighlightFirstOption={true}
           autocomplete="off"
@@ -74,20 +81,17 @@ class CostumMultiDropBox extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    selectedZip: state.prmReducer.selectedZip,
-    zipByState: state.prmReducer.zipByState,
+    selectedStatus: state.prmReducer.selectedStatus,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    zipChangeAction: (zips) =>
+    statusChangeAction: (statuses) =>
       dispatch({
-        type: actionTypes.PRM_CHANGE_ZIP,
-        payload: zips,
+        type: actionTypes.PRM_CHANGE_STATUS,
+        payload: statuses,
       }),
-    // loadZipByState: (selectedZip) =>
-    //   dispatch(getZipsByStateAction(selectedZip)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CostumMultiDropBox);

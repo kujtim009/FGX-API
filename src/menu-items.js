@@ -220,6 +220,18 @@ export default {
                   url: "/basic/button",
                 },
                 {
+                  id: "price_from",
+                  title: "From Price",
+                  type: "PrmCostumEditBox",
+                  url: "/basic/button",
+                },
+                {
+                  id: "price_to",
+                  title: "To Price",
+                  type: "PrmCostumEditBox",
+                  url: "/basic/button",
+                },
+                {
                   id: "random",
                   title: "Pull Random Rec.",
                   type: "CbdRandom",

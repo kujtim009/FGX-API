@@ -12,8 +12,10 @@ import CostumSrchBtn from "./../../Filters/CostumSrchBtn/CostumSrchBtn";
 import CbdMultiStateDropBox from "../../Filters/CbdFilters/CostumStateDropBox/CostumMultiStateDropBox";
 import PrmMultiStateDropBox from "../../Filters/PrmFilters/CostumStateDropBox/CostumMultiStateDropBox";
 import CbdCityDropBox from "../../Filters/CbdFilters/CostumCityDropBox/CostumCityDropBox";
-import PrmZipDropBox from "../../Filters/PrmFilters/CostumZipDropBox/CostumZipDropBox";
+import PrmCostumEditBox from "./../../Filters/PrmFilters/CostumEditBox/CostumEditBox";
 import PrmMultiZipDropBox from "../../Filters/PrmFilters/CostumZipDropBox/CostumMultiZipDropBox";
+import PrmMultiStatusDropBox from "../../Filters/PrmFilters/CostumStatusDropBox/CostumMultiStatusDropBox";
+import PrmCostumSrchBtn from "./../../Filters/PrmFilters/CostumSrchBtn/CostumSrchBtn";
 import CbdPotByerCheckBox from "../../Filters/CbdFilters/CostumPotByerDropBox/PotByerCheckBox";
 import CbdCostumEditBox from "./../../Filters/CbdFilters/CostumEditBox/CostumEditBox";
 import CbdPullRandom from "./../../Filters/CbdFilters/CbdPullRandom/CbdPullRandom";
@@ -119,14 +121,7 @@ const navGroup = (props) => {
               item={item}
             />
           );
-        // case "prmZipDropBox":
-        //   return (
-        //     <PrmZipDropBox
-        //       layout={this.props.layout}
-        //       key={item.id}
-        //       item={item}
-        //     />
-        //   );
+
         case "prmZipDropBox":
           return (
             <PrmMultiZipDropBox
@@ -136,6 +131,23 @@ const navGroup = (props) => {
             />
           );
 
+        case "PrmStatusDropBox":
+          return (
+            <PrmMultiStatusDropBox
+              layout={this.props.layout}
+              key={item.id}
+              item={item}
+            />
+          );
+
+        case "PrmCostumEditBox":
+          return (
+            <PrmCostumEditBox layout={props.layout} key={item.id} item={item} />
+          );
+        case "PrmCostumSrchBtn":
+          return (
+            <PrmCostumSrchBtn layout={props.layout} key={item.id} item={item} />
+          );
         default:
           return false;
       }

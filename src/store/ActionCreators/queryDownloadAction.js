@@ -13,12 +13,30 @@ const queryDownloadActionCreator = (parameters, activeProject) => {
       responseType: "blob",
     };
     // console.log("QUERY DOWNLOAD ACTION: ACTIVE STATE", activeProject);
-    const url =
-      activeProject === "mlf"
-        ? "/mlf_dnld?" + parameters
-        : "/cbd_dnld?" + parameters;
-    const fileName =
-      activeProject === "mlf" ? "FGX_MLF_DATA.csv" : "FGX_CBD_DATA.csv";
+    let url = "";
+    let fileName = "";
+    switch (activeProject) {
+      case "mlf":
+        url = "/mlf_dnld?" + parameters;
+        fileName = "FGX_MLF_DATA.csv";
+        break;
+      case "cbd":
+        url = "/cbd_dnld?" + parameters;
+        fileName = "FGX_CBD_DATA.csv";
+        break;
+      case "prm":
+        url = "/prm_dnld?" + parameters;
+        fileName = "FGX_PRM_DATA.csv";
+        break;
+      default:
+        break;
+    }
+    // const url =
+    //   activeProject === "mlf"
+    //     ? "/mlf_dnld?" + parameters
+    //     : "/cbd_dnld?" + parameters;
+    // const fileName =
+    //   activeProject === "mlf" ? "FGX_MLF_DATA.csv" : "FGX_CBD_DATA.csv";
     axios
       .get(url, header)
       .then(({ data }) => {
