@@ -5,7 +5,8 @@ import { NavLink } from "react-router-dom";
 import { postLoginCall } from "../../../store/ActionCreators/authAction";
 import "./../../../assets/scss/style.scss";
 import Aux from "../../../hoc/_Aux";
-import authRoutes from "../../../route";
+import { BarLoader } from "react-spinners";
+// import authRoutes from "../../../route";
 // import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 
 class SignUp1 extends React.Component {
@@ -15,9 +16,9 @@ class SignUp1 extends React.Component {
   onLoginHandler = () => {
     this.props.onAuthHandler(this.state.email, this.state.password);
   };
-  onInputChangeHandler = event => {
+  onInputChangeHandler = (event) => {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
     });
   };
   render() {
@@ -41,6 +42,11 @@ class SignUp1 extends React.Component {
               <span className="r" />
             </div>
             <div className="card">
+              <BarLoader
+                width={100 + "%"}
+                color="blue"
+                loading={this.props.showSpinner}
+              />
               <div className="card-body text-center">
                 <div className="mb-4">
                   <i className="feather icon-unlock auth-icon" />
@@ -84,15 +90,20 @@ class SignUp1 extends React.Component {
                   Login
                 </button>
 
-                <p className="mb-2 text-muted">
+                {/* <p className="mb-2 text-muted">
                   Forgot password?{" "}
                   <NavLink to="/auth/reset-password-1">Reset</NavLink>
-                </p>
-                <p className="mb-0 text-muted">
+                </p> */}
+                {/* <p className="mb-0 text-muted">
                   Don’t have an account?{" "}
                   <NavLink to="/auth/signup-1">Signup</NavLink>
-                </p>
+                </p> */}
               </div>
+              <BarLoader
+                width={100 + "%"}
+                color="green"
+                loading={this.props.showSpinner}
+              />
             </div>
           </div>
         </div>
@@ -100,19 +111,20 @@ class SignUp1 extends React.Component {
     );
   }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     isAuthenticated: state.authReducer.isAuthenticated,
-    errorMessage: state.authReducer.message
+    errorMessage: state.authReducer.message,
+    showSpinner: state.authReducer.showSpinner,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     onAuthHandler: (email, password) => {
       //   console.log("BUTTON CLICKED");
       dispatch(postLoginCall(email, password));
-    }
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp1);
